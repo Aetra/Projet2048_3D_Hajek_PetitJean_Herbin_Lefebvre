@@ -22,6 +22,7 @@ public class Dimension3 implements Parametres {
     
     public Grille[] mesGrilles = new Grille[ETAGE];
     
+    /*
     public Dimension3(Grille[] dim3)
     {
         for( int i = 0 ; i < ETAGE ; i++ )
@@ -32,7 +33,19 @@ public class Dimension3 implements Parametres {
             this.mesGrilles[i] = new Grille(i);
         }
     }
-
+    */
+    
+    // Surcharge
+    public Dimension3()
+    {
+        for( int i = 0 ; i < ETAGE ; i++ )
+        {
+            // 0: Haut
+            // 1: Moyen
+            // 2: Bas
+            this.mesGrilles[i] = new Grille(i);
+        }
+    }
     
     @Override
     public String toString() {
