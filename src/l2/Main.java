@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
+package l2;
 
 import java.util.Scanner;
 
@@ -17,12 +17,16 @@ public class Main implements Parametres {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
         // TODO code application logic here
         Dimension3 g = new Dimension3();
         boolean b = g.nouvelleCase();
         b = g.nouvelleCase();
         System.out.println(g);
         Scanner sc = new Scanner(System.in);
+        
+        God oranos = new God(g);
+        
         /*System.out.println("X:");
         int x= sc.nextInt();
         System.out.println("Y:");
@@ -33,9 +37,12 @@ public class Main implements Parametres {
         g.getGrille().remove(c);
         System.out.println(g);*/
         
+
         while (!g.partieFinie()) {
+            
             System.out.println("Déplacer vers la Droite (d), Gauche (g), Haut (h), ou Bas (b) ?");
             System.out.println("Ajout : Monter (m) et Descendre (s)");
+            System.out.print("Ulysse... ");  System.out.println(oranos);
             String s = sc.nextLine();
             s.toLowerCase();
             if (!(s.equals("d") || s.equals("droite")
@@ -43,46 +50,41 @@ public class Main implements Parametres {
                     || s.equals("h") || s.equals("haut")
                     || s.equals("b") || s.equals("bas")
                     || s.equals("m") || s.equals("monter")
-                    || s.equals("s") || s.equals("descendre")
-                    )) {
+                    || s.equals("s") || s.equals("descendre"))) {
                 System.out.println("Vous devez écrire d pour Droite, g pour Gauche, h pour Haut ou b pour Bas");
                 System.out.println("Vous devez écrire m pour Monter ou s pour Descendre");
-            } else {
+            } else 
+            {
                 int direction;
-                if (s.equals("d") || s.equals("droite")) 
-                {
+                if (s.equals("d") || s.equals("droite")) {
                     direction = DROITE;
-                } 
-                else if (s.equals("g") || s.equals("gauche")) 
-                {
+                } else if (s.equals("g") || s.equals("gauche")) {
                     direction = GAUCHE;
-                } 
-                else if (s.equals("h") || s.equals("haut")) 
-                {
+                } else if (s.equals("h") || s.equals("haut")) {
                     direction = HAUT;
-                } 
-                else if (s.equals("b") || s.equals("bas")) 
-                {
+                } else if (s.equals("b") || s.equals("bas")) {
                     direction = BAS;
-                } 
-                else if (s.equals("m") || s.equals("monter")) 
-                {
-                    direction = MONTER;  
-                } 
-                else
-                {
+                } else if (s.equals("m") || s.equals("monter")) {
+                    direction = MONTER;
+                } else {
                     direction = DESCENDRE;
                 }
+                
                 boolean b2 = g.lanceurDeplacerCases(direction);
                 if (b2) {
                     b = g.nouvelleCase();
-                    if (!b) g.gameOver();
+                    if (!b) {
+                        g.gameOver();
+                    }
                 }
                 System.out.println(g);
-                if (g.getValeurMax()>=OBJECTIF) g.victory();
+                if (g.getValeurMax() >= OBJECTIF)   g.victory();
+                
             }
         }
         g.gameOver();
+        
+        
         /*
         // Bout de code pour tester manuellement si une grille contient une case ou pas
         Scanner sc = new Scanner(System.in);

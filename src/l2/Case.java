@@ -1,14 +1,9 @@
-package Model;
-
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+package l2;
 
 /**
  *
@@ -18,8 +13,7 @@ public class Case implements Parametres {
 
     private int x, y, valeur;
     private Grille grille;
-    private Label label;
-    private Pane pane;
+
     public Case(int abs, int ord, int v) {
         this.x = abs;
         this.y = ord;
@@ -121,28 +115,6 @@ public class Case implements Parametres {
     @Override
     public String toString() {
         return "Case(" + this.x + "," + this.y + "," + this.valeur + ")";
-    }
-    
-    public void setLabel(Label label) {
-        this.label=label;
-    }
-    public Label getLabel() {
-        return label;
-    }
-
-    public Object getPane() {
-        return pane;
-    }
-
-    public void setPane(Pane pane) {
-        this.pane=pane;
-    }
-
-    public int getLastX() {
-        return this.x;
-    }
-    public int getLastY(){
-        return this.y;
     }
 
 }

@@ -1,10 +1,10 @@
-package Model;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+package l2;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -20,22 +20,8 @@ public class Dimension3 implements Parametres {
     // AH : pensez à essayer de faire un héritage avec Grille
     // Cela pourrait rendre le code un peu plus propre...
     
-    public Grille[] mesGrilles = new Grille[ETAGE];
+    private Grille[] mesGrilles = new Grille[ETAGE];
     
-    /*
-    public Dimension3(Grille[] dim3)
-    {
-        for( int i = 0 ; i < ETAGE ; i++ )
-        {
-            // 0: Haut
-            // 1: Moyen
-            // 2: Bas
-            this.mesGrilles[i] = new Grille(i);
-        }
-    }
-    */
-    
-    // Surcharge
     public Dimension3()
     {
         for( int i = 0 ; i < ETAGE ; i++ )
@@ -45,6 +31,11 @@ public class Dimension3 implements Parametres {
             // 2: Bas
             this.mesGrilles[i] = new Grille(i);
         }
+    }
+    
+    public Grille[] getMesGrilles()
+    {
+        return this.mesGrilles;
     }
     
     @Override
@@ -57,6 +48,11 @@ public class Dimension3 implements Parametres {
             result += this.mesGrilles[i].toString() + "\n";
         }
         return result;
+    }
+    
+    public void run()
+    {
+        
     }
     
     
@@ -233,9 +229,13 @@ public class Dimension3 implements Parametres {
             
             
             if(direction == MONTER)
+            {
                 lim++;
+            }
             else
+            {
                 lim--;
+            }
         }
         
         return lim;
@@ -243,7 +243,7 @@ public class Dimension3 implements Parametres {
     }
             
     
-    public boolean teleportation(int direction)
+    private boolean teleportation(int direction)
     {
         boolean deplacement = false;    // permet de dire si une case a bougé
         

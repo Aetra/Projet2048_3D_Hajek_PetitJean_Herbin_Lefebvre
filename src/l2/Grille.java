@@ -1,19 +1,15 @@
-package Model;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+package l2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import static java.util.EnumSet.range;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
-import static java.util.stream.IntStream.range;
 
 /**
  *
@@ -22,8 +18,6 @@ import static java.util.stream.IntStream.range;
 public class Grille implements Parametres {
 
     private final HashSet<Case> grille;
-    private int setLastX;
-    private int setLastY;
     private int valeurMax = 0;
     private boolean deplacement;
     private int numeroGrille;
@@ -133,9 +127,6 @@ public class Grille implements Parametres {
 
     private void deplacerCasesRecursif(Case[] extremites, int rangee, int direction, int compteur) {
         if (extremites[rangee] != null) {
-          //  extremites[rangee].setLastX(extremites[range].getX());
-            //extremites[rangee].setLastY(extremites[range].getX());
-
             if ((direction == HAUT && extremites[rangee].getY() != compteur)
                     || (direction == BAS && extremites[rangee].getY() != TAILLE - 1 - compteur)
                     || (direction == GAUCHE && extremites[rangee].getX() != compteur)
@@ -238,7 +229,7 @@ public class Grille implements Parametres {
         }
     }
     
-    // cette classe permet de donner accès à une case, d'après ses coordonnées
+    // cette méthode permet de donner accès à une case, d'après ses coordonnées
     public Case giveCase(int x, int y)
     {
         for (Case c : this.grille) {
