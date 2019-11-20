@@ -163,7 +163,7 @@ public class God implements Parametres {
         // parametres reglables
         // 5    2   3   <--
         // 10   2   5
-        int poidsBase = 5, poidsVoisin = 2, poidsVal = 3;
+        int poidsBase = 20, poidsVoisin = 2, poidsVal = 5;
         
         
         long result = 0;
