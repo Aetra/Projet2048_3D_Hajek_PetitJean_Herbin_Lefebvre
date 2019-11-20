@@ -1,0 +1,84 @@
+
+.pane2 {
+    -fx-background-color: #ffbf00;
+    -fx-border-color: black;
+}
+
+.pane4 {
+    -fx-background-color: #00ffff ;
+    -fx-border-color: black;
+}
+
+.pane8 {
+    -fx-background-color: #00bfff;
+    -fx-border-color: black;
+}
+
+.pane16 {
+    -fx-background-color: #ffbf00;
+    -fx-border-color: black;
+}
+
+.pane32 {
+    -fx-background-color: #00ffbf;
+    -fx-border-color: black;
+}
+
+.pane64 {
+    -fx-background-color:#ffb3b3;
+    -fx-border-color: black;
+}
+
+.pane128 {
+    -fx-background-color:#ff0080;
+    -fx-border-color: black;
+}
+
+.pane256 {
+    -fx-background-color: #ff0000;
+    -fx-border-color: black;
+}
+
+.pane512 {
+    -fx-background-color: #ff0000;
+    -fx-border-color: black;
+}
+
+.pane1024 {
+    -fx-background-color: #ff0000;
+    -fx-border-color: black;
+}
+
+.pane2048 {
+    -fx-background-color: #ff0000;
+    -fx-border-color: black;
+}
+
+.pane4096 {
+    -fx-background-color: #ff0000;
+    -fx-border-color: black;
+}
+.pane4096 {
+    -fx-background-color: #ff0000;
+    -fx-border-color: black;
+}
+.pane8192 {
+    -fx-background-color: #ff0000;
+    -fx-border-color: black;
+}
+.pane16384 {
+    -fx-background-color: #ff0000;
+    -fx-border-color: black;
+}
+.fond{
+    -fx-background-color: #000000;
+}
+
+.gridpane {
+    -fx-border-color: black;
+    -fx-grid-lines-visible: true;
+    -fx-border: 2px solid;
+    -fx-halignment: center;
+    -fx-alignment: CENTER;  
+}
+
