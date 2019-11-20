@@ -1,41 +1,56 @@
-package Model;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+package Model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import static java.util.EnumSet.range;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
-import static java.util.stream.IntStream.range;
 
 /**
  *
  * @author Sylvain
  */
-public class Grille implements Parametres {
+public class Grille implements Parametres, Cloneable{
 
-    private final HashSet<Case> grille;
-    private int setLastX;
-    private int setLastY;
+    private HashSet<Case> grille;
     private int valeurMax = 0;
     private boolean deplacement;
     private int numeroGrille;
+    
+        private ArrayList<Case> casesDestroy = new ArrayList<>();
 
+
+    public Grille() {
+        this.grille = new HashSet<>();
+    }
     public Grille(int numeroGrille) {
         this.grille = new HashSet<>();
-        this.numeroGrille = numeroGrille;
+        this.numeroGrille=numeroGrille;
     }
+ 
+
+        @Override
+    public Object clone() throws CloneNotSupportedException { 
+        Grille cloned = (Grille) super.clone();
+        return cloned;
+    }
+    
+     public ArrayList<Case> getCasesDestroy() {
+        return casesDestroy;
+    }
+
     
     public int getNumeroGrille()
     {
-        return this.numeroGrille;
+        return numeroGrille;
+    }
+    public void setGrille(HashSet<Case> grille) {
+        this.grille = grille;
     }
 
     @Override
@@ -89,7 +104,7 @@ public class Grille implements Parametres {
         return true;
     }
 
-    public boolean lanceurDeplacerCases(int direction) {
+    public boolean lanceurDeplacerCases(int direction) throws CloneNotSupportedException {
         Case[] extremites = this.getCasesExtremites(direction);
         deplacement = false; // pour vérifier si on a bougé au moins une case après le déplacement, avant d'en rajouter une nouvelle
         for (int i = 0; i < TAILLE; i++) {
@@ -130,12 +145,62 @@ public class Grille implements Parametres {
         }
         this.valeurMax = max;
     }
-
-    private void deplacerCasesRecursif(Case[] extremites, int rangee, int direction, int compteur) {
+/*
+    private void deplacerCasesRecursif(Case[] extremites, int rangee, int direction, int compteur) throws CloneNotSupportedException {
         if (extremites[rangee] != null) {
-          //  extremites[rangee].setLastX(extremites[range].getX());
-            //extremites[rangee].setLastY(extremites[range].getX());
-
+            if ((direction == HAUT && extremites[rangee].getY() != compteur)
+                    || (direction == BAS && extremites[rangee].getY() != TAILLE - 1 - compteur)
+                    || (direction == GAUCHE && extremites[rangee].getX() != compteur)
+                    || (direction == DROITE && extremites[rangee].getX() != TAILLE - 1 - compteur)) {
+                this.grille.remove(extremites[rangee]);
+                switch (direction) {
+                    case HAUT:
+                        extremites[rangee].setY(compteur);
+                        break;
+                    case BAS:
+                        extremites[rangee].setY(TAILLE - 1 - compteur);
+                        break;
+                    case GAUCHE:
+                        extremites[rangee].setX(compteur);
+                        break;
+                    case DROITE:
+                        extremites[rangee].setX(TAILLE - 1 - compteur);
+                        break;
+                }
+                this.grille.add(extremites[rangee]);
+                deplacement = true;
+            }
+            Case voisin = extremites[rangee].getVoisinDirect(-direction);
+            if (voisin != null) {
+                if (extremites[rangee].valeurEgale(voisin)) {
+                    // ajoute dans le tableau la case a détruire
+                    getCasesDestroy().add(0, (Case) voisin.clone());
+                    // modifie les coordonnées pour le traitement qui suit
+                        // d'où il provient
+                    getCasesDestroy().get(0).setLastX(getCasesDestroy().get(0).getX());
+                    getCasesDestroy().get(0).setLastY(getCasesDestroy().get(0).getY());
+                        // où il était censé arriver
+                    getCasesDestroy().get(0).setX(extremites[rangee].getX());
+                    getCasesDestroy().get(0).setY(extremites[rangee].getY());
+                    
+                    this.fusion(extremites[rangee]);
+                    extremites[rangee] = voisin.getVoisinDirect(-direction);
+                    // suppression de la case dans la grille
+                    this.grille.remove(voisin);
+                    this.deplacerCasesRecursif(extremites, rangee, direction, compteur + 1);
+                } else {
+                    extremites[rangee] = voisin;
+                    this.deplacerCasesRecursif(extremites, rangee, direction, compteur + 1);
+                }
+            }
+        }
+    } */
+    
+    private void deplacerCasesRecursif(Case[] extremites, int rangee, int direction, int compteur) throws CloneNotSupportedException {
+        if (extremites[rangee] != null) {
+            // position avant changement
+            extremites[rangee].setLastX(extremites[rangee].getX());
+            extremites[rangee].setLastY(extremites[rangee].getY());
             if ((direction == HAUT && extremites[rangee].getY() != compteur)
                     || (direction == BAS && extremites[rangee].getY() != TAILLE - 1 - compteur)
                     || (direction == GAUCHE && extremites[rangee].getX() != compteur)
@@ -161,8 +226,19 @@ public class Grille implements Parametres {
             Case voisin = extremites[rangee].getVoisinDirect(-direction);
             if (voisin != null) {
                 if (extremites[rangee].valeurEgale(voisin)) {
+                    // ajoute dans le tableau la case a détruire
+                    getCasesDestroy().add(0, (Case) voisin.clone());
+                    // modifie les coordonnées pour le traitement qui suit
+                        // d'où il provient
+                    getCasesDestroy().get(0).setLastX(getCasesDestroy().get(0).getX());
+                    getCasesDestroy().get(0).setLastY(getCasesDestroy().get(0).getY());
+                        // où il était censé arriver
+                    getCasesDestroy().get(0).setX(extremites[rangee].getX());
+                    getCasesDestroy().get(0).setY(extremites[rangee].getY());
+                    
                     this.fusion(extremites[rangee]);
                     extremites[rangee] = voisin.getVoisinDirect(-direction);
+                    // suppression de la case dans la grille
                     this.grille.remove(voisin);
                     this.deplacerCasesRecursif(extremites, rangee, direction, compteur + 1);
                 } else {
@@ -172,6 +248,7 @@ public class Grille implements Parametres {
             }
         }
     }
+    
 
     /*
     * Si direction = HAUT : retourne les 4 cases qui sont le plus en haut (une pour chaque colonne)
@@ -183,6 +260,7 @@ public class Grille implements Parametres {
     public Case[] getCasesExtremites(int direction) {
         Case[] result = new Case[TAILLE];
         for (Case c : this.grille) {
+            c.setLastGrille(c.getNumGrille()); // Mise a jour pour le côté JFX (obligatoire)
             switch (direction) {
                 case HAUT:
                     if ((result[c.getX()] == null) || (result[c.getX()].getY() > c.getY())) { // si on n'avait pas encore de case pour cette rangée ou si on a trouvé un meilleur candidat
@@ -219,7 +297,7 @@ public class Grille implements Parametres {
             // on crée toutes les cases encore libres
             for (int x = 0; x < TAILLE; x++) {
                 for (int y = 0; y < TAILLE; y++) {
-                    Case c = new Case(x, y, valeur);
+                    Case c = new Case(x, y, valeur,this.getNumeroGrille());
                     if (!this.grille.contains(c)) { // contains utilise la méthode equals dans Case
                         casesLibres.add(c);
                     }

@@ -1,10 +1,10 @@
-package Model;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+package Model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -15,25 +15,35 @@ import java.util.Iterator;
  *
  * @author aurelien
  */
-public class Dimension3 implements Parametres {
+public enum Dimension3 implements Parametres {
+
+    INSTANCE;
     
     // AH : pensez à essayer de faire un héritage avec Grille
     // Cela pourrait rendre le code un peu plus propre...
     
-    public Grille[] mesGrilles = new Grille[ETAGE];
-    
-    public Dimension3(Grille[] dim3)
+   // private Grille[] mesGrilles = new Grille[ETAGE];
+        private Grille[] mesGrilles;
+
+    private Dimension3()
     {
+        mesGrilles = new Grille[3];
+
+        /*
         for( int i = 0 ; i < ETAGE ; i++ )
         {
             // 0: Haut
             // 1: Moyen
             // 2: Bas
-            this.mesGrilles[i] = new Grille(i);
-        }
-    }
 
+//           this.mesGrilles[i] = new Grille(i);
+        }
+        */
+    }
     
+     public static Dimension3 getInstance() {
+        return INSTANCE;
+    }
     @Override
     public String toString() {
         
@@ -46,9 +56,9 @@ public class Dimension3 implements Parametres {
         return result;
     }
     
-    
+    /*
     // permet d'ordonner toutes les grilles, de déplacer leurs blocs dans une direction donnée
-    public boolean lanceurDeplacerCases(int direction)
+    public boolean lanceurDeplacerCases(int direction) throws CloneNotSupportedException
     {
         boolean result = false;
         // Si la direction choisie est valide...
@@ -75,7 +85,7 @@ public class Dimension3 implements Parametres {
         
         return result;
     }
-    
+    */
     public boolean partieFinie() {
         
         int over = 0;
@@ -139,7 +149,27 @@ public class Dimension3 implements Parametres {
         }
         return maxV;
     }
-    
+    /*
+    public boolean partieFinie() {
+        if (getValeurMax() == OBJECTIF){
+            return true;
+        }
+        else if (this.grille.size() < TAILLE * TAILLE * TAILLE) {
+            return false;
+        } else {
+            for (Case c : this.grille) {
+                for (int i = 1; i <= 3; i++) {
+                    if (c.getVoisinDirect(i) != null) {
+                        if (c.valeurEgale(c.getVoisinDirect(i))) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    */
     public void victory() {
         System.out.println("Bravo ! Vous avez atteint " + this.getValeurMax());
         System.exit(0);
@@ -220,16 +250,20 @@ public class Dimension3 implements Parametres {
             
             
             if(direction == MONTER)
+            {
                 lim++;
+            }
             else
+            {
                 lim--;
+            }
         }
         
         return lim;
 
     }
             
-    
+    /*
     public boolean teleportation(int direction)
     {
         boolean deplacement = false;    // permet de dire si une case a bougé
@@ -259,7 +293,7 @@ public class Dimension3 implements Parametres {
                         System.out.println(ascenseur[a]);
                     }
                     */
-                    
+                  /*  
                     switch (direction)
                     {
                         case MONTER:
@@ -277,5 +311,118 @@ public class Dimension3 implements Parametres {
         this.setValeurMax();
         return deplacement;
     }
+*/
     
-}
+
+    public void init(Grille[] dim3) {
+        System.out.println(dim3[0]);
+        this.mesGrilles[0] = dim3[0];
+        this.mesGrilles[1] = dim3[1];
+        this.mesGrilles[2] = dim3[2];
+    }
+    
+    public Case[][] convertHash(Grille g) {
+        HashSet<Case> set = g.getGrille();
+        Case[][] convert = new Case[3][3];
+        for (Case c : set) {
+            convert[c.getX()][c.getY()] = c;
+        }
+        return convert;
+    }
+
+  public boolean fusionGauche() throws CloneNotSupportedException {
+        boolean b1 = this.teleportationSameCase(this.getMultiGrille()[0], this.getMultiGrille()[1], -1);
+        boolean b2 = this.teleportationSameCase(this.getMultiGrille()[1], this.getMultiGrille()[2], -1);
+        
+        boolean b3 = this.teleportationEmptyCase(this.getMultiGrille()[0], this.getMultiGrille()[1], -1);
+        boolean b4 = this.teleportationEmptyCase(this.getMultiGrille()[1], this.getMultiGrille()[2], -1);
+        
+        return b1 || b2 || b3 || b4;
+    }
+    
+    public boolean fusionDroite() throws CloneNotSupportedException {
+        boolean b1 = this.teleportationSameCase(this.getMultiGrille()[2], this.getMultiGrille()[1], 1);
+        boolean b2 = this.teleportationSameCase(this.getMultiGrille()[1], this.getMultiGrille()[0], 1);
+        
+        boolean b3 = this.teleportationEmptyCase(this.getMultiGrille()[2], this.getMultiGrille()[1], 1);
+        boolean b4 = this.teleportationEmptyCase(this.getMultiGrille()[1], this.getMultiGrille()[0], 1);
+        
+        return b1 || b2 || b3 || b4;
+       }
+    
+        public boolean teleportationEmptyCase(Grille left, Grille right, int compteur) throws CloneNotSupportedException { // de base se fait de la droite vers la gauche (<-)
+        boolean b = false;
+        Case[][] l = this.convertHash(left);
+        Case[][] r = this.convertHash(right);
+        
+        for (int x = 0; x < TAILLE; x++) {
+            for (int y = 0; y < TAILLE; y++) {
+                if (r[x][y] != null) { // si ma case dans la grille droite existe alors
+                    if (l[x][y] == null) {                         
+                        Case fusion = (Case) r[x][y].clone();
+                        fusion.setNumGrille(fusion.getNumGrille() + compteur);
+                        fusion.setGrille(left);
+                        fusion.setLastX(fusion.getX());
+                        fusion.setLastY(fusion.getY());
+                        // ne peas mettre lastGrille : sinon le mouvement se fera avec une grille en moins !
+                        left.getGrille().add(fusion); // ajout de la nouvelle case
+                                              
+                        right.getGrille().remove(r[x][y]);
+                        b = true;
+                    } 
+                }
+            }
+        }
+        return b;
+    }
+        public Grille[] getMultiGrille() {
+        return mesGrilles;
+    }
+    public boolean teleportationSameCase(Grille left, Grille right, int compteur) throws CloneNotSupportedException { // de base se fait de la droite vers la gauche (<-)
+        boolean b = false;
+        Case[][] l = this.convertHash(left);
+        Case[][] r = this.convertHash(right);
+        
+        for (int x = 0; x < TAILLE; x++) {
+            for (int y = 0; y < TAILLE; y++) {
+                if (r[x][y] != null) { // si ma case dans la grille droite existe alors
+                    if (l[x][y] != null) { // si ma case dans la grille droite existe alors
+                        if (l[x][y].valeurEgale(r[x][y])) { // si ces cases ont la mêmes valeurs alors je fusionne
+                            Case fusion = (Case) l[x][y].clone();
+                            fusion.setValeur(fusion.getValeur()*2); // Fusion
+                            fusion.setGrille(left);
+                            fusion.setLastGrille(r[x][y].getNumGrille()); // NEW
+                            fusion.setLastX(fusion.getX());
+                            fusion.setLastY(fusion.getY());
+
+                            right.getCasesDestroy().add(r[x][y]);
+                            // supprime les anciennes cases qui vont être mis-à-jour
+                            left.getGrille().remove(l[x][y]);
+                            right.getGrille().remove(r[x][y]);
+                            // ajoute la nouvelle case
+                            left.getGrille().add(fusion);
+                            b = true;
+                        } else { // MAJ JFX
+                            l[x][y].setLastX(l[x][y].getX());
+                            l[x][y].setLastY(l[x][y].getY());                            
+                        }
+                    } else { // la position est disponible donc je tp la case
+                        Case fusion = (Case) r[x][y].clone();
+                        fusion.setNumGrille(fusion.getNumGrille() + compteur);
+                        fusion.setLastGrille(r[x][y].getNumGrille());
+                        fusion.setGrille(left);
+                        fusion.setLastX(fusion.getX());
+                        fusion.setLastY(fusion.getY());
+                        
+                        right.getGrille().remove(r[x][y]);
+                        left.getGrille().add(fusion);
+                        b = true;
+                    }
+                }
+            }
+        }
+        return b;
+    }
+
+    }    
+

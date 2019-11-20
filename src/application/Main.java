@@ -13,7 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import javafx.scene.image.Image;
 
 /**
  *
@@ -23,15 +23,18 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        System.out.println("Testch1");
         Parent root = FXMLLoader.load(getClass().getResource("ThemeBasique.fxml"));
-        System.out.println("testCh2");
         
         Scene scene = new Scene(root);
         boolean add = scene.getStylesheets().add("css/styles.css");
         
+        Image img_ic=new Image("img/ic1_2048.jpg");
+        stage.getIcons().add(img_ic);
+        stage.setTitle("2048 3D FUTUR");
+        
         stage.setScene(scene);
         stage.show();
+        
     }
 
     /**

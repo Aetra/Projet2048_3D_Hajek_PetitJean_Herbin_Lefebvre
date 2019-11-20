@@ -1,31 +1,104 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 3 mars 2015, 20:28:31
-    Author     : castagno
-*/
 
-.pane {
-    -fx-background-color: #99FF33;
+.pane2 {
+    -fx-background-color: #ec9300;
+    -fx-border-color: black;
+}
+
+.pane4 {
+    -fx-background-color: #a18658;
+    -fx-border-color: black;
+}
+
+.pane8 {
+    -fx-background-color: #defc6d;
+    -fx-border-color: black;
+}
+
+.pane16 {
+    -fx-background-color: #91b216;
+    -fx-border-color: black;
+}
+
+.pane32 {
+    -fx-background-color: #16b293;
+    -fx-border-color: black;
+}
+
+.pane64 {
+    -fx-background-color: #418175;
+    -fx-border-color: black;
+}
+
+.pane128 {
+    -fx-background-color:#ff6ef0 ;
+    -fx-border-color: black;
+}
+
+.pane256 {
+    -fx-background-color: #e06eff;
+    -fx-border-color: black;
+}
+
+.pane512 {
+    -fx-background-color: #ff6e91;
+    -fx-border-color: black;
+}
+
+
+.pane1024 {
+    -fx-background-color: #da9eac;
+    -fx-border-color: black;
+}
+.pane2048 {
+    -fx-background-color: #b2a3a6;
+    -fx-border-color: black;
+}
+
+.pane4096 {
+    -fx-background-color: #ff0033;
     -fx-border-color: black;
 }
 
 .gridpane {
-     -fx-border-color: black;
-     -fx-grid-lines-visible: true;
-     /*-fx-border: 2px solid;*/
-     -fx-halignment: center;
-     -fx-alignment: CENTER;  
+    -fx-border-color: black;
+    -fx-grid-lines-visible: true;
+    -fx-border: 2px solid;
+    -fx-halignment: center;
+    -fx-alignment: CENTER;  
 }
+
 
 .tuile {
     -fx-text-alignment: center;
     -fx-halignment: center; 
-    -fx-text-fill: #6666FF;
-    -fx-font: "Cambria";
+    -fx-text-fill: #ffffff;
     -fx-font-size: 30;
     -fx-padding: 33 47 33 47;
+}
+.tuile10 {
+    -fx-text-alignment: center;
+    -fx-halignment: center; 
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 30;
+    -fx-padding: 33 39 33 39;
+}
+
+.tuile100 {
+    -fx-text-alignment: center;
+    -fx-halignment: center; 
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 30;
+    -fx-padding: 33 31 33 31;
+}
+.tuile1000 {
+    -fx-text-alignment: center;
+    -fx-halignment: center; 
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 30;
+    -fx-padding: 33 29 33 29;
+}
+
+
+.fond{
+    -fx-background-color: #E6E6E6;
 }

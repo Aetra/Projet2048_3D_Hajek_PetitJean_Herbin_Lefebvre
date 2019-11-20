@@ -1,37 +1,108 @@
-package Model;
-
-import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package Model;
 
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 
 /**
  *
  * @author Sylvain
  */
-public class Case implements Parametres {
+public class Case implements Parametres, Cloneable {
 
-    private int x, y, valeur;
+    private int x, y, valeur, numeroGrille, lastX, lastY, lastGrille;;
     private Grille grille;
-    private Label label;
     private Pane pane;
-    public Case(int abs, int ord, int v) {
+    private Label label;
+
+
+     public Case(int abs, int ord, int v, int numeroGrille) {
         this.x = abs;
         this.y = ord;
         this.valeur = v;
+        this.numeroGrille = numeroGrille;
+        // Côté JFX : valeur par défaut à l'initialisation
+        this.lastX = abs;
+        this.lastY = ord;
+        this.lastGrille = numeroGrille;
     }
-    
-    public void setGrille(Grille g) {
+     public void setGrille(Grille g) {
         this.grille = g;
     }
-    
+    @Override
+    public Object clone() throws CloneNotSupportedException { 
+        Case caseClone = (Case) super.clone(); 
+        return caseClone;
+    }
     public Grille getGrille() {
         return this.grille;
+    }
+    
+      public Label getLabel() {
+        return label;
+    }
+
+    /**
+     * @param l the l to set
+     */
+    public void setLabel(Label l) {
+        this.label = l;
+    }
+     public int getLastGrille() {
+        return lastGrille;
+    }
+     
+    public void setLastGrille(int lastGrille) {
+        this.lastGrille = lastGrille;
+    }
+
+     public Pane getPane() {
+        return pane;
+    }
+
+    /**
+     * @param p the p to set
+     */
+    public void setPane(Pane p) {
+        this.pane = p;
+    }
+    public int getLastX() {
+        return lastX;
+    }
+
+    /**
+     * @param lastX the lastX to set
+     */
+    public void setLastX(int lastX) {
+        this.lastX = lastX;
+    }
+
+    /**
+     * @return the lastY
+     */
+    public int getLastY() {
+        return lastY;
+    }
+
+    /**
+     * @param lastY the lastY to set
+     */
+    public void setLastY(int lastY) {
+        this.lastY = lastY;
+    }
+     public int getNumGrille() {
+        return numeroGrille;
+    }
+
+    /**
+     * @param numGrille the numGrille to set
+     */
+    public void setNumGrille(int numeroGrille) {
+        this.numeroGrille = numeroGrille;
     }
     
     public int getX() {
@@ -118,31 +189,16 @@ public class Case implements Parametres {
         return null;
     }
 
+    /*
     @Override
     public String toString() {
         return "Case(" + this.x + "," + this.y + "," + this.valeur + ")";
-    }
-    
-    public void setLabel(Label label) {
-        this.label=label;
-    }
-    public Label getLabel() {
-        return label;
-    }
-
-    public Object getPane() {
-        return pane;
-    }
-
-    public void setPane(Pane pane) {
-        this.pane=pane;
-    }
-
-    public int getLastX() {
-        return this.x;
-    }
-    public int getLastY(){
-        return this.y;
+    }*/
+        @Override
+    public String toString() {
+        String s = "Case(X " + this.x + ",Y " + this.y + ",Val " + this.valeur + ", num Grille " + this.numeroGrille + ")";
+        s = s + "last x " + this.getLastX() + ", last y " + this.lastY + ", last grille " + this.lastGrille + ".";
+        return s;
     }
 
 }
