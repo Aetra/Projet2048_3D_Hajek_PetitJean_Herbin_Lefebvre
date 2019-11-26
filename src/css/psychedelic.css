@@ -100,5 +100,17 @@
 
 
 .fond{
-    -fx-background-color: #E6E6E6;
+    -fx-background-color: greenyellow;
+}
+
+.grille{
+    -fx-rotate: 90;
+}
+
+.grille1{
+    -fx-rotate: 180;
+}
+
+.grille2{
+    -fx-rotate: 270;
 }
