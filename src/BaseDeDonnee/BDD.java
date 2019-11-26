@@ -9,7 +9,11 @@ import java.sql.Statement;
 
 public class BDD implements Parametre{
     
-    /*      Fonction qui permet d'ouvrir la base de données     */
+    /**
+    * Cette fonction permet de ce connecter à la base de donnée
+    * Elle retourne un objet de type Connection.
+    * exception : Exception e
+    */
     public static Connection openBDD(){
         Connection con = null;
         
@@ -26,7 +30,11 @@ public class BDD implements Parametre{
         return con;
     }
         
-    /*      Fonction qui permet de chercher le pseudo dans la base de donnée et rendre un boolean  */
+    /**
+    * Fonction qui renvoie un boolean pour verifier si le pseudo existe ou non dans la base de donnée.
+    * Elle prends en parametre 1 chaine de caractère et un objet de type Connection
+    * exception : SQLException sql
+    */
     protected static boolean verifPseudo(String pseudoVerif,Connection co)throws SQLException{
             boolean exist = false;
             String pseudo;
@@ -44,7 +52,11 @@ public class BDD implements Parametre{
             return exist;
     }
 
-    /*      Fonction qui permet de check le mot de passe est renvoie false si le mot de passe ne correspond pas */
+    /**
+     * Fonction qui renvoie un boolean pour verifier si le mot de passe est le bon ou non
+     * Elle prends en parametre deux chaines de caractères et un objet de type Connection
+     * exception : SQLException sql
+     */
     protected static boolean verifPswd(String pseudoVerif,String pswdVerif,Connection co){
         String keyWord = "";
         boolean cdtMdp = false;
@@ -70,7 +82,11 @@ public class BDD implements Parametre{
         return cdtMdp;
     }
  
-    /*      Fonction qui permet de mettre un couple pseudo-password dans la base de donée   */
+    /**
+     * Cette fonction permet d'ajouter un compte à notre table "compte" de notre base de donnée
+     * Elle prends en parametre deux chaines de caracteres et un objet de type connection
+     * exception : SQLException sql
+     */
     protected static void setNewAccount(String setPseudo, String setPswd, Connection co){
         String pseudo = "'"+setPseudo+"'";
         String pswd = "'"+setPswd+"'";
@@ -81,7 +97,12 @@ public class BDD implements Parametre{
         }catch(SQLException e){}
     }
 
-    /*      Fonction qui permet d'inserer une ligne de score*/
+    
+    /**
+     * Cette fonction permet d'ajouter une ligne de score à notre table "scoreboard" de notre base de donnée
+     * Elle prends en parametre une chaine de caractère, deux entiers et un objet de type connection
+     * exception : SQLException e
+     */
     protected static void insertLigneScore(String pseudoInsert, int mvt, int score, Connection co){
                 /*  Variables */
         String pseudo = "'"+pseudoInsert+"'";
