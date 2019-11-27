@@ -324,18 +324,20 @@ public class FXMLDocumentController implements Initializable {
                         c.getPane().getStyleClass().clear();
                         c.getPane().getStyleClass().add("pane128");
                         c.getLabel().getStyleClass().add("tuile100");
-
+                        break;
                     case 256:
                         c.getPane().getStyleClass().clear();
                         c.getPane().getStyleClass().add("pane256");
+                        break;
                     case 512:
                         c.getPane().getStyleClass().clear();
                         c.getPane().getStyleClass().add("pane512");
+                        break;
                     case 1024:
                         c.getPane().getStyleClass().clear();
                         c.getPane().getStyleClass().add("pane1024");
                         c.getLabel().getStyleClass().add("tuile1000");
-
+                        break;
                     case 2048:
                         c.getPane().getStyleClass().clear();
                         c.getPane().getStyleClass().add("pane2048");
@@ -351,8 +353,6 @@ public class FXMLDocumentController implements Initializable {
                     case 16384:
                         c.getPane().getStyleClass().clear();
                         c.getPane().getStyleClass().add("pane16384");
-                        c.getLabel().getStyleClass().add("tuile10000");
-
                         break;
                 }
             }  
