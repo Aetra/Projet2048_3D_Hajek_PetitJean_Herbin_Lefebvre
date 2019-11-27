@@ -274,7 +274,7 @@ public class FXMLDocumentController implements Initializable {
                 t.add(new Tuile2048(this.dim3[2]));
                 t.threadMovement();
                 t.threadMovementCaseDead(fond);
-                //this.nouvelleCase();            
+                this.nouvelleCase();            
             }
         } else if (touche.compareTo("m") == 0) { // FUSION DROITE
             //boolean fusionSuccess = mesGrilles.teleportation(Parametres.MONTER);
@@ -285,9 +285,9 @@ public class FXMLDocumentController implements Initializable {
                 t.add(new Tuile2048(this.dim3[0]));
                 t.add(new Tuile2048(this.dim3[1]));
                 t.add(new Tuile2048(this.dim3[2]));
-                 t.threadMovement();
+                t.threadMovement();
                 t.threadMovementCaseDead(fond);
-                //this.nouvelleCase();    
+                this.nouvelleCase();    
             }
         }
         this.updateTemplate(); // Pour la valeur du label (pour l'instant)
@@ -334,6 +334,8 @@ public class FXMLDocumentController implements Initializable {
                     case 1024:
                         c.getPane().getStyleClass().clear();
                         c.getPane().getStyleClass().add("pane1024");
+                        c.getLabel().getStyleClass().add("tuile1000");
+
                     case 2048:
                         c.getPane().getStyleClass().clear();
                         c.getPane().getStyleClass().add("pane2048");
@@ -349,6 +351,8 @@ public class FXMLDocumentController implements Initializable {
                     case 16384:
                         c.getPane().getStyleClass().clear();
                         c.getPane().getStyleClass().add("pane16384");
+                        c.getLabel().getStyleClass().add("tuile10000");
+
                         break;
                 }
             }  

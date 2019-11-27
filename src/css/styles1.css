@@ -104,3 +104,17 @@
     -fx-font-size: 30;
     -fx-padding: 33 31 33 31;
 }
+.tuile1000 {
+    -fx-text-alignment: center;
+    -fx-halignment: center; 
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 30;
+    -fx-padding: 33 23 33 23;
+}
+.tuile10000 {
+    -fx-text-alignment: center;
+    -fx-halignment: center; 
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 30;
+    -fx-padding: 33 15 33 15;
+}
