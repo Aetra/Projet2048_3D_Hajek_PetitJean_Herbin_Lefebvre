@@ -105,7 +105,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Commande" />
+                    <MenuItem mnemonicParsing="false" onAction="#popupcmd" text="Commande" />
                         <MenuItem mnemonicParsing="false" text="Je sais pas jouer IA" />
                         <MenuItem mnemonicParsing="false" text="Je sais pas jouer HAL" />
                   </items>

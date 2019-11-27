@@ -59,13 +59,10 @@ public class FXMLDocumentController implements Initializable {
     private GridPane grille1;
     @FXML
     private Label mvtScoreLabel;
-<<<<<<< HEAD
-=======
+
     @FXML
     private Label scoreToLabel;
     int direction;
-
->>>>>>> 372f7806002d291ab4efd9b2ead1081d7d9f2e22
     
     private Grille modelGrille1;
     private Grille modelGrille2;
