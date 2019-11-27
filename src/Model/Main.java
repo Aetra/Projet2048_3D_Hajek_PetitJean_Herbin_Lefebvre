@@ -11,18 +11,18 @@ import java.util.Scanner;
  *
  * @author Sylvain
  */
-public class Main implements Parametres {
+//public class Main implements Parametres {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws CloneNotSupportedException {
+   // public static void main(String[] args) {}
+        /*
         // TODO code application logic here
-            Dimension3 g = Dimension3.INSTANCE;
-
-        boolean b = g.nouvelleCase();
-        b = g.nouvelleCase();
-        System.out.println(g);
+       // Dimension3 g = new Dimension3();
+        //boolean b = g.nouvelleCase();
+       // b = g.nouvelleCase();
+       // System.out.println(g);
         Scanner sc = new Scanner(System.in);
         /*System.out.println("X:");
         int x= sc.nextInt();
@@ -32,7 +32,7 @@ public class Main implements Parametres {
         int valeur= sc.nextInt();
         Case c = new Case(x,y,valeur);
         g.getGrille().remove(c);
-        System.out.println(g);*/
+        System.out.println(g);
         
         while (!g.partieFinie()) {
             System.out.println("Déplacer vers la Droite (d), Gauche (g), Haut (h), ou Bas (b) ?");
@@ -74,17 +74,14 @@ public class Main implements Parametres {
                 {
                     direction = DESCENDRE;
                 }
-               /*
                 boolean b2 = g.lanceurDeplacerCases(direction);
                 if (b2) {
                     b = g.nouvelleCase();
                     if (!b) g.gameOver();
                 }
-                */
                 System.out.println(g);
                 if (g.getValeurMax()>=OBJECTIF) g.victory();
             }
-               
         }
         g.gameOver();
         /*
@@ -98,7 +95,6 @@ public class Main implements Parametres {
         Case c2 = new Case(x, y, 4);
         System.out.println("test1=" + g.getGrille().contains(c));
         System.out.println("test2=" + g.getGrille().contains(c2));
-         */
+         
     }
-
-}
+    */

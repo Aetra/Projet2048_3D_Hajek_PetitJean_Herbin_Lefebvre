@@ -59,6 +59,13 @@ public class FXMLDocumentController implements Initializable {
     private GridPane grille1;
     @FXML
     private Label mvtScoreLabel;
+<<<<<<< HEAD
+=======
+    @FXML
+    private Label scoreToLabel;
+    int direction;
+
+>>>>>>> 372f7806002d291ab4efd9b2ead1081d7d9f2e22
     
     private Grille modelGrille1;
     private Grille modelGrille2;
@@ -264,6 +271,7 @@ public class FXMLDocumentController implements Initializable {
            }
            else if (touche.compareTo("l") == 0) { // FUSION GAUCHE
             //boolean fusionSuccess = mesGrilles.teleportation(DESCENDRE);
+            //boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(Parametres.DESCENDRE);  
             boolean fusionSuccess = mesGrilles.fusionGauche();  
 
             System.out.println(fusionSuccess);
@@ -273,19 +281,20 @@ public class FXMLDocumentController implements Initializable {
                 t.add(new Tuile2048(this.dim3[2]));
                 t.threadMovement();
                 t.threadMovementCaseDead(fond);
-                //this.nouvelleCase();            
+                this.nouvelleCase();            
             }
         } else if (touche.compareTo("m") == 0) { // FUSION DROITE
-            //boolean fusionSuccess = mesGrilles.teleportation(Monter);
-
+            //boolean fusionSuccess = mesGrilles.teleportation(Parametres.MONTER);
             boolean fusionSuccess = mesGrilles.fusionDroite();                     
+
+            //boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(direction);                     
             if (fusionSuccess) {
                 t.add(new Tuile2048(this.dim3[0]));
                 t.add(new Tuile2048(this.dim3[1]));
                 t.add(new Tuile2048(this.dim3[2]));
-                 t.threadMovement();
+                t.threadMovement();
                 t.threadMovementCaseDead(fond);
-                //this.nouvelleCase();    
+                this.nouvelleCase();    
             }
         }
         this.updateTemplate(); // Pour la valeur du label (pour l'instant)
@@ -322,16 +331,20 @@ public class FXMLDocumentController implements Initializable {
                         c.getPane().getStyleClass().clear();
                         c.getPane().getStyleClass().add("pane128");
                         c.getLabel().getStyleClass().add("tuile100");
-
+                        break;
                     case 256:
                         c.getPane().getStyleClass().clear();
                         c.getPane().getStyleClass().add("pane256");
+                        break;
                     case 512:
                         c.getPane().getStyleClass().clear();
                         c.getPane().getStyleClass().add("pane512");
+                        break;
                     case 1024:
                         c.getPane().getStyleClass().clear();
                         c.getPane().getStyleClass().add("pane1024");
+                        c.getLabel().getStyleClass().add("tuile1000");
+                        break;
                     case 2048:
                         c.getPane().getStyleClass().clear();
                         c.getPane().getStyleClass().add("pane2048");
@@ -460,7 +473,7 @@ public class FXMLDocumentController implements Initializable {
     private void clickTpG(MouseEvent event) throws CloneNotSupportedException {
         TuileComposite t = new TuileComposite();
    
-         boolean fusionSuccess = mesGrilles.fusionGauche();  
+            boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(direction);  
 
             System.out.println(fusionSuccess);
             if (fusionSuccess) {
@@ -480,7 +493,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void clicktpD(MouseEvent event) throws CloneNotSupportedException {
       TuileComposite t = new TuileComposite();
-      boolean fusionSuccess = mesGrilles.fusionDroite();                     
+            boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(direction);  
             if (fusionSuccess) {
                 t.add(new Tuile2048(this.dim3[0]));
                 t.add(new Tuile2048(this.dim3[1]));

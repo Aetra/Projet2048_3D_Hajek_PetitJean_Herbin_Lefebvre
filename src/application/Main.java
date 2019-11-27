@@ -26,11 +26,11 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("ThemeBasique.fxml"));
         
         Scene scene = new Scene(root);
-        boolean add = scene.getStylesheets().add("css/styles.css");
+        boolean add = scene.getStylesheets().add("css/styles1.css");
         
-        Image img_ic=new Image("img/ic1_2048.jpg");
+        Image img_ic=new Image("img/Logo.png");
         stage.getIcons().add(img_ic);
-        stage.setTitle("2048 3D FUTUR");
+        stage.setTitle("2048 3D extension");
         
         stage.setScene(scene);
         stage.show();
