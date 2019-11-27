@@ -48,7 +48,9 @@ public class FXMLDocumentController implements Initializable {
     private MenuItem exit;
     @FXML
     private MenuItem theme;
-   private Button bTop, bBot, bLeft, bRight, bTpg, bTpd;
+    @FXML
+    private Button bTop;
+   private Button bBot, bLeft, bRight, bTpg, bTpd;
     @FXML
     private Pane fond;
     @FXML
@@ -56,11 +58,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private GridPane grille1;
     @FXML
-    private GridPane grille3;
-    @FXML
     private Label mvtScoreLabel;
-    @FXML
-    private Label scoreToLabel;
     
     private Grille modelGrille1;
     private Grille modelGrille2;
@@ -80,6 +78,10 @@ public class FXMLDocumentController implements Initializable {
 
     private int x = 25, y = 295;
     private int objectifx = 25, objectify = 295;
+    @FXML
+    private GridPane grille;
+    @FXML
+    private Label scoreTotLabel;
     /**
      * Initializes the controller class.
      */
@@ -523,6 +525,11 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void theme(ActionEvent event) {
+    }
+
+    @FXML
+    private void popupcmd(ActionEvent event) {
+        
     }
     
 }
