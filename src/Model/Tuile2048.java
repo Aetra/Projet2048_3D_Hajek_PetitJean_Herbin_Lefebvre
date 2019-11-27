@@ -57,7 +57,7 @@ public class Tuile2048 implements Tuile, Parametres{
                                 }
                             }
                         );
-                        Thread.sleep(1);
+                        Thread.sleep((long) 1);
                     } // end while
                     return null; // la méthode call doit obligatoirement retourner un objet. Ici on n'a rien de particulier à retourner. Du coup, on utilise le type Void (avec un V majuscule) : c'est un type spécial en Java auquel on ne peut assigner que la valeur null
                 } // end call

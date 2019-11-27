@@ -61,6 +61,8 @@ public class FXMLDocumentController implements Initializable {
     private Label mvtScoreLabel;
     @FXML
     private Label scoreToLabel;
+    int direction;
+
     
     private Grille modelGrille1;
     private Grille modelGrille2;
@@ -262,6 +264,7 @@ public class FXMLDocumentController implements Initializable {
            }
            else if (touche.compareTo("l") == 0) { // FUSION GAUCHE
             //boolean fusionSuccess = mesGrilles.teleportation(DESCENDRE);
+            //boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(Parametres.DESCENDRE);  
             boolean fusionSuccess = mesGrilles.fusionGauche();  
 
             System.out.println(fusionSuccess);
@@ -274,9 +277,10 @@ public class FXMLDocumentController implements Initializable {
                 //this.nouvelleCase();            
             }
         } else if (touche.compareTo("m") == 0) { // FUSION DROITE
-            //boolean fusionSuccess = mesGrilles.teleportation(Monter);
-
+            //boolean fusionSuccess = mesGrilles.teleportation(Parametres.MONTER);
             boolean fusionSuccess = mesGrilles.fusionDroite();                     
+
+            //boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(direction);                     
             if (fusionSuccess) {
                 t.add(new Tuile2048(this.dim3[0]));
                 t.add(new Tuile2048(this.dim3[1]));
@@ -458,7 +462,7 @@ public class FXMLDocumentController implements Initializable {
     private void clickTpG(MouseEvent event) throws CloneNotSupportedException {
         TuileComposite t = new TuileComposite();
    
-         boolean fusionSuccess = mesGrilles.fusionGauche();  
+            boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(direction);  
 
             System.out.println(fusionSuccess);
             if (fusionSuccess) {
@@ -478,7 +482,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void clicktpD(MouseEvent event) throws CloneNotSupportedException {
       TuileComposite t = new TuileComposite();
-      boolean fusionSuccess = mesGrilles.fusionDroite();                     
+            boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(direction);  
             if (fusionSuccess) {
                 t.add(new Tuile2048(this.dim3[0]));
                 t.add(new Tuile2048(this.dim3[1]));

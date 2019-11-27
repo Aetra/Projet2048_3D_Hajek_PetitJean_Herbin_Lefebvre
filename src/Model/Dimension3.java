@@ -44,6 +44,7 @@ public enum Dimension3 implements Parametres {
      public static Dimension3 getInstance() {
         return INSTANCE;
     }
+     
     @Override
     public String toString() {
         
@@ -55,8 +56,6 @@ public enum Dimension3 implements Parametres {
         }
         return result;
     }
-    
-    /*
     // permet d'ordonner toutes les grilles, de déplacer leurs blocs dans une direction donnée
     public boolean lanceurDeplacerCases(int direction) throws CloneNotSupportedException
     {
@@ -85,7 +84,7 @@ public enum Dimension3 implements Parametres {
         
         return result;
     }
-    */
+  
     public boolean partieFinie() {
         
         int over = 0;
@@ -211,7 +210,7 @@ public enum Dimension3 implements Parametres {
         }
         return null;
     }
-    
+  
     private int actionRecursif(int direction, Case[] ascenseur, Case c1, boolean fusion, int lim)
     {
         Case c2 = extremeTab(direction,ascenseur);
@@ -264,6 +263,73 @@ public enum Dimension3 implements Parametres {
     }
             
     /*
+        private int actionRecursif(int direction, Case[] ascenseur, Case c1, boolean fusion, int lim)
+    {
+        Case c2 = extremeTab(direction,ascenseur);
+        
+        if( c2 != null )    // tant qu'il existe une case, on applique la récursivité !
+        {
+            if( c1 != null ) // si cette case peut être fusionnée par son précédant (si ce dernier existe)...
+            {
+                fusion = !c1.valeurEgale(c2);
+                if(!fusion)
+                {
+                    c2.setValeur(c2.getValeur()*2); // fusion !
+                }
+            }
+            
+            
+            // suppression de cette case dans le tableau
+            ascenseur[c2.getGrille().getNumeroGrille()] = null;
+            // suppression de cette case de sa propre grille
+            this.mesGrilles[c2.getGrille().getNumeroGrille()].getGrille().remove(c2);
+
+            lim = actionRecursif(direction,ascenseur,c2,fusion,lim);    
+            // le contenu de c2 ne s'efface pas grâce à la présence de c2, transmise à travers la récursivité
+        }
+        
+        
+        // System.out.println("Lim: " + lim);
+        // System.out.println("Case c1: " + c1);
+        // System.out.println("Case c2: " + c2);
+        if( (fusion && c1 != null) || (c2 == null && c1 != null) )
+        {
+            // System.out.println("Case c1: " + c1);
+            ascenseur[lim] = c1;
+            this.mesGrilles[lim].getGrille().add(c1);
+            c1.setGrille(this.mesGrilles[lim]);
+            
+            
+            if(direction == MONTER)
+            {
+                lim++;
+            }
+            else
+            {
+                lim--;
+            }
+        }
+        
+        return lim;
+
+    }
+               
+*/
+    public void init(Grille[] dim3) {
+        System.out.println(dim3[0]);
+        this.mesGrilles[0] = dim3[0];
+        this.mesGrilles[1] = dim3[1];
+        this.mesGrilles[2] = dim3[2];
+    }
+    
+    public Case[][] convertHash(Grille g) {
+        HashSet<Case> set = g.getGrille();
+        Case[][] convert = new Case[3][3];
+        for (Case c : set) {
+            convert[c.getX()][c.getY()] = c;
+        }
+        return convert;
+    }
     public boolean teleportation(int direction)
     {
         boolean deplacement = false;    // permet de dire si une case a bougé
@@ -293,7 +359,7 @@ public enum Dimension3 implements Parametres {
                         System.out.println(ascenseur[a]);
                     }
                     */
-                  /*  
+                    
                     switch (direction)
                     {
                         case MONTER:
@@ -311,25 +377,7 @@ public enum Dimension3 implements Parametres {
         this.setValeurMax();
         return deplacement;
     }
-*/
-    
-
-    public void init(Grille[] dim3) {
-        System.out.println(dim3[0]);
-        this.mesGrilles[0] = dim3[0];
-        this.mesGrilles[1] = dim3[1];
-        this.mesGrilles[2] = dim3[2];
-    }
-    
-    public Case[][] convertHash(Grille g) {
-        HashSet<Case> set = g.getGrille();
-        Case[][] convert = new Case[3][3];
-        for (Case c : set) {
-            convert[c.getX()][c.getY()] = c;
-        }
-        return convert;
-    }
-
+ 
   public boolean fusionGauche() throws CloneNotSupportedException {
         boolean b1 = this.teleportationSameCase(this.getMultiGrille()[0], this.getMultiGrille()[1], -1);
         boolean b2 = this.teleportationSameCase(this.getMultiGrille()[1], this.getMultiGrille()[2], -1);
@@ -349,7 +397,10 @@ public enum Dimension3 implements Parametres {
         
         return b1 || b2 || b3 || b4;
        }
-    
+        public Grille[] getMesGrilles()
+        {
+            return this.mesGrilles;
+        }
         public boolean teleportationEmptyCase(Grille left, Grille right, int compteur) throws CloneNotSupportedException { // de base se fait de la droite vers la gauche (<-)
         boolean b = false;
         Case[][] l = this.convertHash(left);
@@ -424,5 +475,9 @@ public enum Dimension3 implements Parametres {
         return b;
     }
 
+
+    public Object[] getGrilles() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     }    
 
