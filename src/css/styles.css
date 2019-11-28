@@ -71,7 +71,7 @@
 .tuile {
     -fx-text-alignment: center;
     -fx-halignment: center; 
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: black;
     -fx-font-size: 30;
     -fx-padding: 33 47 33 47;
 }

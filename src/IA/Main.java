@@ -21,7 +21,7 @@ public class Main implements Parametres {
     public static void main(String[] args) throws CloneNotSupportedException {
         
         // TODO code application logic here
-         Dimension3 g = Dimension3.INSTANCE;
+        Dimension3 g = Dimension3.INSTANCE;
         boolean b = g.nouvelleCase();
         b = g.nouvelleCase();
         System.out.println(g);

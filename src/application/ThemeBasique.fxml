@@ -6,6 +6,10 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -100,25 +104,43 @@
                 <Menu mnemonicParsing="false" text="Fichier">
                   <items>
                     <MenuItem fx:id="exit" mnemonicParsing="false" onAction="#exit" text="Quitter et Sauvegarder" />
-                        <MenuItem fx:id="theme" mnemonicParsing="false" onAction="#theme" text="Charger Thème" />
+                        <Menu mnemonicParsing="false" text="Chargé thème">
+                           <items>
+                              <RadioMenuItem fx:id="thm1" mnemonicParsing="false" onAction="#switchThm" text="Theme1">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="chgtStyles" />
+                                 </toggleGroup></RadioMenuItem>
+                              <RadioMenuItem fx:id="thm2" mnemonicParsing="false" onAction="#switchThm" text="Theme2" toggleGroup="$chgtStyles" />
+                              <RadioMenuItem fx:id="thm3" mnemonicParsing="false" onAction="#switchThm" text="Theme3" toggleGroup="$chgtStyles" />
+                           </items>
+                        </Menu>
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#popupcmd" text="Commande" />
+                    <MenuItem mnemonicParsing="false" text="Régle du jeu" />
                         <MenuItem mnemonicParsing="false" text="Je sais pas jouer IA" />
                         <MenuItem mnemonicParsing="false" text="Je sais pas jouer HAL" />
                   </items>
                 </Menu>
               </menus>
             </MenuBar>
+            <ToggleButton fx:id="cmd" layoutX="933.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#lookCommand" prefHeight="26.0" prefWidth="104.0" text="Keyboard" />
+            <Label fx:id="tp" layoutX="933.0" layoutY="42.0" text="Teleportation:&#10;UP(⇶): m&#10;DOWN(⬱):l&#10;Move:&#10;RIGHT(→): d&#10;LEFT(←): q&#10;BOT(↓): s &#10;TOP(↑): s " textOverrun="CLIP" wrapText="true">
+               <font>
+                  <Font name="Bodoni MT" size="18.0" />
+               </font>
+               <effect>
+                  <Blend />
+               </effect>
+            </Label>
+            <Button fx:id="bTop" layoutX="81.0" layoutY="103.0" mnemonicParsing="false" onMouseClicked="#clickTop" prefHeight="62.0" prefWidth="36.0" />
+            <Button fx:id="bBot" layoutX="81.0" layoutY="203.0" mnemonicParsing="false" onMouseClicked="#clickBot" prefHeight="62.0" prefWidth="36.0" />
+            <Button fx:id="bRight" layoutX="130.0" layoutY="153.0" mnemonicParsing="false" onMouseClicked="#clickRight" prefHeight="62.0" prefWidth="36.0" rotate="90.0" />
+            <Button fx:id="bLeft" layoutX="31.0" layoutY="153.0" mnemonicParsing="false" onMouseClicked="#clickLeft" prefHeight="62.0" prefWidth="36.0" rotate="90.0" />
+            <Button fx:id="bTpg" layoutX="133.0" layoutY="240.0" mnemonicParsing="false" onMouseClicked="#clickTpG" text="TPG" />
+            <Button fx:id="bTpd" layoutX="179.0" layoutY="240.0" mnemonicParsing="false" onMouseClicked="#clicktpD" text="TPD" />
          </children>
       </Pane>
-      <Button fx:id="bTop" layoutX="81.0" layoutY="103.0" mnemonicParsing="false" onMouseClicked="#clickTop" prefHeight="62.0" prefWidth="36.0" />
-      <Button fx:id="bBot" layoutX="81.0" layoutY="203.0" mnemonicParsing="false" onMouseClicked="#clickBot" prefHeight="62.0" prefWidth="36.0" />
-      <Button fx:id="bRight" layoutX="130.0" layoutY="153.0" mnemonicParsing="false" onMouseClicked="#clickRight" prefHeight="62.0" prefWidth="36.0" rotate="90.0" />
-      <Button fx:id="bLeft" layoutX="31.0" layoutY="153.0" mnemonicParsing="false" onMouseClicked="#clickLeft" prefHeight="62.0" prefWidth="36.0" rotate="-90.0" />
-      <Button fx:id="bTpg" layoutX="133.0" layoutY="240.0" mnemonicParsing="false" onMouseClicked="#clickTpG" text="TPG" />
-      <Button fx:id="bTpd" layoutX="179.0" layoutY="240.0" mnemonicParsing="false" onMouseClicked="#clicktpD" text="TPD" />
    </children>
 </AnchorPane>

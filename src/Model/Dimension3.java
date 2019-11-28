@@ -474,10 +474,5 @@ public enum Dimension3 implements Parametres {
         }
         return b;
     }
-
-
-    public Object[] getGrilles() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    }    
+ }    
 

@@ -6,31 +6,29 @@
 package Model;
 
 import java.util.Scanner;
+import Model.Case;
 
-/**
- *
- * @author Sylvain
- */
-//public class Main implements Parametres {
+/*
+ 
+public class Main implements Parametres {
 
-    /**
-     * @param args the command line arguments
-     */
-   // public static void main(String[] args) {}
-        /*
+       
+   public static void main(String[] args) throws CloneNotSupportedException {
+  
         // TODO code application logic here
-       // Dimension3 g = new Dimension3();
-        //boolean b = g.nouvelleCase();
-       // b = g.nouvelleCase();
-       // System.out.println(g);
-        Scanner sc = new Scanner(System.in);
-        /*System.out.println("X:");
+       Dimension3 g = Dimension3.INSTANCE;
+       boolean b = g.nouvelleCase();
+       b = g.nouvelleCase();
+       System.out.println(g);
+       Scanner sc = new Scanner(System.in);
+        System.out.println("X:");
         int x= sc.nextInt();
         System.out.println("Y:");
         int y= sc.nextInt();
         System.out.println("Valeur:");
         int valeur= sc.nextInt();
-        Case c = new Case(x,y,valeur);
+        int numeroGrille=sc.nextInt();
+        Case c = new Case(x,y,valeur,numeroGrille);
         g.getGrille().remove(c);
         System.out.println(g);
         
@@ -98,3 +96,4 @@ import java.util.Scanner;
          
     }
     */
+  // }

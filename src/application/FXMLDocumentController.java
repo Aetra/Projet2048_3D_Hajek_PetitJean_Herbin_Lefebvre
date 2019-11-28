@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package application;
-
 import Model.CareTaker;
 import Model.Case;
 import Model.Dimension3;
@@ -31,10 +30,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
@@ -46,11 +49,17 @@ public class FXMLDocumentController implements Initializable {
     private MenuBar menuBar;
     @FXML
     private MenuItem exit;
+    @FXML    
+    private RadioMenuItem thm1;
     @FXML
-    private MenuItem theme;
+    private RadioMenuItem thm2;
+    @FXML
+    private RadioMenuItem thm3;
+    @FXML
+    private ToggleGroup chgtStyle;
     @FXML
     private Button bTop;
-   private Button bBot, bLeft, bRight, bTpg, bTpd;
+   private Button bBot, bLeft, bRight, bTpg, bTpd, cmd;
     @FXML
     private Pane fond;
     @FXML
@@ -58,7 +67,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private GridPane grille1;
     @FXML
-    private Label mvtScoreLabel;
+    private Label mvtScoreLabel, showcmd,tp;
+    private Label lTp,lUp,lDown,lMove,lRight,lLeft,lBot,lTop;
 
     @FXML
     private Label scoreToLabel;
@@ -94,6 +104,7 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
          // TODO
+        
         System.out.println("le contrôleur initialise la vue");
         fond.getStyleClass().add("fond");   
         // Initialisation de ma multi-grille
@@ -130,7 +141,8 @@ public class FXMLDocumentController implements Initializable {
         */
 
     }  
-
+    
+    
     private void afficherTuile() { // A chaque nouvelle case cela créé la tuile (de façon dynamique)
         System.out.println("AFFICHAGE DES TUILES");
         for (int k = 0; k < 3; k++) {
@@ -185,15 +197,40 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void handleButtonAction(MouseEvent event) {	
-	System.out.println("Clic de souris sur le bouton start");
+        System.out.println("Clic de souris sur le bouton start");
+
+        System.out.println("New Game");
+        this.removeAll();
+        modelGrille1 = new Grille(0);
+        modelGrille2 = new Grille(1);
+        modelGrille3 = new Grille(2);
+         mesGrilles = Dimension3.INSTANCE;
+        dim3 = new Grille[]{modelGrille1, modelGrille2, modelGrille3};
+        mesGrilles.init(dim3);
+        /*
+        for (int i = 0; i < 2; i++) {
+            int random = (int) (Math.random() * 3);
+            this.mesGrilles[random].nouvelleCase();
+        }
+        */
         for (int i = 0; i < 2; i++) {
             int random = (int) (Math.random() * 3);
             this.dim3[random].nouvelleCase();
         }
         this.afficherTuile();
         this.positionTuile();
-        System.out.println(mesGrilles);
-        
+        mvtScoreLabel.setText("0");
+        System.out.println(dim3);
+
+
+    }
+    
+      private void removeAll() {
+        for (int i = 0; i < 3; i++) {
+            for (Case c : this.dim3[i].getGrille()) {
+                fond.getChildren().remove((Node) c.getPane());
+            }
+        }
     }
     
     @FXML
@@ -539,7 +576,47 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void popupcmd(ActionEvent event) {
-        
     }
-    
+     @FXML
+    private void lookCommand(MouseEvent event) {
+        if(tp.getText()=="")
+        {
+            tp.setText("Teleportation:\n" +
+                        "UP(⇶): m\n" +
+                        "DOWN(⬱):l\n" +
+                        "Move:\n" +
+                        "RIGHT(→): d\n" +
+                        "LEFT(←): q\n" +
+                        "BOT(↓): s \n" +
+                        "TOP(↑): s ");
+        }else{
+            tp.setText("");
+
+        }
+    }
+    @FXML
+    private void switchThm(ActionEvent event) {
+         fond.getStylesheets().clear(); 
+         System.out.println("oui");
+
+        switch(chgtStyle.getToggles().indexOf(chgtStyle.getSelectedToggle())){
+            // Les nombres sont dans l'ordre du menu
+            case 0 :
+                fond.getStylesheets().add("css/styles.css");
+                break;
+            case 1 :
+                fond.getStylesheets().add("css/styles1.css");
+                break;
+            case 2 :
+                fond.getStylesheets().add("css/styles2.css");
+                break;
+            case 3 :
+                fond.getStylesheets().add("css/psychedelic.css");
+                break;
+            default:
+                break;
+        }
+
+    }
+        
 }

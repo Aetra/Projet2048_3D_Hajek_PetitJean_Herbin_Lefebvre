@@ -38,6 +38,7 @@ public class Case implements Parametres, Cloneable {
         Case caseClone = (Case) super.clone(); 
         return caseClone;
     }
+    
     public Grille getGrille() {
         return this.grille;
     }
