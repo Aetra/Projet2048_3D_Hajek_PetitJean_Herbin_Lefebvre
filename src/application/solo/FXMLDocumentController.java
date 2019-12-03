@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package application;
+package application.solo;
 import Model.CareTaker;
 import Model.Case;
 import Model.Dimension3;
@@ -22,22 +22,36 @@ import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import com.sun.naming.internal.FactoryEnumeration;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import javax.swing.*;
 
 /**
  * FXML Controller class
@@ -45,10 +59,29 @@ import javafx.scene.layout.VBox;
  * @author Simon
  */
 public class FXMLDocumentController implements Initializable {
+    private boolean hasGameStarted = false;
+    @FXML
+    private Pane mvtPane;
+    @FXML
+    private Pane scorePane;
+    @FXML
+    private Button hide;
+    @FXML
+    private AnchorPane container;
+    @FXML
+    private Pane playButton;
+    @FXML
+    private Label playLabel;
+    @FXML
+    private Pane chronoPane;
     @FXML
     private MenuBar menuBar;
     @FXML
     private MenuItem exit;
+    @FXML
+    private MenuItem reglesGames;
+    @FXML
+    private Pane goBack;
     @FXML    
     private RadioMenuItem thm1;
     @FXML
@@ -69,6 +102,34 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Label mvtScoreLabel, showcmd,tp;
     private Label lTp,lUp,lDown,lMove,lRight,lLeft,lBot,lTop;
+
+
+    /* moi */
+    private Timeline timeline;
+
+    @FXML
+    private Button soloMode;
+    @FXML
+    private Button multiMode;
+
+    @FXML
+    private Label labelSeconds;
+    @FXML
+    private Label labelMinutes;
+    @FXML
+    private Label labelHours;
+    @FXML
+    private ImageView logo;
+
+    private static final Integer STARTTIME = 0;
+    private static final Integer MINUTESINANHOUR = 59;
+    private static final Integer SECONDSINAMINUTE = 59;
+    private Label timerLabel = new Label();
+    private Integer timeSeconds = STARTTIME;
+    private Integer timeMinutes  = STARTTIME;
+    private Integer timeHours = STARTTIME;
+
+    /* plus moi */
 
     @FXML
     private Label scoreToLabel;
@@ -195,32 +256,166 @@ public class FXMLDocumentController implements Initializable {
        
      }
 
-    @FXML
-    private void handleButtonAction(MouseEvent event) {	
-        System.out.println("Clic de souris sur le bouton start");
+     @FXML
+     private void cacherLabel(ActionEvent e) {
+        FadeTransition hideLab = new FadeTransition(Duration.millis(500), tp);
+        FadeTransition showLab = new FadeTransition(Duration.millis(500), tp);
+        if (tp.getOpacity() ==  1.) {
+            hideLab.setFromValue(1.0);
+            hideLab.setToValue(0.);
+            hideLab.play();
+        }
+        else {
+            showLab.setFromValue(0.0);
+            showLab.setToValue(1.0);
+            showLab.play();
+        }
 
-        System.out.println("New Game");
-        this.removeAll();
-        modelGrille1 = new Grille(0);
-        modelGrille2 = new Grille(1);
-        modelGrille3 = new Grille(2);
+        //if (tp.isVisible())
+          //  tp.setVisible(false);
+        //else tp.setVisible(true);
+     }
+
+    /** Permet de relancer le chronomètre en partant de 0*/
+     private void restartChrono() {
+         if (timeline != null) {
+             timeline.stop();
+         }
+         timeSeconds = STARTTIME;
+         timeMinutes = STARTTIME;
+         timeHours = STARTTIME;
+
+
+         // update timerLabel
+         labelSeconds.setText("00");
+         labelMinutes.setText("00");
+         labelHours.setText("00");
+         timeline = new Timeline();
+         timeline.setCycleCount(Timeline.INDEFINITE);
+
+         timeline.getKeyFrames().add(
+                 new KeyFrame(Duration.seconds(1),
+                         new EventHandler() {
+                             public void handle(Event event) {
+                                 timeSeconds++;
+
+                                 labelSeconds.setText(
+                                         String.format("%02d",timeSeconds)
+                                 );
+                                 labelMinutes.setText(
+                                         String.format("%02d",timeMinutes)
+                                 );
+                                 labelHours.setText(
+                                         String.format("%02d",timeHours)
+                                 );
+                                 if (timeSeconds >= SECONDSINAMINUTE) {
+                                     timeSeconds = STARTTIME;
+                                     if (timeMinutes >= MINUTESINANHOUR) {
+                                         timeMinutes = STARTTIME;
+                                         timeHours ++;
+                                     }
+                                     else timeMinutes ++;
+
+                                 }
+                             }
+                         }));
+         timeline.playFromStart();
+     }
+
+     /** Met un pause le chrono*/
+     @FXML
+     private void pausePlayChrono(MouseEvent e) {
+        if (hasGameStarted) {
+            if (Animation.Status.PAUSED == timeline.getStatus())
+                timeline.play();
+            else
+            {
+                timeline.pause();
+            }
+        }
+     }
+
+    /** Retourne la durée total du chrono en secondes*/
+     private double getCurrentTime() {
+         return timeline.getCurrentTime().toSeconds();
+     }
+
+     @FXML
+     private void backHome(MouseEvent e) throws IOException {
+         Parent root = FXMLLoader.load(getClass().getResource("/application/accueil/Accueil.fxml"));
+         Scene scene = goBack.getScene();
+
+         root.translateXProperty().set(scene.getWidth());
+         StackPane parentContainer = (StackPane) scene.getRoot();
+         parentContainer.getChildren().add(root);
+
+         Timeline timeline2 = new Timeline();
+         KeyValue kv = new KeyValue(root.translateXProperty(),0, Interpolator.EASE_BOTH);
+         KeyFrame kf = new KeyFrame(Duration.millis(600),kv);
+         timeline2.getKeyFrames().add(kf);
+         timeline2.setOnFinished(event -> {
+             parentContainer.getChildren().remove(container);
+         });
+
+         timeline2.play();
+     }
+
+    @FXML
+    private void highlightButton(MouseEvent e) {
+        ColorAdjust colorAdjust = new ColorAdjust();
+
+
+        // Setting the brightness value
+        colorAdjust.setBrightness(1);
+
+
+        Pane source = (Pane) e.getSource();
+        source.setEffect(colorAdjust);
+    }
+
+    @FXML
+    private void cancelHighlight(MouseEvent e) {
+        Pane source = (Pane) e.getSource();
+        source.setEffect(null);
+    }
+
+    @FXML
+    private void handleButtonAction(MouseEvent event) {
+
+
+
+         hasGameStarted = true;
+         this.removeAll();
+         modelGrille1 = new Grille(0);
+         modelGrille2 = new Grille(1);
+         modelGrille3 = new Grille(2);
          mesGrilles = Dimension3.INSTANCE;
-        dim3 = new Grille[]{modelGrille1, modelGrille2, modelGrille3};
-        mesGrilles.init(dim3);
-        /*
-        for (int i = 0; i < 2; i++) {
-            int random = (int) (Math.random() * 3);
-            this.mesGrilles[random].nouvelleCase();
-        }
-        */
-        for (int i = 0; i < 2; i++) {
-            int random = (int) (Math.random() * 3);
-            this.dim3[random].nouvelleCase();
-        }
-        this.afficherTuile();
-        this.positionTuile();
-        mvtScoreLabel.setText("0");
-        System.out.println(dim3);
+         dim3 = new Grille[]{modelGrille1, modelGrille2, modelGrille3};
+         mesGrilles.init(dim3);
+    /*
+    for (int i = 0; i < 2; i++) {
+        int random = (int) (Math.random() * 3);
+        this.mesGrilles[random].nouvelleCase();
+    }
+    */
+         for (int i = 0; i < 2; i++) {
+             int random = (int) (Math.random() * 3);
+             this.dim3[random].nouvelleCase();
+         }
+         this.afficherTuile();
+         this.positionTuile();
+         mvtScoreLabel.setText("0");
+         System.out.println(dim3);
+
+
+         FadeTransition ft = new FadeTransition(Duration.millis(500), chronoPane);
+         ft.setFromValue(0.0);
+         ft.setToValue(1.);
+         ft.play();
+         restartChrono();
+         playLabel.setText("Restart");
+
+
 
 
     }
@@ -240,8 +435,6 @@ public class FXMLDocumentController implements Initializable {
         System.out.println("touche appuyée");
         String touche = ke.getText();
         if (touche.compareTo("q") == 0) { // utilisateur appuie sur "q" pour envoyer la tuile vers la gauche
-            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1)); // mise à jour du compteur de mouvement
-         //   scoreToLabel.setText(String.valueOf(mesGrilles.getValeurMax())); // mise à jour du compteur de mouvement
 
          System.out.println(mesGrilles.getValeurMax());
             boolean b1 = this.dim3[0].lanceurDeplacerCases(Parametres.GAUCHE);
@@ -250,6 +443,7 @@ public class FXMLDocumentController implements Initializable {
             System.out.println(b1 || b2 || b3);
             if (b1 || b2 || b3) {
                   // Méthode composite
+                mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1)); // mise à jour du compteur de mouvement
                 t.add(new Tuile2048(this.dim3[0]));
                 t.add(new Tuile2048(this.dim3[1]));
                 t.add(new Tuile2048(this.dim3[2]));
@@ -259,13 +453,13 @@ public class FXMLDocumentController implements Initializable {
             }
             
         } else if (touche.compareTo("d") == 0) { // utilisateur appuie sur "d" pour envoyer la tuile vers la droite
-            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
             boolean b1 = this.dim3[0].lanceurDeplacerCases(Parametres.DROITE);
             boolean b2 = this.dim3[1].lanceurDeplacerCases(Parametres.DROITE);
             boolean b3 = this.dim3[2].lanceurDeplacerCases(Parametres.DROITE);
             System.out.println(b1 || b2 || b3);
             if (b1 || b2 || b3) {
-               // Patern composite
+                mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1)); // mise à jour du compteur de mouvement
+                // Patern composite
                 t.add(new Tuile2048(this.dim3[0]));
                 t.add(new Tuile2048(this.dim3[1]));
                 t.add(new Tuile2048(this.dim3[2]));
@@ -274,11 +468,11 @@ public class FXMLDocumentController implements Initializable {
                 this.nouvelleCase();
             }
         } else if (touche.compareTo("z") == 0) { // utilisateur appuie sur "z" pour envoyer la tuile vers le haut
-            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
             boolean b1 = this.dim3[0].lanceurDeplacerCases(Parametres.HAUT);
             boolean b2 = this.dim3[1].lanceurDeplacerCases(Parametres.HAUT);
             boolean b3 = this.dim3[2].lanceurDeplacerCases(Parametres.HAUT);
             if (b1 || b2 || b3) {
+                mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1)); // mise à jour du compteur de mouvement
                 // Patern composite
                 t.add(new Tuile2048(this.dim3[0]));
                 t.add(new Tuile2048(this.dim3[1]));
@@ -289,11 +483,11 @@ public class FXMLDocumentController implements Initializable {
             }
             
         } else if (touche.compareTo("s") == 0) { // utilisateur appuie sur "s" pour envoyer la tuile vers le bas
-            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));  
             boolean b1 = this.dim3[0].lanceurDeplacerCases(Parametres.BAS);
             boolean b2 = this.dim3[1].lanceurDeplacerCases(Parametres.BAS);
             boolean b3 = this.dim3[2].lanceurDeplacerCases(Parametres.BAS);
             if (b1 || b2 || b3) {
+                mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
                 // Patern composite
                 t.add(new Tuile2048(this.dim3[0]));
                 t.add(new Tuile2048(this.dim3[1]));
@@ -310,6 +504,7 @@ public class FXMLDocumentController implements Initializable {
 
             System.out.println(fusionSuccess);
             if (fusionSuccess) {
+                mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
                 t.add(new Tuile2048(this.dim3[0]));
                 t.add(new Tuile2048(this.dim3[1]));
                 t.add(new Tuile2048(this.dim3[2]));
@@ -323,6 +518,7 @@ public class FXMLDocumentController implements Initializable {
 
             //boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(direction);                     
             if (fusionSuccess) {
+                mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
                 t.add(new Tuile2048(this.dim3[0]));
                 t.add(new Tuile2048(this.dim3[1]));
                 t.add(new Tuile2048(this.dim3[2]));
@@ -332,6 +528,8 @@ public class FXMLDocumentController implements Initializable {
             }
         }
         this.updateTemplate(); // Pour la valeur du label (pour l'instant)
+        scoreToLabel.setText(String.valueOf(mesGrilles.getValeurMax())); // mise à jour du compteur de mouvement
+
         System.out.println(mesGrilles);    
   }
        public synchronized void updateTemplate() {
@@ -573,49 +771,26 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void theme(ActionEvent event) {
     }
+    
+    @FXML
+    private void regles(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/solo/extra/GameRules.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("FINAL RULES");
+        stage.setScene(new Scene(root1));  
+        stage.show();
+           }
 
     @FXML
-    private void popupcmd(ActionEvent event) {
-    }
-     @FXML
-    private void lookCommand(MouseEvent event) {
-        if(tp.getText()=="")
-        {
-            tp.setText("Teleportation:\n" +
-                        "UP(⇶): m\n" +
-                        "DOWN(⬱):l\n" +
-                        "Move:\n" +
-                        "RIGHT(→): d\n" +
-                        "LEFT(←): q\n" +
-                        "BOT(↓): s \n" +
-                        "TOP(↑): s ");
-        }else{
-            tp.setText("");
-
-        }
-    }
-    @FXML
-    private void switchThm(ActionEvent event) {
-         fond.getStylesheets().clear(); 
-         System.out.println("oui");
-
-        switch(chgtStyle.getToggles().indexOf(chgtStyle.getSelectedToggle())){
-            // Les nombres sont dans l'ordre du menu
-            case 0 :
-                fond.getStylesheets().add("css/styles.css");
-                break;
-            case 1 :
-                fond.getStylesheets().add("css/styles1.css");
-                break;
-            case 2 :
-                fond.getStylesheets().add("css/styles2.css");
-                break;
-            case 3 :
-                fond.getStylesheets().add("css/psychedelic.css");
-                break;
-            default:
-                break;
-        }
+    private void switchThm(ActionEvent e) {
+        fond.getStylesheets().clear();
+        RadioMenuItem source = (RadioMenuItem) e.getSource();
+        if (source == thm1) fond.getStylesheets().add("css/styles1.css");
+        else if (source == thm2) fond.getStylesheets().add("css/styles2.css");
+        else if (source == thm3) fond.getStylesheets().add("css/psychedelic.css");
+        else return;
 
     }
         

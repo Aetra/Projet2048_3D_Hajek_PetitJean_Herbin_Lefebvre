@@ -23,7 +23,7 @@ public class Tuile2048 implements Tuile, Parametres{
 
     // mouvement pour une tuile
     @Override
-    public void threadMovement() { 
+    public void threadMovement() {
         for (Case c  : grille.getGrille()) {
             final int numGrille = grille.getNumeroGrille();
             Task task = new Task<Void>() { // on définit une tâche parallèle pour mettre à jour la vue

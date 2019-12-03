@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="5.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2048 apres JC, peu de temps après l'investiture de Peter Griffin le premier, l'aigle cinglant de la légion d'acier des milles mers. Un milliardaire excentrique decide d'envoyer dans l'espace une capsule de &quot;civilisation&quot;. Dedans une photo de Poutine entrain de chevaucher un stegosaure, un paquet de gauloise datant des années septante, un couteau suisse de l'armée Srilankaise et un ordinateur de la marque SC." wrappingWidth="589.849365234375">
+         <font>
+            <Font name="Consolas" size="12.0" />
+         </font></Text>
+      <Text layoutX="5.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bien que rustique dans la présentation vous arrivez à traduire les suites de caractères défillant à l'écran : appuyez sur les fleches pour pouvoir bouger les carrés multicolore, vous pouvez aussi utiliser le pad de l'ordinateur. La touche TPD c'est pour téléporter les carrés vers la droite et donc par effet mirroir la touche TPG c'est pour deplacer par vers la gauche tout les carrés. Vous pourrez aussi tester l'intelligence humaine avec vos deux compagnons de voyage HAL et IA." wrappingWidth="589.849365234375">
+         <font>
+            <Font name="Consolas" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="5.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ce milliardaire pensait qu'il n'était pas seul dans l'univers et il avait raison car      vous !!! Vous avez trouvé sa capsule en allant à la chasse aux smurflips ces oiseaux couleurs arc en ciel de mer. Apres avoir perdu du temps à étudier la photo de cet homme imposant vous décidez d'allumer cet etrange objet gravé des initiales SC." wrappingWidth="589.849365234375">
+         <font>
+            <Font name="Consolas" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="502.0" layoutY="287.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Le narrateur" wrappingWidth="83.73675537109375">
+         <font>
+            <Font name="Consolas" size="12.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

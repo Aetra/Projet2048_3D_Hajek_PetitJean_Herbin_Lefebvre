@@ -18,7 +18,7 @@ public class TuileComposite implements Tuile{
     @Override
     public void threadMovement() {
         for(Tuile t : tuileComposite) { 
-            t.threadMovement(); 
+            t.threadMovement();
         }
     }
     
