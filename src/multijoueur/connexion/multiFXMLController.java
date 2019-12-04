@@ -1,4 +1,4 @@
-package application.multijoueurCo;
+package multijoueur.connexion;
 
 import BaseDeDonnee.BDD;
 
@@ -63,13 +63,12 @@ public class multiFXMLController extends BDD implements Initializable {
     @FXML
     private void inscription(ActionEvent event) throws IOException {      
         //String path = "/package/FXML.fxml";
-        String path = "/application/multiInscription/inscriptionPanel.fxml";
+        String path = "/multijoueur/inscription/inscriptionPanel.fxml";
 
         AnchorPane pane = FXMLLoader.load(getClass().getResource(path));
         coPane.getChildren().setAll(pane);
     }
 
-    @FXML
     private void quitter(ActionEvent event){
         // fonction qui permet de quitter
         System.exit(0);
@@ -96,6 +95,14 @@ public class multiFXMLController extends BDD implements Initializable {
         if(cdt1==true){
             pseudoField.setStyle("-fx-border-color: orange;");
         }
+    }
+
+    @FXML
+    private void backMenuPrincipal(ActionEvent event) throws IOException {
+        String path = "/application/accueil/Accueil.fxml";
+
+        AnchorPane pane = FXMLLoader.load(getClass().getResource(path));
+        coPane.getChildren().setAll(pane);
     }
 
     

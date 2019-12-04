@@ -85,7 +85,7 @@ public class AccueilController implements Initializable {
 
     @FXML
     private void startModeMulti() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/application/multijoueurCo/multiCoFXML.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/multijoueur/connexion/multiCoFXML.fxml"));
         Scene scene = buttonSolo.getScene();
         root.translateXProperty().set(scene.getWidth());
         parentContainer.getChildren().add(root);

@@ -1,4 +1,4 @@
-package application.multiInscription;
+package multijoueur.inscription;
 
 import BaseDeDonnee.*;
 import java.io.IOException;
@@ -95,7 +95,7 @@ public class InscriptionController extends BDD implements Initializable {
 
     @FXML
     private void back(ActionEvent event) throws IOException {
-        String path = "/application/multijoueurCo/multiCoFXML.fxml";
+        String path = "/multijoueur/connexion/multiCoFXML.fxml";
        
         AnchorPane pane = FXMLLoader.load(getClass().getResource(path));
        
