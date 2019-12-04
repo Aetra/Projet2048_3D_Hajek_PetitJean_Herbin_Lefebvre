@@ -1,83 +1,135 @@
+* {
+    /* Couleur des tuiles : */
+    -color-pane2 : #F7F0E8;
+    -color-pane4 : #F7EAE8;
+    -color-pane8 : #defc6d;
+    -color-pane16 : #91b216;
+    -color-pane32 : #16b293;
+    -color-pane64 : #418175;
+    -color-pane128 : #ff6ef0;
+    -color-pane256 : #e06eff;
+    -color-pane512 : #ff6e91;
+    -color-pane1024 : #da9eac;
+    -color-pane2048 : #b2a3a6;
+    -color-pane4096 : #ff0033;
+
+    /*couleur du background de la fenetre*/
+    -color-bg : #E6E6E6;
+    /* couleur des bordures de la grille */
+    -color-border-grid : black;
+    /* couleur du background de la grille*/
+    -color-bg-grid : WHITE;
+    /* couleur du background du chrono*/
+    -color-chrono : #F9E79F;
+    /* couleur du background des scores*/
+    -color-score :  #F5CBA7;
+}
+.fond{
+    -fx-background-color: -color-bg;
+} /* page blanche */
 
 .pane2 {
-    -fx-background-color: #ec9300;
-    -fx-border-color: black;
+    -fx-background-color: -color-pane2;
+    -fx-border-color: black; /*fondpage*/
 }
 
 .pane4 {
-    -fx-background-color: #a18658;
-    -fx-border-color: black;
+    -fx-background-color: -color-pane4 ;
+    -fx-border-color: black; /*fondpage*/
 }
 
 .pane8 {
-    -fx-background-color: #defc6d;
+    -fx-background-color:  -color-pane8; /*rose1*/
     -fx-border-color: black;
 }
 
 .pane16 {
-    -fx-background-color: #91b216;
+    -fx-background-color: -color-pane16; /* rose1*/
     -fx-border-color: black;
 }
 
 .pane32 {
-    -fx-background-color: #16b293;
+    -fx-background-color: -color-pane32; /*rose1++*/
     -fx-border-color: black;
 }
 
 .pane64 {
-    -fx-background-color: #418175;
+    -fx-background-color: -color-pane64; /*rouge1*/
     -fx-border-color: black;
 }
 
 .pane128 {
-    -fx-background-color:#ff6ef0 ;
+    -fx-background-color: -color-pane128; /*rosebeige*/
     -fx-border-color: black;
 }
 
 .pane256 {
-    -fx-background-color: #e06eff;
+    -fx-background-color: -color-pane256; /*beige1*/
     -fx-border-color: black;
 }
 
 .pane512 {
-    -fx-background-color: #ff6e91;
+    -fx-background-color: -color-pane512; /*beige2*/
     -fx-border-color: black;
 }
-
 
 .pane1024 {
-    -fx-background-color: #da9eac;
-    -fx-border-color: black;
+    -fx-background-color: -color-pane1024;
 }
+
 .pane2048 {
-    -fx-background-color: #b2a3a6;
+    -fx-background-color: -color-pane2048;
     -fx-border-color: black;
 }
 
 .pane4096 {
-    -fx-background-color: #ff0033;
+    -fx-background-color: -color-pane4096;
     -fx-border-color: black;
 }
 
-.gridpane {
+.pane8192 {
+    -fx-background-color: -color-pane8192;
     -fx-border-color: black;
-    -fx-grid-lines-visible: true;
-    -fx-border: 2px solid;
-    -fx-halignment: center;
-    -fx-alignment: CENTER;  
 }
+
+.pane16384 {
+    -fx-background-color: -color-pane16384;
+    -fx-border-color: black;
+}
+
+.mvtPane, .scorePane {
+    -fx-background-color : -color-score;
+    -fx-border-radius : 10px;
+    -fx-background-radius : 10px;
+}
+
+.chronoPane {
+    -fx-background-color :  -color-chrono;
+    -fx-border-radius : 10px;
+    -fx-background-radius : 10px;
+}
+
+.grille {
+    -fx-border-color: #F4DEDD; /*rosepale*/
+    -fx-grid-lines-visible: true;
+    -fx-border-width: 2px ;
+    -fx-border-style  : solid;
+    -fx-halignment: center;
+    -fx-alignment: CENTER;
+    -fx-background-color: #F7E9E8 ;  /*rosetrespale*/
+} /*grilles */
 
 
 .tuile {
     -fx-text-alignment: center;
-    -fx-halignment: center; 
-    -fx-text-fill: #ffffff;
+    -fx-halignment: center;
+    -fx-text-fill: black;
     -fx-font-size: 30;
     -fx-padding: 33 47 33 47;
 }
 .tuile10 {
     -fx-text-alignment: center;
-    -fx-halignment: center; 
+    -fx-halignment: center;
     -fx-text-fill: #ffffff;
     -fx-font-size: 30;
     -fx-padding: 33 39 33 39;
@@ -85,28 +137,22 @@
 
 .tuile100 {
     -fx-text-alignment: center;
-    -fx-halignment: center; 
+    -fx-halignment: center;
     -fx-text-fill: #ffffff;
     -fx-font-size: 30;
     -fx-padding: 33 31 33 31;
 }
 .tuile1000 {
     -fx-text-alignment: center;
-    -fx-halignment: center; 
+    -fx-halignment: center;
     -fx-text-fill: #ffffff;
     -fx-font-size: 30;
     -fx-padding: 33 23 33 23;
 }
 .tuile10000 {
     -fx-text-alignment: center;
-    -fx-halignment: center; 
+    -fx-halignment: center;
     -fx-text-fill: #ffffff;
     -fx-font-size: 30;
     -fx-padding: 33 15 33 15;
-}
-
-
-
-.fond{
-    -fx-background-color: #E6E6E6;
 }

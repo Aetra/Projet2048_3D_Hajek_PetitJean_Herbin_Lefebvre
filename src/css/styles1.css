@@ -1,81 +1,53 @@
+* {
+    /* Couleur des tuiles : */
+    -color-pane2 : #F7F0E8;
+    -color-pane4 : #F7EAE8;
+    -color-pane8 : #CF8C7D;
+    -color-pane16 : #D28979;
+    -color-pane32 : #CF846E;
+    -color-pane64 : #C24B47;
+    -color-pane128 : #CBA662;
+    -color-pane256 : #CBAA62;
+    -color-pane512 : #C9A85E;
+    -color-pane1024 : #C2A147;
+    -color-pane2048 : #BB923E;
+    -color-pane4096 : #58221D;
+    -color-pane8192 :#58221D;
+    -color-pane16384 : #F7F0E8;
 
-.pane2 {
-    -fx-background-color: #F7F0E8;
-    -fx-border-color: black; /*fondpage*/
+    /*couleur du background de la fenetre*/
+    -color-bg : #F7F0E8;
+    /* couleur des bordures de la grille */
+    -color-border-grid : black;
+    /* couleur du background de la grille*/
+    -color-bg-grid : WHITE;
+    /* couleur du background du chrono*/
+    -color-chrono : #F9E79F;
+    /* couleur du background des scores*/
+    -color-score :  #F5CBA7;
 }
 
-.pane4 {
-    -fx-background-color: #F7EAE8 ;
-    -fx-border-color: black; /*fondpage*/
-}
-
-.pane8 {
-    -fx-background-color:  #CF8C7D; /*rose1*/
-    -fx-border-color: black;
-}
-
-.pane16 {
-    -fx-background-color: #D28979; /* rose1*/
-    -fx-border-color: black;
-}
-
-.pane32 {
-    -fx-background-color: #CF846E; /*rose1++*/
-    -fx-border-color: black;
-}
-
-.pane64 {
-    -fx-background-color: #C24B47; /*rouge1*/
-    -fx-border-color: black;
-}
-
-.pane128 {
-    -fx-background-color:#CBA662; /*rosebeige*/
-    -fx-border-color: black;
-}
-
-.pane256 {
-    -fx-background-color: #CBAA62; /*beige1*/
-    -fx-border-color: black;
-}
-
-.pane512 {
-    -fx-background-color: #C9A85E; /*beige2*/
-    -fx-border-color: black;
-}
-
-.pane1024 {
-    -fx-background-color: #C2A147;
-    -fx-border-color: black;
-}
-
-.pane2048 {
-    -fx-background-color: #BB923E;
-    -fx-border-color: black;
-}
-
-.pane4096 {
-    -fx-background-color: #58221D;
-    -fx-border-color: black;
-}
-
-.pane8192 {
-    -fx-background-color: #58221D;
-    -fx-border-color: black;
-}
-
-.pane16384 {
-    -fx-background-color: #58221D;
-    -fx-border-color: black;
-}
 .fond{
-    -fx-background-color: #F7F0E8;
+    -fx-background-color: -color-bg;
 } /* page blanche */
 
-.gridpane {
+.mvtPane, .scorePane {
+    -fx-background-color : -color-score;
+    -fx-border-radius : 10px;
+    -fx-background-radius : 10px;
+}
+
+.chronoPane {
+    -fx-background-color :  -color-chrono;
+    -fx-border-radius : 10px;
+    -fx-background-radius : 10px;
+}
+
+.grille {
     -fx-border-color: #F4DEDD; /*rosepale*/
     -fx-grid-lines-visible: true;
-    -fx-border: 2px solid;
+    -fx-border-width: 2px ;
+    -fx-border-style  : solid;
     -fx-halignment: center;
     -fx-alignment: CENTER;
     -fx-background-color: #F7E9E8 ;  /*rosetrespale*/
@@ -85,7 +57,7 @@
 .tuile {
     -fx-text-alignment: center;
     -fx-halignment: center; 
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: black;
     -fx-font-size: 30;
     -fx-padding: 33 47 33 47;
 }
