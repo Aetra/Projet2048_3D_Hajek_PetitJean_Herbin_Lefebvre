@@ -95,8 +95,8 @@ public class AccueilController implements Initializable {
         
         parentContainer.getChildren().add(root);
         Timeline timeline = new Timeline();
-        KeyValue kv = new KeyValue(root.translateXProperty(),0, Interpolator.EASE_BOTH);
-        KeyFrame kf = new KeyFrame(Duration.millis(600),kv);
+        KeyValue kv = new KeyValue(root.translateXProperty(),220, Interpolator.EASE_BOTH);
+        KeyFrame kf = new KeyFrame(Duration.millis(200),kv);
         timeline.getKeyFrames().add(kf);
         timeline.play();
         
