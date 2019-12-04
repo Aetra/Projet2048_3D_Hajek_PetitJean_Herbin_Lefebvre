@@ -18,11 +18,11 @@
             <Label fx:id="cdtAcces" layoutX="22.0" layoutY="154.0" prefHeight="17.0" prefWidth="602.0" />
          </children>
       </Pane>
-      <Pane layoutX="14.0" layoutY="207.0" prefHeight="200.0" prefWidth="626.0">
+      <Pane layoutX="4.0" layoutY="207.0" prefHeight="200.0" prefWidth="690.0">
          <children>
-            <Button layoutX="250.0" layoutY="50.0" mnemonicParsing="false" onAction="#connexion" prefHeight="25.0" prefWidth="127.0" style="-fx-background-radius: 20%;" text="Connexion" />
-            <Button layoutX="250.0" layoutY="100.0" mnemonicParsing="false" onAction="#inscription" prefHeight="25.0" prefWidth="127.0" style="-fx-background-radius: 20%;" text="Incription" />
-            <Button fx:id="backHomeCo" layoutX="250.0" layoutY="161.0" mnemonicParsing="false" onAction="#backMenuPrincipal" prefHeight="25.0" prefWidth="127.0" style="-fx-background-radius: 20%;" text="Retour" />
+            <Button layoutX="282.0" layoutY="50.0" mnemonicParsing="false" onAction="#connexion" prefHeight="25.0" prefWidth="127.0" style="-fx-background-radius: 20%;" text="Connexion" />
+            <Button layoutX="282.0" layoutY="100.0" mnemonicParsing="false" onAction="#inscription" prefHeight="25.0" prefWidth="127.0" style="-fx-background-radius: 20%;" text="Incription" />
+            <Button fx:id="backHomeCo" layoutX="282.0" layoutY="138.0" mnemonicParsing="false" onAction="#backMenuPrincipal" prefHeight="25.0" prefWidth="127.0" style="-fx-background-radius: 20%;" text="Retour" />
          </children>
       </Pane>
    </children>

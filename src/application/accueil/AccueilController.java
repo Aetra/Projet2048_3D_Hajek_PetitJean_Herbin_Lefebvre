@@ -87,13 +87,19 @@ public class AccueilController implements Initializable {
     private void startModeMulti() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/multijoueur/connexion/multiCoFXML.fxml"));
         Scene scene = buttonSolo.getScene();
-        root.translateXProperty().set(scene.getWidth());
+        
+        
+        root.translateYProperty().set(scene.getHeight()/5);
+        root.translateXProperty().set(scene.getWidth()/2);
+        System.out.println("Height "+scene.getHeight()/5 + " Width " + scene.getWidth()/2);
+        
         parentContainer.getChildren().add(root);
         Timeline timeline = new Timeline();
         KeyValue kv = new KeyValue(root.translateXProperty(),0, Interpolator.EASE_BOTH);
         KeyFrame kf = new KeyFrame(Duration.millis(600),kv);
         timeline.getKeyFrames().add(kf);
         timeline.play();
+        
     }
     
 }
