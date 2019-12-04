@@ -11,7 +11,7 @@
    <children>
       <Pane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="680.0">
          <children>
-            <TextField fx:id="pseudoField" layoutX="220.0" layoutY="23.0" prefHeight="25.0" prefWidth="339.0" promptText="Entrez votre pseudo" />
+            <TextField fx:id="pseudoField" layoutX="220.0" layoutY="23.0" prefHeight="25.0" prefWidth="340.0" promptText="Entrez votre pseudo" />
             <Label layoutX="64.0" layoutY="27.0" prefHeight="17.0" prefWidth="92.0" text="Pseudo" />
             <Label fx:id="pseudoLabel" layoutX="64.0" layoutY="83.0" prefHeight="17.0" prefWidth="498.0" />
             <Label layoutX="64.0" layoutY="129.0" prefHeight="17.0" prefWidth="92.0" text="Mot de passe" />

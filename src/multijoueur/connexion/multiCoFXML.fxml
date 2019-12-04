@@ -12,9 +12,9 @@
       <Pane layoutX="14.0" layoutY="7.0" prefHeight="200.0" prefWidth="680.0">
          <children>
             <Label layoutX="28.0" layoutY="22.0" prefHeight="18.0" prefWidth="127.0" text="Pseudo" />
-            <TextField fx:id="pseudoField" layoutX="163.0" layoutY="18.0" prefHeight="25.0" prefWidth="214.0" promptText="Entrez votre pseudo" />
+            <TextField fx:id="pseudoField" layoutX="163.0" layoutY="18.0" prefHeight="25.0" prefWidth="340.0" promptText="Entrez votre pseudo" />
             <Label layoutX="14.0" layoutY="91.0" prefHeight="17.0" prefWidth="127.0" text="Mot de passe" />
-            <PasswordField fx:id="mdpField" layoutX="163.0" layoutY="87.0" prefHeight="25.0" prefWidth="214.0" promptText="Entrez votre mot de passe" />
+            <PasswordField fx:id="mdpField" layoutX="163.0" layoutY="87.0" prefHeight="25.0" prefWidth="340.0" promptText="Entrez votre mot de passe" />
             <Label fx:id="cdtAcces" layoutX="22.0" layoutY="154.0" prefHeight="17.0" prefWidth="602.0" />
          </children>
       </Pane>
