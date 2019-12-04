@@ -15,6 +15,7 @@
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
             <name>Projet2048_3D_Hajek_Petitjean_Herbin_Lefebvre</name>
             <source-roots>
+                <root id="src.mysql-connector-java-5.1.41.dir"/>
                 <root id="src.dir"/>
             </source-roots>
             <test-roots>

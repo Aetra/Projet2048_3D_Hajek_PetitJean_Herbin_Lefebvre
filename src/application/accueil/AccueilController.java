@@ -85,6 +85,15 @@ public class AccueilController implements Initializable {
 
     @FXML
     private void startModeMulti() {
+        Parent root = FXMLLoader.load(getClass().getResource("/application/solo/ThemeBasique.fxml"));
+        Scene scene = buttonSolo.getScene();
+        root.translateXProperty().set(scene.getWidth());
+        parentContainer.getChildren().add(root);
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(root.translateXProperty(),0, Interpolator.EASE_BOTH);
+        KeyFrame kf = new KeyFrame(Duration.millis(600),kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
     }
     
 }
