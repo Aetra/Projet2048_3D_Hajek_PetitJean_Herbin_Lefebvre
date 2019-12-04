@@ -8,13 +8,21 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.util.Duration;
 
 public class multiFXMLController extends BDD implements Initializable {
     BDD db = new BDD();
@@ -30,6 +38,8 @@ public class multiFXMLController extends BDD implements Initializable {
     private PasswordField mdpField;
     @FXML
     private Label cdtAcces;
+    @FXML
+    private Button backHomeCo;
     
     @FXML
     private void connexion(ActionEvent event){
@@ -96,13 +106,24 @@ public class multiFXMLController extends BDD implements Initializable {
             pseudoField.setStyle("-fx-border-color: orange;");
         }
     }
-
+    // centrer un pane sunr un autre pane
+    
     @FXML
-    private void backMenuPrincipal(ActionEvent event) throws IOException {
-        String path = "/application/accueil/Accueil.fxml";
+    private void backMenuPrincipal(ActionEvent eventCo) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/application/accueil/Accueil.fxml"));
+         Scene scene = backHomeCo.getScene();
 
-        AnchorPane pane = FXMLLoader.load(getClass().getResource(path));
-        coPane.getChildren().setAll(pane);
+         root.translateXProperty().set(scene.getWidth());
+         StackPane parentContainer = (StackPane) scene.getRoot();
+         parentContainer.getChildren().add(root);
+
+         Timeline timeline2 = new Timeline();
+         KeyValue kv = new KeyValue(root.translateXProperty(),0, Interpolator.EASE_BOTH);
+         KeyFrame kf = new KeyFrame(Duration.millis(600),kv);
+         timeline2.getKeyFrames().add(kf);
+         
+
+         timeline2.play();
     }
 
     

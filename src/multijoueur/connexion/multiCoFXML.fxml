@@ -22,7 +22,7 @@
          <children>
             <Button layoutX="250.0" layoutY="50.0" mnemonicParsing="false" onAction="#connexion" prefHeight="25.0" prefWidth="127.0" style="-fx-background-radius: 20%;" text="Connexion" />
             <Button layoutX="250.0" layoutY="100.0" mnemonicParsing="false" onAction="#inscription" prefHeight="25.0" prefWidth="127.0" style="-fx-background-radius: 20%;" text="Incription" />
-            <Button layoutX="250.0" layoutY="161.0" mnemonicParsing="false" onAction="#backMenuPrincipal" prefHeight="25.0" prefWidth="127.0" style="-fx-background-radius: 20%;" text="Retour" />
+            <Button fx:id="backHomeCo" layoutX="250.0" layoutY="161.0" mnemonicParsing="false" onAction="#backMenuPrincipal" prefHeight="25.0" prefWidth="127.0" style="-fx-background-radius: 20%;" text="Retour" />
          </children>
       </Pane>
    </children>
