@@ -9,14 +9,14 @@
 
 <AnchorPane id="AnchorPane" fx:id="inscPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="multijoueur.inscription.InscriptionController">
    <children>
-      <Pane layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="680.0">
+      <Pane layoutX="14.0" layoutY="7.0" prefHeight="200.0" prefWidth="680.0">
          <children>
-            <TextField fx:id="pseudoField" layoutX="220.0" layoutY="23.0" prefHeight="25.0" prefWidth="340.0" promptText="Entrez votre pseudo" />
-            <Label layoutX="64.0" layoutY="27.0" prefHeight="17.0" prefWidth="92.0" text="Pseudo" />
-            <Label fx:id="pseudoLabel" layoutX="64.0" layoutY="83.0" prefHeight="17.0" prefWidth="498.0" />
-            <Label layoutX="64.0" layoutY="129.0" prefHeight="17.0" prefWidth="92.0" text="Mot de passe" />
-            <Label fx:id="pswdLabel" layoutX="10.0" layoutY="169.0" prefHeight="17.0" prefWidth="665.0" />
-            <PasswordField fx:id="passwordField" layoutX="220.0" layoutY="125.0" prefHeight="25.0" prefWidth="339.0" promptText="Entrez votre mot de passe" />
+            <TextField fx:id="pseudoField" layoutX="163.0" layoutY="18.0" prefHeight="25.0" prefWidth="340.0" promptText="Entrez votre pseudo" />
+            <Label layoutX="28.0" layoutY="22.0" prefHeight="17.0" prefWidth="92.0" text="Pseudo" />
+            <Label fx:id="pseudoLabel" layoutX="28.0" layoutY="57.0" prefHeight="17.0" prefWidth="498.0" />
+            <Label layoutX="14.0" layoutY="91.0" prefHeight="17.0" prefWidth="92.0" text="Mot de passe" />
+            <Label fx:id="pswdLabel" layoutX="8.0" layoutY="131.0" prefHeight="17.0" prefWidth="665.0" />
+            <PasswordField fx:id="passwordField" layoutX="163.0" layoutY="87.0" prefHeight="25.0" prefWidth="339.0" promptText="Entrez votre mot de passe" />
          </children>
       </Pane>
       <Pane layoutX="10.0" layoutY="280.0" prefHeight="200.0" prefWidth="680.0">
