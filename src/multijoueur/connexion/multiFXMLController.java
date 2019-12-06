@@ -74,7 +74,6 @@ public class multiFXMLController extends BDD implements Initializable {
     private void inscription(ActionEvent event) throws IOException {      
         //String path = "/package/FXML.fxml";
         String path = "/multijoueur/inscription/inscriptionPanel.fxml";
-
         AnchorPane pane = FXMLLoader.load(getClass().getResource(path));
         coPane.getChildren().setAll(pane);
     }
