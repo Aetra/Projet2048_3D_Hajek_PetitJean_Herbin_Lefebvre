@@ -60,8 +60,7 @@ import javax.swing.*;
  */
 public class FXMLDocumentController implements Initializable {
     private boolean hasGameStarted = false;
-    @FXML
-    private Pane mvtPane;
+
     @FXML
     private Pane scorePane;
     @FXML
@@ -69,17 +68,13 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private AnchorPane container;
     @FXML
-    private Pane playButton;
-    @FXML
-    private Label playLabel;
-    @FXML
-    private Pane chronoPane;
-    @FXML
     private MenuBar menuBar;
     @FXML
     private MenuItem exit;
     @FXML
     private MenuItem reglesGames;
+    @FXML
+    private MenuItem rankG;
     @FXML
     private Pane goBack;
     @FXML    
@@ -92,9 +87,16 @@ public class FXMLDocumentController implements Initializable {
     private ToggleGroup chgtStyle;
     @FXML
     private Button bTop;
-   private Button bBot, bLeft, bRight, bTpg, bTpd, cmd;
+    @FXML
+    private Button bBot, bLeft, bRight, bTpg, bTpd, cmd;
     @FXML
     private Pane fond;
+    @FXML
+    private Pane playButton;
+    @FXML
+    private Label playLabel;
+    @FXML
+    private Pane chronoPane;
     @FXML
     private GridPane grille2;
     @FXML
@@ -167,7 +169,12 @@ public class FXMLDocumentController implements Initializable {
          // TODO
         
         System.out.println("le contrôleur initialise la vue");
-        fond.getStyleClass().add("fond");   
+        fond.getStyleClass().add("fond");  
+        scorePane.getStyleClass().add("scorePane");   
+        grille.getStyleClass().add("grille");   
+        chronoPane.getStyleClass().add("chronoPane");
+        playButton.getStyleClass().add("playButton");
+
         // Initialisation de ma multi-grille
         modelGrille1 = new Grille(0);
         modelGrille2 = new Grille(1);
@@ -775,6 +782,17 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void regles(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/solo/extra/GameRules.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("FINAL RULES");
+        stage.setScene(new Scene(root1));  
+        stage.show();
+           }
+    
+        @FXML
+    private void checkrank(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/solo/extra/PopupWinLose.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);

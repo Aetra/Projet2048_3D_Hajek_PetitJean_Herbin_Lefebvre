@@ -85,10 +85,8 @@ public class AccueilController implements Initializable {
 
     @FXML
     private void startModeMulti() throws IOException {
-        
         Parent root = FXMLLoader.load(getClass().getResource("/multijoueur/connexion/multiCoFXML.fxml"));
         Scene scene = buttonSolo.getScene();
-        
         
         root.translateYProperty().set(scene.getHeight()/5);
         root.translateXProperty().set(scene.getWidth()/2);
@@ -99,7 +97,7 @@ public class AccueilController implements Initializable {
         KeyValue kv = new KeyValue(root.translateXProperty(),220, Interpolator.EASE_BOTH);
         KeyFrame kf = new KeyFrame(Duration.millis(200),kv);
         timeline.getKeyFrames().add(kf);
-        timeline.play();   
+        timeline.play();
     }
-   
+    
 }
