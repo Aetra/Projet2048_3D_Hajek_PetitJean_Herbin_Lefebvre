@@ -22,14 +22,14 @@
     /* couleur du background de la grille*/
     -color-bg-grid : WHITE;
     /* couleur du background du chrono*/
-    -color-chrono : #F9E79F;
+    -color-chrono : #E39CBE;
     /* couleur du background des scores*/
-    -color-score :  #F5CBA7;
+    -color-score :  #A43747;
 }
-
+/* page blanche */
 .fond{
     -fx-background-color: -color-bg;
-} /* page blanche */
+} 
 
 .mvtPane, .scorePane {
     -fx-background-color : -color-score;

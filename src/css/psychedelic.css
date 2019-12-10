@@ -2,61 +2,73 @@
 .pane2 {
     -fx-background-color: #ec9300;
     -fx-border-color: black;
+    -fx-font-weight : bold;
 }
 
 .pane4 {
     -fx-background-color: #a18658;
     -fx-border-color: black;
+    -fx-font-weight : bold;
 }
 
 .pane8 {
     -fx-background-color: #defc6d;
     -fx-border-color: black;
+    -fx-font-weight : bold;
 }
 
 .pane16 {
     -fx-background-color: #91b216;
     -fx-border-color: black;
+    -fx-font-weight : bold;
 }
 
 .pane32 {
     -fx-background-color: #16b293;
     -fx-border-color: black;
+    -fx-font-weight : bold;
 }
 
 .pane64 {
     -fx-background-color: #418175;
     -fx-border-color: black;
+    -fx-font-weight : bold;
 }
 
 .pane128 {
     -fx-background-color:#ff6ef0 ;
     -fx-border-color: black;
+    -fx-font-weight : bold;
 }
 
 .pane256 {
     -fx-background-color: #e06eff;
     -fx-border-color: black;
+    -fx-font-weight : bold;
 }
 
 .pane512 {
     -fx-background-color: #ff6e91;
     -fx-border-color: black;
+    -fx-font-weight : bold;
 }
 
 
 .pane1024 {
     -fx-background-color: #da9eac;
     -fx-border-color: black;
+    -fx-font-weight : bold;
 }
 .pane2048 {
     -fx-background-color: #b2a3a6;
     -fx-border-color: black;
+    -fx-font-weight : bold;
 }
 
 .pane4096 {
     -fx-background-color: #ff0033;
     -fx-border-color: black;
+    -fx-font-weight : bold;
 }
 
 .gridpane {
@@ -95,7 +107,15 @@
     -fx-halignment: center; 
     -fx-text-fill: #ffffff;
     -fx-font-size: 30;
-    -fx-padding: 33 29 33 29;
+    -fx-padding: 33 23 33 23;
+
+}
+.tuile10000 {
+    -fx-text-alignment: center;
+    -fx-halignment: center; 
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 30;
+    -fx-padding: 33 15 33 15;
 }
 
 

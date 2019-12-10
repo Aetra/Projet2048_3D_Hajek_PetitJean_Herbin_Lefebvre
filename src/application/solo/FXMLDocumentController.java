@@ -66,9 +66,19 @@ public class FXMLDocumentController implements Initializable, Serializable, Para
     @FXML
     private Pane scorePane;
     @FXML
-    private Button hide;
+    private Pane scorePane2;
     @FXML
     private AnchorPane container;
+    @FXML
+    private GridPane grille;
+    @FXML
+    private GridPane grille1;
+    @FXML
+    private GridPane grille2;
+    @FXML
+    private Pane chronoPane;
+    @FXML
+    private Button hide;
     @FXML
     private MenuBar menuBar;
     @FXML
@@ -93,8 +103,6 @@ public class FXMLDocumentController implements Initializable, Serializable, Para
     private Pane playButton;
     @FXML
     private Label playLabel;
-    @FXML
-    private Pane chronoPane;
     @FXML
     private Label mvtScoreLabel,tp;
     private Label lTp,lUp,lDown,lMove,lRight,lLeft,lBot,lTop;
@@ -138,8 +146,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Para
 
     private int x = 25, y = 295;
     private int objectifx = 25, objectify = 295;
-    @FXML
-    private GridPane grille;
+
     @FXML
     private MenuItem leave;
     @FXML
@@ -160,10 +167,24 @@ public class FXMLDocumentController implements Initializable, Serializable, Para
         
         System.out.println("le contrôleur initialise la vue");
         fond.getStyleClass().add("fond");  
-        scorePane.getStyleClass().add("scorePane");   
+        scorePane.getStyleClass().add("scorePane");
+        scorePane2.getStyleClass().add("scorePane2");   
+        playLabel.getStyleClass().add("playLabel");
         grille.getStyleClass().add("grille");   
         chronoPane.getStyleClass().add("chronoPane");
         playButton.getStyleClass().add("playButton");
+        bBot.getStyleClass().add("bBot");
+        bLeft.getStyleClass().add("bLeft");
+        bRight.getStyleClass().add("bRight");
+        bTop.getStyleClass().add("bTop");
+        bTpg.getStyleClass().add("bTpg");
+        bTpd.getStyleClass().add("bTpd");
+        hide.getStyleClass().add("hide");
+        grille.getStyleClass().add("grille");
+        grille1.getStyleClass().add("grille1");
+        grille2.getStyleClass().add("grille2");
+        menuBar.getStyleClass().add("menuBar");
+        goBack.getStyleClass().add("goBack");
 
         // Initialisation de ma multi-grille
         modelGrille1 = new Grille(0);
@@ -175,7 +196,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Para
         // Pour le bouton revenir en arrière
         originator = new Originator();
         careTaker = new CareTaker();
-         mesGrilles.initStart(dim3);
+        mesGrilles.initStart(dim3);
     }
     
     @FXML

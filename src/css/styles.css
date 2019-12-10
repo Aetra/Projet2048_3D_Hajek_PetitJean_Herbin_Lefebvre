@@ -13,20 +13,79 @@
     -color-pane2048 : #b2a3a6;
     -color-pane4096 : #ff0033;
 
-    /*couleur du background de la fenetre*/
-    -color-bg : #E6E6E6;
-    /* couleur des bordures de la grille */
+    /** couleur du background de la fenetre*/
+    -color-bg :purple;
+    /** couleur des bordures de la grille */
     -color-border-grid : black;
-    /* couleur du background de la grille*/
+    /** couleur du background de la grille*/
     -color-bg-grid : WHITE;
-    /* couleur du background du chrono*/
-    -color-chrono : #F9E79F;
-    /* couleur du background des scores*/
+    /** couleur du background du chrono*/
+    -color-chrono : pink;
+    /** couleur du background du score*/
     -color-score :  #F5CBA7;
+    /** couleur du background des mouvements */
+    -color-score2 :  blue;
+    /** couleur de titre play */
+    -color-title: red; 
+    /** couleur des boutons fléchés */
+    -color-cmdSouris:pink;
+    /** couleur show/hide cmd */
+    -color-btnCmd:pink;
+    /** Couleur fond grille */
+    -color-grille: pink;
+    /** Couleur MenuBar */
+    -color-menuBar: pink;
+    /** Couleur fond retourArriere */
+    -color-retourArr: pink;
+
+}
+.bTop,.bRight,.bLeft,.bBot,.bTpg,.bTpd{
+    -fx-background-color: -color-cmdSouris;
+}
+/** Couleur des boutons */
+.hide{
+    -fx-background-color: -color-btnCmd;
+}
+.backHome{
+    background-color: -color-cercleArr;
 }
 .fond{
     -fx-background-color: -color-bg;
-} /* page blanche */
+} 
+.playLabel{
+    -fx-text-fill: -color-title;
+}
+.goBack{
+    -fx-background-color: -color-retourArr;
+}
+.menuBar{
+    -fx-background-color: -color-MenuBar;
+}
+.scorePane{
+    -fx-background-color : -color-score;
+    -fx-border-radius : 10px;
+    -fx-background-radius : 10px;
+}
+.scorePane2{
+    -fx-background-color : -color-score2;
+    -fx-border-radius : 10px;
+    -fx-background-radius : 10px;
+}
+
+.chronoPane {
+    -fx-background-color :  -color-chrono;
+    -fx-border-radius : 10px;
+    -fx-background-radius : 10px;
+}
+.grille,.grille1,.grille2 {
+    -fx-border-color: #F4DEDD; /*rosepale*/
+    -fx-grid-lines-visible: true;
+    -fx-border-style  : solid;
+    -fx-halignment: center;
+    -fx-alignment: CENTER;
+    -fx-background-color: -color-grille ;  /*rosetrespale*/
+} /*grilles */
+
 
 .pane2 {
     -fx-background-color: -color-pane2;
@@ -96,29 +155,6 @@
     -fx-background-color: -color-pane16384;
     -fx-border-color: black;
 }
-
-.mvtPane, .scorePane {
-    -fx-background-color : -color-score;
-    -fx-border-radius : 10px;
-    -fx-background-radius : 10px;
-}
-
-.chronoPane {
-    -fx-background-color :  -color-chrono;
-    -fx-border-radius : 10px;
-    -fx-background-radius : 10px;
-}
-
-.grille {
-    -fx-border-color: #F4DEDD; /*rosepale*/
-    -fx-grid-lines-visible: true;
-    -fx-border-width: 2px ;
-    -fx-border-style  : solid;
-    -fx-halignment: center;
-    -fx-alignment: CENTER;
-    -fx-background-color: #F7E9E8 ;  /*rosetrespale*/
-} /*grilles */
-
 
 .tuile {
     -fx-text-alignment: center;
