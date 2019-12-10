@@ -13,13 +13,35 @@ import java.util.List;
  * @author Simon
  */
 public class CareTaker {
-   private List<Memento> mementoList = new ArrayList<Memento>();
+   private ArrayList backMemento = new ArrayList();
 
-   public void add(Memento state){
-      mementoList.add(state);
-   }
-
-   public Memento get(int index){
-      return mementoList.get(index);
-   }
+    private int index = -1;
+    
+    
+    public void setIndex(int ind){
+        index=ind;
+    }
+    
+    public int getIndex(){
+        return index;
+    }
+    
+    public void addMemento(Object m){
+        int l = backMemento.size();
+        if (index != l){
+//            System.out.println("On efface");
+            backMemento.add(index + 1, m);
+            for (int k = index + 2; k < l; k++){
+                backMemento.remove(k);
+            }            
+        }
+        else{
+            backMemento.add(m);
+        }
+        index++;
+    }
+    
+    public Object getMemento(int i){
+        return backMemento.get(i);
+    }
 }

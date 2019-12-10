@@ -23,7 +23,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import com.sun.naming.internal.FactoryEnumeration;
+import java.io.File;
+import java.io.Serializable;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -44,9 +48,7 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -56,9 +58,9 @@ import javax.swing.*;
 /**
  * FXML Controller class
  *
- * @author Simon
+ * @author Val
  */
-public class FXMLDocumentController implements Initializable {
+public class FXMLDocumentController implements Initializable, Serializable, Parametres{
     private boolean hasGameStarted = false;
 
     @FXML
@@ -69,8 +71,6 @@ public class FXMLDocumentController implements Initializable {
     private AnchorPane container;
     @FXML
     private MenuBar menuBar;
-    @FXML
-    private MenuItem exit;
     @FXML
     private MenuItem reglesGames;
     @FXML
@@ -84,11 +84,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private RadioMenuItem thm3;
     @FXML
-    private ToggleGroup chgtStyle;
-    @FXML
     private Button bTop;
     @FXML
-    private Button bBot, bLeft, bRight, bTpg, bTpd, cmd;
+    private Button bBot, bLeft, bRight, bTpg, bTpd;
     @FXML
     private Pane fond;
     @FXML
@@ -98,21 +96,10 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Pane chronoPane;
     @FXML
-    private GridPane grille2;
-    @FXML
-    private GridPane grille1;
-    @FXML
-    private Label mvtScoreLabel, showcmd,tp;
+    private Label mvtScoreLabel,tp;
     private Label lTp,lUp,lDown,lMove,lRight,lLeft,lBot,lTop;
-
-
-    /* moi */
     private Timeline timeline;
 
-    @FXML
-    private Button soloMode;
-    @FXML
-    private Button multiMode;
 
     @FXML
     private Label labelSeconds;
@@ -120,8 +107,6 @@ public class FXMLDocumentController implements Initializable {
     private Label labelMinutes;
     @FXML
     private Label labelHours;
-    @FXML
-    private ImageView logo;
 
     private static final Integer STARTTIME = 0;
     private static final Integer MINUTESINANHOUR = 59;
@@ -130,8 +115,6 @@ public class FXMLDocumentController implements Initializable {
     private Integer timeSeconds = STARTTIME;
     private Integer timeMinutes  = STARTTIME;
     private Integer timeHours = STARTTIME;
-
-    /* plus moi */
 
     @FXML
     private Label scoreToLabel;
@@ -158,12 +141,19 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private GridPane grille;
     @FXML
-    private Label scoreTotLabel;
+    private MenuItem leave;
+    @FXML
+    private MenuItem load;
+    @FXML
+    private ToggleGroup chgtStyles;
+    @FXML
+    private RadioMenuItem thm4;
+    @FXML
+    private ToggleGroup chgtStyles1;
+    
     /**
      * Initializes the controller class.
      */
-     // variables globales non définies dans la vue (fichier .fxml)
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
          // TODO
@@ -185,30 +175,67 @@ public class FXMLDocumentController implements Initializable {
         // Pour le bouton revenir en arrière
         originator = new Originator();
         careTaker = new CareTaker();
-         mesGrilles.init(dim3);
-         /*
-        ObjectOutputStream oos = null;
-        ObjectInputStream ois = null;
-        try{
-            final FileInputStream fichierln = new FileInputStream("model.ser");
-            ois = new ObjectInputStream(fichierln);
-            mesGrilles = (Dimension3)ois.readObject();
-        } catch (final IOException e) {
+         mesGrilles.initStart(dim3);
+    }
+    
+    @FXML
+    private void exit(ActionEvent event) {
+         ObjectOutputStream oos = null;
+         try {
+            File f = new File(new File(new File(FXMLDocumentController.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent()).getParent() + "\\mg.ser");
+            final FileOutputStream fichier = new FileOutputStream(f);
+            oos = new ObjectOutputStream(fichier);
+            oos.writeObject(this.modelGrille1);
+            oos.writeObject(this.modelGrille2);
+            oos.writeObject(this.modelGrille3);
+            oos.flush();
+        } catch (final java.io.IOException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        } finally{
-            try{
-                if(ois != null){
-                    ois.close();
+        } catch (URISyntaxException e) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            try {
+                if (oos != null) {
+                    oos.flush();
+                    oos.close();
                 }
-            }catch (final IOException exc){
-                exc.printStackTrace();
+            } catch (final IOException e) {
+                e.printStackTrace();
             }
         }
-        */
 
-    }  
+     }
+        @FXML
+    private void loading(ActionEvent event) {
+        //ObjectOutputStream oos = null;
+        ObjectInputStream ois = null;
+        Grille[] grilles = new Grille[3];
+        try {
+            File f = new File(new File(new File(FXMLDocumentController.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent()).getParent() + "\\mg.ser");
+
+            final FileInputStream fichierIn = new FileInputStream(f);
+            ois = new ObjectInputStream(fichierIn);
+            //mGrille = (MultiGrille) ois.readObject();
+            for (int i = 0; i < grilles.length; i++) {
+                grilles[i] = (Grille) ois.readObject();
+            }
+            this.dim3 = grilles;
+            this.mesGrilles.setMesGrilles(grilles);
+
+        } catch (final java.io.IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (ois != null) {
+                    ois.close();
+                }
+            } catch (final IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
     
     
     private void afficherTuile() { // A chaque nouvelle case cela créé la tuile (de façon dynamique)
@@ -233,8 +260,8 @@ public class FXMLDocumentController implements Initializable {
                     c.getLabel().setText(Integer.toString(c.getValeur()));
                 }
             }
+            }
         }
-    }
 
      private void positionTuile() {
         for (int i = 0; i < 3; i++) {
@@ -257,7 +284,6 @@ public class FXMLDocumentController implements Initializable {
     
     
     
-/**iICIIIIIIIIII */
     @FXML
     private void handleDragAction(MouseEvent event) {
        
@@ -282,6 +308,7 @@ public class FXMLDocumentController implements Initializable {
           //  tp.setVisible(false);
         //else tp.setVisible(true);
      }
+    
 
     /** Permet de relancer le chronomètre en partant de 0*/
      private void restartChrono() {
@@ -387,9 +414,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void handleButtonAction(MouseEvent event) {
-
-
+    private void starting(MouseEvent event) {
 
          hasGameStarted = true;
          this.removeAll();
@@ -398,7 +423,7 @@ public class FXMLDocumentController implements Initializable {
          modelGrille3 = new Grille(2);
          mesGrilles = Dimension3.INSTANCE;
          dim3 = new Grille[]{modelGrille1, modelGrille2, modelGrille3};
-         mesGrilles.init(dim3);
+         mesGrilles.initStart(dim3);
     /*
     for (int i = 0; i < 2; i++) {
         int random = (int) (Math.random() * 3);
@@ -412,6 +437,8 @@ public class FXMLDocumentController implements Initializable {
          this.afficherTuile();
          this.positionTuile();
          mvtScoreLabel.setText("0");
+         scoreToLabel.setText("0");
+        
          System.out.println(dim3);
 
 
@@ -436,7 +463,7 @@ public class FXMLDocumentController implements Initializable {
     }
     
     @FXML
-    private void keyPressed(KeyEvent ke) throws CloneNotSupportedException {
+    private void keyPressed(KeyEvent ke) throws CloneNotSupportedException, IOException{
         TuileComposite t = new TuileComposite();
 
         System.out.println("touche appuyée");
@@ -444,9 +471,9 @@ public class FXMLDocumentController implements Initializable {
         if (touche.compareTo("q") == 0) { // utilisateur appuie sur "q" pour envoyer la tuile vers la gauche
 
          System.out.println(mesGrilles.getValeurMax());
-            boolean b1 = this.dim3[0].lanceurDeplacerCases(Parametres.GAUCHE);
-            boolean b2 = this.dim3[1].lanceurDeplacerCases(Parametres.GAUCHE);
-            boolean b3 = this.dim3[2].lanceurDeplacerCases(Parametres.GAUCHE);
+            boolean b1 = this.dim3[0].lanceurDeplacerCases(GAUCHE);
+            boolean b2 = this.dim3[1].lanceurDeplacerCases(GAUCHE);
+            boolean b3 = this.dim3[2].lanceurDeplacerCases(GAUCHE);
             System.out.println(b1 || b2 || b3);
             if (b1 || b2 || b3) {
                   // Méthode composite
@@ -460,9 +487,9 @@ public class FXMLDocumentController implements Initializable {
             }
             
         } else if (touche.compareTo("d") == 0) { // utilisateur appuie sur "d" pour envoyer la tuile vers la droite
-            boolean b1 = this.dim3[0].lanceurDeplacerCases(Parametres.DROITE);
-            boolean b2 = this.dim3[1].lanceurDeplacerCases(Parametres.DROITE);
-            boolean b3 = this.dim3[2].lanceurDeplacerCases(Parametres.DROITE);
+            boolean b1 = this.dim3[0].lanceurDeplacerCases(DROITE);
+            boolean b2 = this.dim3[1].lanceurDeplacerCases(DROITE);
+            boolean b3 = this.dim3[2].lanceurDeplacerCases(DROITE);
             System.out.println(b1 || b2 || b3);
             if (b1 || b2 || b3) {
                 mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1)); // mise à jour du compteur de mouvement
@@ -475,9 +502,9 @@ public class FXMLDocumentController implements Initializable {
                 this.nouvelleCase();
             }
         } else if (touche.compareTo("z") == 0) { // utilisateur appuie sur "z" pour envoyer la tuile vers le haut
-            boolean b1 = this.dim3[0].lanceurDeplacerCases(Parametres.HAUT);
-            boolean b2 = this.dim3[1].lanceurDeplacerCases(Parametres.HAUT);
-            boolean b3 = this.dim3[2].lanceurDeplacerCases(Parametres.HAUT);
+            boolean b1 = this.dim3[0].lanceurDeplacerCases(HAUT);
+            boolean b2 = this.dim3[1].lanceurDeplacerCases(HAUT);
+            boolean b3 = this.dim3[2].lanceurDeplacerCases(HAUT);
             if (b1 || b2 || b3) {
                 mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1)); // mise à jour du compteur de mouvement
                 // Patern composite
@@ -490,9 +517,9 @@ public class FXMLDocumentController implements Initializable {
             }
             
         } else if (touche.compareTo("s") == 0) { // utilisateur appuie sur "s" pour envoyer la tuile vers le bas
-            boolean b1 = this.dim3[0].lanceurDeplacerCases(Parametres.BAS);
-            boolean b2 = this.dim3[1].lanceurDeplacerCases(Parametres.BAS);
-            boolean b3 = this.dim3[2].lanceurDeplacerCases(Parametres.BAS);
+            boolean b1 = this.dim3[0].lanceurDeplacerCases(BAS);
+            boolean b2 = this.dim3[1].lanceurDeplacerCases(BAS);
+            boolean b3 = this.dim3[2].lanceurDeplacerCases(BAS);
             if (b1 || b2 || b3) {
                 mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
                 // Patern composite
@@ -504,12 +531,8 @@ public class FXMLDocumentController implements Initializable {
                 this.nouvelleCase();
             }
            }
-           else if (touche.compareTo("l") == 0) { // FUSION GAUCHE
-            //boolean fusionSuccess = mesGrilles.teleportation(DESCENDRE);
-            //boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(Parametres.DESCENDRE);  
-            boolean fusionSuccess = mesGrilles.fusionGauche();  
-
-            System.out.println(fusionSuccess);
+           else if (touche.compareTo("l") == 0) { // FUSION Down
+            boolean fusionSuccess=mesGrilles.lanceurDeplacerCases(DESCENDRE);
             if (fusionSuccess) {
                 mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
                 t.add(new Tuile2048(this.dim3[0]));
@@ -519,11 +542,8 @@ public class FXMLDocumentController implements Initializable {
                 t.threadMovementCaseDead(fond);
                 this.nouvelleCase();            
             }
-        } else if (touche.compareTo("m") == 0) { // FUSION DROITE
-            //boolean fusionSuccess = mesGrilles.teleportation(Parametres.MONTER);
-            boolean fusionSuccess = mesGrilles.fusionDroite();                     
-
-            //boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(direction);                     
+        } else if (touche.compareTo("m") == 0) { // FUSION Up
+            boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(MONTER);             
             if (fusionSuccess) {
                 mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
                 t.add(new Tuile2048(this.dim3[0]));
@@ -535,10 +555,130 @@ public class FXMLDocumentController implements Initializable {
             }
         }
         this.updateTemplate(); // Pour la valeur du label (pour l'instant)
-        scoreToLabel.setText(String.valueOf(mesGrilles.getValeurMax())); // mise à jour du compteur de mouvement
-
+        scoreToLabel.setText(String.valueOf(mesGrilles.getValeurMax())); 
         System.out.println(mesGrilles);    
   }
+        @FXML
+    private void clickTop(MouseEvent event) throws CloneNotSupportedException, IOException {
+            TuileComposite t = new TuileComposite();
+           mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
+            boolean b1 = this.dim3[0].lanceurDeplacerCases(HAUT);
+            boolean b2 = this.dim3[1].lanceurDeplacerCases(HAUT);
+            boolean b3 = this.dim3[2].lanceurDeplacerCases(HAUT);
+            if (b1 || b2 || b3) {
+                // Patern composite
+                t.add(new Tuile2048(this.dim3[0]));
+                t.add(new Tuile2048(this.dim3[1]));
+                t.add(new Tuile2048(this.dim3[2]));
+                t.threadMovement();
+                t.threadMovementCaseDead(fond);
+               this.nouvelleCase();
+            }
+            this.updateTemplate();
+            System.out.println(mesGrilles);  
+    }
+
+    @FXML
+    private void clickBot(MouseEvent event) throws CloneNotSupportedException, IOException {
+         TuileComposite t = new TuileComposite();
+            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));  
+            boolean b1 = this.dim3[0].lanceurDeplacerCases(BAS);
+            boolean b2 = this.dim3[1].lanceurDeplacerCases(BAS);
+            boolean b3 = this.dim3[2].lanceurDeplacerCases(BAS);
+            if (b1 || b2 || b3) {
+                t.add(new Tuile2048(this.dim3[0]));
+                t.add(new Tuile2048(this.dim3[1]));
+                t.add(new Tuile2048(this.dim3[2]));
+                t.threadMovement();
+                t.threadMovementCaseDead(fond);
+                this.nouvelleCase();
+                
+            }
+            this.updateTemplate();
+            System.out.println(mesGrilles);  
+    }
+
+    @FXML
+    private void clickRight(MouseEvent event) throws CloneNotSupportedException, IOException {
+         TuileComposite t = new TuileComposite();
+            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
+            boolean b1 = this.dim3[0].lanceurDeplacerCases(DROITE);
+            boolean b2 = this.dim3[1].lanceurDeplacerCases(DROITE);
+            boolean b3 = this.dim3[2].lanceurDeplacerCases(DROITE);
+            System.out.println(b1 || b2 || b3);
+            if (b1 || b2 || b3) {
+               // Patern composite
+                t.add(new Tuile2048(this.dim3[0]));
+                t.add(new Tuile2048(this.dim3[1]));
+                t.add(new Tuile2048(this.dim3[2]));
+                t.threadMovement();
+                t.threadMovementCaseDead(fond);
+                this.nouvelleCase();
+                this.updateTemplate();
+        System.out.println(mesGrilles);  
+            }
+    }
+
+    @FXML
+    private void clickLeft(MouseEvent event) throws CloneNotSupportedException, IOException {
+        TuileComposite t = new TuileComposite();
+            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1)); // mise à jour du compteur de mouvement
+            boolean b1 = this.dim3[0].lanceurDeplacerCases(GAUCHE);
+            boolean b2 = this.dim3[1].lanceurDeplacerCases(GAUCHE);
+            boolean b3 = this.dim3[2].lanceurDeplacerCases(GAUCHE);
+            System.out.println(b1 || b2 || b3);
+            if (b1 || b2 || b3) {
+                  // Méthode composite
+                t.add(new Tuile2048(this.dim3[0]));
+                t.add(new Tuile2048(this.dim3[1]));
+                t.add(new Tuile2048(this.dim3[2]));
+                t.threadMovement();
+                t.threadMovementCaseDead(fond);
+                this.nouvelleCase();
+                
+
+            }
+        this.updateTemplate();
+        System.out.println(mesGrilles);  
+    }
+
+    @FXML
+    private void clickTpG(MouseEvent event) throws CloneNotSupportedException, IOException {
+        TuileComposite t = new TuileComposite();
+        mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1)); // mise à jour du compteur de mouvement
+            boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(DESCENDRE);  
+            if (fusionSuccess) {
+                t.add(new Tuile2048(this.dim3[0]));
+                t.add(new Tuile2048(this.dim3[1]));
+                t.add(new Tuile2048(this.dim3[2]));
+                t.threadMovement();
+                t.threadMovementCaseDead(fond);
+                this.nouvelleCase();    
+
+            }
+         this.updateTemplate();
+        System.out.println(mesGrilles);  
+         
+    }
+
+    @FXML
+    private void clicktpD(MouseEvent event) throws CloneNotSupportedException, IOException {
+      TuileComposite t = new TuileComposite();
+      mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1)); // mise à jour du compteur de mouvement
+            boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(MONTER);  
+            if (fusionSuccess) {
+                t.add(new Tuile2048(this.dim3[0]));
+                t.add(new Tuile2048(this.dim3[1]));
+                t.add(new Tuile2048(this.dim3[2]));
+                 t.threadMovement();
+                t.threadMovementCaseDead(fond);
+                this.nouvelleCase();    
+                
+            }
+            this.updateTemplate();
+            System.out.println(mesGrilles);  
+    }
+    
        public synchronized void updateTemplate() {
         for (int k = 0; k < 3; k++) {
             for (Case c : this.dim3[k].getGrille()) {
@@ -605,8 +745,10 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
-       
-    public void nouvelleCase() {
+
+    /** deroulement Du jeu */
+    public void nouvelleCase() throws IOException {
+      if(mesGrilles.getValeurMax()<2048){
         ArrayList<Integer> grillePossible = new ArrayList<>();
         grillePossible.add(0); grillePossible.add(1); grillePossible.add(2);
         // si le tableau est vide cela signifie qu'on ne peut ajouter aucune case dans les grilles
@@ -621,163 +763,18 @@ public class FXMLDocumentController implements Initializable {
         }
         this.afficherTuile();
         this.positionTuile();
+      }
+      else{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/solo/extra/PopupWinLose.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("FINAL RULES");
+        stage.setScene(new Scene(root1));  
+        stage.show();
+      }
     }
-
-    @FXML
-    private void clickTop(MouseEvent event) throws CloneNotSupportedException {
-            TuileComposite t = new TuileComposite();
-           mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
-            boolean b1 = this.dim3[0].lanceurDeplacerCases(Parametres.HAUT);
-            boolean b2 = this.dim3[1].lanceurDeplacerCases(Parametres.HAUT);
-            boolean b3 = this.dim3[2].lanceurDeplacerCases(Parametres.HAUT);
-            if (b1 || b2 || b3) {
-                // Patern composite
-                t.add(new Tuile2048(this.dim3[0]));
-                t.add(new Tuile2048(this.dim3[1]));
-                t.add(new Tuile2048(this.dim3[2]));
-                t.threadMovement();
-                t.threadMovementCaseDead(fond);
-               this.nouvelleCase();
-            }
-            this.updateTemplate(); // Pour la valeur du label (pour l'instant)
-                 System.out.println(mesGrilles);  
-    }
-
-    @FXML
-    private void clickBot(MouseEvent event) throws CloneNotSupportedException {
-         TuileComposite t = new TuileComposite();
-            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));  
-            boolean b1 = this.dim3[0].lanceurDeplacerCases(Parametres.BAS);
-            boolean b2 = this.dim3[1].lanceurDeplacerCases(Parametres.BAS);
-            boolean b3 = this.dim3[2].lanceurDeplacerCases(Parametres.BAS);
-            if (b1 || b2 || b3) {
-                // Patern composite
-                t.add(new Tuile2048(this.dim3[0]));
-                t.add(new Tuile2048(this.dim3[1]));
-                t.add(new Tuile2048(this.dim3[2]));
-                t.threadMovement();
-                t.threadMovementCaseDead(fond);
-                this.nouvelleCase();
-                
-            }
-            this.updateTemplate(); // Pour la valeur du label (pour l'instant)
-            System.out.println(mesGrilles);  
-    }
-
-    @FXML
-    private void clickRight(MouseEvent event) throws CloneNotSupportedException {
-         TuileComposite t = new TuileComposite();
-            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
-            boolean b1 = this.dim3[0].lanceurDeplacerCases(Parametres.DROITE);
-            boolean b2 = this.dim3[1].lanceurDeplacerCases(Parametres.DROITE);
-            boolean b3 = this.dim3[2].lanceurDeplacerCases(Parametres.DROITE);
-            System.out.println(b1 || b2 || b3);
-            if (b1 || b2 || b3) {
-               // Patern composite
-                t.add(new Tuile2048(this.dim3[0]));
-                t.add(new Tuile2048(this.dim3[1]));
-                t.add(new Tuile2048(this.dim3[2]));
-                t.threadMovement();
-                t.threadMovementCaseDead(fond);
-                this.nouvelleCase();
-                this.updateTemplate(); // Pour la valeur du label (pour l'instant)
-        System.out.println(mesGrilles);  
-            }
-    }
-
-    @FXML
-    private void clickLeft(MouseEvent event) throws CloneNotSupportedException {
-        TuileComposite t = new TuileComposite();
-
-            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1)); // mise à jour du compteur de mouvement
-            boolean b1 = this.dim3[0].lanceurDeplacerCases(Parametres.GAUCHE);
-            boolean b2 = this.dim3[1].lanceurDeplacerCases(Parametres.GAUCHE);
-            boolean b3 = this.dim3[2].lanceurDeplacerCases(Parametres.GAUCHE);
-            System.out.println(b1 || b2 || b3);
-            if (b1 || b2 || b3) {
-                  // Méthode composite
-                t.add(new Tuile2048(this.dim3[0]));
-                t.add(new Tuile2048(this.dim3[1]));
-                t.add(new Tuile2048(this.dim3[2]));
-                t.threadMovement();
-                t.threadMovementCaseDead(fond);
-                this.nouvelleCase();
-
-            }
-        this.updateTemplate(); // Pour la valeur du label (pour l'instant)
-        System.out.println(mesGrilles);  
-    }
-
-    @FXML
-    private void clickTpG(MouseEvent event) throws CloneNotSupportedException {
-        TuileComposite t = new TuileComposite();
-   
-            boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(direction);  
-
-            System.out.println(fusionSuccess);
-            if (fusionSuccess) {
-                t.add(new Tuile2048(this.dim3[0]));
-                t.add(new Tuile2048(this.dim3[1]));
-                t.add(new Tuile2048(this.dim3[2]));
-                t.threadMovement();
-                t.threadMovementCaseDead(fond);
-                this.nouvelleCase();    
-
-            }
-         this.updateTemplate(); // Pour la valeur du label (pour l'instant)
-        System.out.println(mesGrilles);  
-         
-    }
-
-    @FXML
-    private void clicktpD(MouseEvent event) throws CloneNotSupportedException {
-      TuileComposite t = new TuileComposite();
-            boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(direction);  
-            if (fusionSuccess) {
-                t.add(new Tuile2048(this.dim3[0]));
-                t.add(new Tuile2048(this.dim3[1]));
-                t.add(new Tuile2048(this.dim3[2]));
-                 t.threadMovement();
-                t.threadMovementCaseDead(fond);
-                this.nouvelleCase();    
-                
-            }
-            this.updateTemplate(); // Pour la valeur du label (pour l'instant)
-            System.out.println(mesGrilles);  
-    }
-
-   
-       @FXML
-    private void exit(ActionEvent event) {
-         System.out.println("Les devs vous disent à bientôt!");
-        ObjectOutputStream oos = null;
-         if (mesGrilles.partieFinie()){
-            mesGrilles.init(dim3);;
-        }
-        try{
-            final FileOutputStream fichier = new FileOutputStream("model.ser");
-            oos = new ObjectOutputStream(fichier);
-            oos.writeObject(this.mesGrilles);
-            oos.flush();
-        }catch (final IOException e){
-            e.printStackTrace();
-        }finally{
-            try{
-                if(oos != null){
-                    oos.flush();
-                    oos.close();
-            }
-            }catch(final IOException ex){
-                ex.printStackTrace();
-            }
-        }
-        
-        System.exit(0);
-    }
-
-    @FXML
-    private void theme(ActionEvent event) {
-    }
+       
     
     @FXML
     private void regles(ActionEvent event) throws IOException {
@@ -792,13 +789,7 @@ public class FXMLDocumentController implements Initializable {
     
         @FXML
     private void checkrank(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/solo/extra/PopupWinLose.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("FINAL RULES");
-        stage.setScene(new Scene(root1));  
-        stage.show();
+       
            }
 
     @FXML
@@ -811,5 +802,6 @@ public class FXMLDocumentController implements Initializable {
         else return;
 
     }
+
         
 }

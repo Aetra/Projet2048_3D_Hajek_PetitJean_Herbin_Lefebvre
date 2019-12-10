@@ -16,14 +16,10 @@ public interface Parametres {
     static final int GAUCHE = -2;
     static final int TAILLE = 3;
     static final int OBJECTIF = 2048;
-        
-    static final int FULLRIGHT = 5;
-    static final int FULLLEFT = -5;
     static final int tailleX = 334/3;
     static final int tailleY =334/3;
     
-    // AH: cette variable indique le nombre de grilles qui composera le 2848-3D
     static final int ETAGE = 3; 
-    static final int MONTER = 5;
     static final int DESCENDRE = 6;
+    static final int MONTER = 5;
 }

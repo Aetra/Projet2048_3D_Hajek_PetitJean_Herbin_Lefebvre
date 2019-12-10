@@ -7,7 +7,7 @@ package Model;
 
 /**
  *
- * @author Panach
+ * @author Val
  */
 public class Originator {
    private Dimension3 state;
@@ -20,11 +20,33 @@ public class Originator {
       return state;
    }
 
-   public Memento saveStateToMemento(){
+   public Object saveToMemento() throws CloneNotSupportedException{
       return new Memento(state);
    }
 
-   public void getStateFromMemento(Memento memento){
-      state = memento.getState();
+   public void getStateFromMemento(Memento memento) throws CloneNotSupportedException{
+      state = memento.getSavedState();
    }
+   public Dimension3 restoreFromMemento(Object m) throws CloneNotSupportedException{
+        if (m instanceof Memento){
+            Memento memento = (Memento)m;
+            state = memento.getSavedState();
+            //System.out.println("Originator: Etat après restauration: \n" + state);
+        }
+        return state;
+    }
+ 
+private static class Memento{
+    private Dimension3 state;
+    
+    public Memento(Dimension3 stateToSave) throws CloneNotSupportedException{
+      //  state = (Dimension3) stateToSave.clone();
+    }
+    
+    public Dimension3 getSavedState() throws CloneNotSupportedException{
+        return null;
+        //return (Dimension3) state.clone();
+    }
+   }
+
 }

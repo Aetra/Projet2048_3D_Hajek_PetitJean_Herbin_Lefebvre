@@ -12,7 +12,7 @@ import javafx.scene.layout.Pane;
  *
  * @author Sylvain
  */
-public class Case implements Parametres, Cloneable {
+public class Case implements Parametres, Cloneable, java.io.Serializable {
 
     private int x, y, valeur, numeroGrille, lastX, lastY, lastGrille;;
     private Grille grille;

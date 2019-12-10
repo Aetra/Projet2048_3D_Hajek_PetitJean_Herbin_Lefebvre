@@ -29,7 +29,7 @@ import javafx.util.Duration;
 /**
  * FXML Controller class
  *
- * @author Simon
+ * @author Val
  */
 public class AccueilController implements Initializable {
 

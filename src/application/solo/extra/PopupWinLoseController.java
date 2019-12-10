@@ -17,7 +17,7 @@ import javafx.scene.layout.Pane;
 /**
  * FXML Controller class
  *
- * @author Simon
+ * @author Val
  */
 public class PopupWinLoseController implements Initializable {
 

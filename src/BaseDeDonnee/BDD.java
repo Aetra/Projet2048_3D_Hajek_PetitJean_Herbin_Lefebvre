@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class BDD implements Parametre{
-    
     /*      Fonction qui permet d'ouvrir la base de données     */
     public static Connection openBDD(){
         Connection con = null;
@@ -82,7 +81,7 @@ public class BDD implements Parametre{
     }
 
     /*      Fonction qui permet d'inserer une ligne de score*/
-    protected static void insertLigneScore(String pseudoInsert, int mvt, int score, Connection co){
+    protected static void insertLigneScore(String pseudoInsert, int mvt, int score, int chrono, Connection co){
                 /*  Variables */
         String pseudo = "'"+pseudoInsert+"'";
         boolean firstStrike = true; //c'est notre première partie 
@@ -103,7 +102,7 @@ public class BDD implements Parametre{
                 /*  Condition 1 : première partie INSERT */
             if(firstStrike == true){
                 Statement insertScore = co.createStatement();
-                insertScore.executeUpdate("INSERT INTO scoreboard VALUES ("+pseudo+","+mvt+","+score+")");           
+                insertScore.executeUpdate("INSERT INTO scoreboard VALUES ("+pseudo+","+mvt+","+score+","+chrono+",)");           
             }
             
                  /*  Condition 2 : meilleur score UPDDATE */
@@ -112,6 +111,7 @@ public class BDD implements Parametre{
                 System.out.println("Voici score BDD "+ scoreBDD);
                 int moveBDD = recupMove(pseudo,co); // c'est le mouvement que l'on recupère si déjà joué
                 System.out.println("Voici move BDD " + moveBDD);
+                int chronoBDD=recupChrono(pseudo,co);
                 if(scoreBDD < score){
                     /*  Si notre score est supérieur à celui en du tableau alors on UPDATE le score   */
                     Statement updateScore = co.createStatement();
@@ -126,7 +126,15 @@ public class BDD implements Parametre{
                         /*  Si notre mouvement est supérieur à celui du tableau alors UPDATE mouvement*/
                         updateMove.executeUpdate("UPDATE scoreboard SET Mouvement = '"+mvt+"' WHERE Pseudo = "+pseudo);
                     }
+                    if( chrono < chronoBDD){
+                        // si mvt bdd superieur mvt
+                        System.out.println(chronoBDD +" > "+chrono);
+                        Statement updateMove = co.createStatement();
+                        /*  Si notre mouvement est supérieur à celui du tableau alors UPDATE mouvement*/
+                        updateMove.executeUpdate("UPDATE scoreboard SET Mouvement = '"+mvt+"' WHERE Pseudo = "+pseudo);
+                    }
                 }
+                
                 
             }
         }catch(SQLException e){}
@@ -162,7 +170,18 @@ public class BDD implements Parametre{
        }catch(SQLException e){} 
         return moveRecup;
     }
+      protected static int recupChrono(String pseudoBDD, Connection co){
+       int chrono = 0;
+        try{
+            Statement isCo = co.createStatement();
+            String querry ="SELECT `Chronometre` FROM `scoreboard` WHERE `Pseudo` = "+pseudoBDD;
+            ResultSet res = isCo.executeQuery(querry);
+            while(res.next()){
+                chrono= res.getInt("chrono");
+                System.out.println("/n Voici mvt " + chrono);
+        }
 
-
-
+       }catch(SQLException e){} 
+        return chrono;
+    }
 }
