@@ -1,42 +1,42 @@
 * {
     /* Couleur des tuiles : */
-    -color-pane2 : #F7F0E8;
-    -color-pane4 : #F7EAE8;
-    -color-pane8 : #defc6d;
-    -color-pane16 : #91b216;
-    -color-pane32 : #16b293;
-    -color-pane64 : #418175;
-    -color-pane128 : #ff6ef0;
-    -color-pane256 : #e06eff;
-    -color-pane512 : #ff6e91;
-    -color-pane1024 : #da9eac;
-    -color-pane2048 : #b2a3a6;
-    -color-pane4096 : #ff0033;
+    -color-pane2 : #CFE4AF;
+    -color-pane4 : #B7DF9F;
+    -color-pane8 : #99CC66;
+    -color-pane16 : #81C34B;
+    -color-pane32 : #66B43C;
+    -color-pane64 : #389532;
+    -color-pane128 : #26732D;
+    -color-pane256 : #246B2E;
+    -color-pane512 : #1B5025;
+    -color-pane1024 : #174529;
+    -color-pane2048 : #1B502A;
+    -color-pane4096 : #123619;
+    -color-pane8192 : #123619;
+    -color-pane16384 :#123619;
 
     /** couleur du background de la fenetre*/
-    -color-bg :purple;
+    -color-bg :#E4F0D1;
+    /** couleur du background du chrono*/
+    -color-chrono : #86CC66;
+    /** couleur du background du score*/
+    -color-score :  #256F3F;
+    /** couleur du background des mouvements */
+    -color-score2 :  #256F3F;
+    /** couleur de titre play */
+    -color-title: #1B502A; 
+    /** couleur des boutons fléchés */
+    -color-cmdSouris:#256F3F;
+    /** couleur show/hide cmd */
+    -color-btnCmd:#86CC66;
     /** couleur des bordures de la grille */
     -color-border-grid : black;
-    /** couleur du background de la grille*/
-    -color-bg-grid : WHITE;
-    /** couleur du background du chrono*/
-    -color-chrono : pink;
-    /** couleur du background du score*/
-    -color-score :  #F5CBA7;
-    /** couleur du background des mouvements */
-    -color-score2 :  blue;
-    /** couleur de titre play */
-    -color-title: red; 
-    /** couleur des boutons fléchés */
-    -color-cmdSouris:pink;
-    /** couleur show/hide cmd */
-    -color-btnCmd:pink;
     /** Couleur fond grille */
-    -color-grille: pink;
+    -color-grille: #C3EBC2;
     /** Couleur MenuBar */
-    -color-menuBar: pink;
+    -color-menuBar: #256F3F;
     /** Couleur fond retourArriere */
-    -color-retourArr: pink;
+    -color-retourArr: #E4F0D1;
 
 }
 .bTop,.bRight,.bLeft,.bBot,.bTpg,.bTpd{
@@ -45,9 +45,6 @@
 /** Couleur des boutons */
 .hide{
     -fx-background-color: -color-btnCmd;
-}
-.backHome{
-    background-color: -color-cercleArr;
 }
 .fond{
     -fx-background-color: -color-bg;

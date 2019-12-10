@@ -71,14 +71,6 @@
     -fx-font-weight : bold;
 }
 
-.gridpane {
-    -fx-border-color: black;
-    -fx-grid-lines-visible: true;
-    -fx-border: 2px solid;
-    -fx-halignment: center;
-    -fx-alignment: CENTER;  
-}
-
 
 .tuile {
     -fx-text-alignment: center;

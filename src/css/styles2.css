@@ -10,29 +10,62 @@
     -color-pane256 : #858AD6;
     -color-pane512 : #7577D1;
     -color-pane1024 : #6678D1;
-    -color-pane2048 : #A3E0D1;
+    -color-pane2048 : #2F658E;
     -color-pane4096 : #1E0B22;
     -color-pane8192 : #1E0B22;
-    -color-pane16384 : #1E0B22;
+    -color-pane16384 :#1E0B22;
 
-    /*couleur du background de la fenetre*/
+
+    /** couleur du background de la fenetre*/
     -color-bg : #0F0A1F;
-    /* couleur des bordures de la grille */
+    /** couleur du background du chrono*/
+    -color-chrono : #B3C7E6;
+    /** couleur du background du score*/
+    -color-score : #7586D1;
+    /** couleur du background des mouvements */
+    -color-score2 : #7586D1;
+    /** couleur de titre play */
+    -color-title : #B6D2E7; 
+    /** couleur des boutons fléchés */
+    -color-cmdSouris : #2F658E;
+    /** couleur show/hide cmd */
+    -color-btnCmd : #B3C7E6;
+    /** couleur des bordures de la grille */
     -color-border-grid : black;
-    /* couleur du background de la grille*/
-    -color-bg-grid : WHITE;
-    /* couleur du background du chrono*/
-    -color-chrono : #2F658E;
-    /* couleur du background des scores*/
-    -color-score :  #40BFBF;
+    /** Couleur fond grille */
+    -color-grille: white;
+    /** Couleur MenuBar */
+    -color-menuBar: #2F658E;
+    /** Couleur fond retourArriere */
+    -color-retourArr: #0F0A1F;
+
 }
-/* page blanche */
+.bTop,.bRight,.bLeft,.bBot,.bTpg,.bTpd{
+    -fx-background-color: -color-cmdSouris;
+}
+/** Couleur des boutons */
+.hide{
+    -fx-background-color: -color-btnCmd;
+}
 .fond{
     -fx-background-color: -color-bg;
 } 
-
-.mvtPane, .scorePane {
+.playLabel{
+    -fx-text-fill: -color-title;
+}
+.goBack{
+    -fx-background-color: -color-retourArr;
+}
+.menuBar{
+    -fx-background-color: -color-MenuBar;
+}
+.scorePane{
     -fx-background-color : -color-score;
+    -fx-border-radius : 10px;
+    -fx-background-radius : 10px;
+}
+.scorePane2{
+    -fx-background-color : -color-score2;
     -fx-border-radius : 10px;
     -fx-background-radius : 10px;
 }
@@ -42,51 +75,118 @@
     -fx-border-radius : 10px;
     -fx-background-radius : 10px;
 }
-
-.grille {
+.grille,.grille1,.grille2 {
     -fx-border-color: #F4DEDD; /*rosepale*/
-    -fx-background-color:pink;
     -fx-grid-lines-visible: true;
-    -fx-border-width: 2px ;
     -fx-border-style  : solid;
     -fx-halignment: center;
     -fx-alignment: CENTER;
+    -fx-background-color: -color-grille ;  
 } /*grilles */
 
 
+.pane2 {
+    -fx-background-color: -color-pane2;
+    -fx-border-color: black; 
+}
+
+.pane4 {
+    -fx-background-color: -color-pane4 ;
+    -fx-border-color: black;
+}
+
+.pane8 {
+    -fx-background-color:  -color-pane8;
+    -fx-border-color: black;
+}
+
+.pane16 {
+    -fx-background-color: -color-pane16;
+    -fx-border-color: black;
+}
+
+.pane32 {
+    -fx-background-color: -color-pane32; /*rose1++*/
+    -fx-border-color: black;
+}
+
+.pane64 {
+    -fx-background-color: -color-pane64; 
+    -fx-border-color: black;
+}
+
+.pane128 {
+    -fx-background-color: -color-pane128; 
+    -fx-border-color: black;
+}
+
+.pane256 {
+    -fx-background-color: -color-pane256;
+    -fx-border-color: black;
+}
+
+.pane512 {
+    -fx-background-color: -color-pane512; 
+    -fx-border-color: black;
+}
+
+.pane1024 {
+    -fx-background-color: -color-pane1024;
+}
+
+.pane2048 {
+    -fx-background-color: -color-pane2048;
+    -fx-border-color: black;
+}
+
+.pane4096 {
+    -fx-background-color: -color-pane4096;
+    -fx-border-color: black;
+}
+
+.pane8192 {
+    -fx-background-color: -color-pane8192;
+    -fx-border-color: black;
+}
+
+.pane16384 {
+    -fx-background-color: -color-pane16384;
+    -fx-border-color: black;
+}
+
 .tuile {
     -fx-text-alignment: center;
-    -fx-halignment: center; 
-    -fx-text-fill: white;
+    -fx-halignment: center;
+    -fx-text-fill: black;
     -fx-font-size: 30;
     -fx-padding: 33 47 33 47;
 }
 .tuile10 {
     -fx-text-alignment: center;
-    -fx-halignment: center; 
-    -fx-text-fill: white;
+    -fx-halignment: center;
+    -fx-text-fill: #ffffff;
     -fx-font-size: 30;
     -fx-padding: 33 39 33 39;
 }
 
 .tuile100 {
     -fx-text-alignment: center;
-    -fx-halignment: center; 
-    -fx-text-fill: white;
+    -fx-halignment: center;
+    -fx-text-fill: #ffffff;
     -fx-font-size: 30;
     -fx-padding: 33 31 33 31;
 }
 .tuile1000 {
     -fx-text-alignment: center;
-    -fx-halignment: center; 
-    -fx-text-fill: white;
+    -fx-halignment: center;
+    -fx-text-fill: #ffffff;
     -fx-font-size: 30;
     -fx-padding: 33 23 33 23;
 }
 .tuile10000 {
     -fx-text-alignment: center;
-    -fx-halignment: center; 
-    -fx-text-fill: white;
+    -fx-halignment: center;
+    -fx-text-fill: #ffffff;
     -fx-font-size: 30;
     -fx-padding: 33 15 33 15;
 }
