@@ -7,6 +7,7 @@ package Model;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.fxml.FXML;
 
 /**
  *
@@ -16,10 +17,10 @@ public class Case implements Parametres, Cloneable, java.io.Serializable {
 
     private int x, y, valeur, numeroGrille, lastX, lastY, lastGrille;;
     private Grille grille;
-    private Pane pane;
-    private Label label;
-
-
+    @FXML
+    private transient Pane pane;
+    @FXML
+    private transient Label label;
      public Case(int abs, int ord, int v, int numeroGrille) {
         this.x = abs;
         this.y = ord;

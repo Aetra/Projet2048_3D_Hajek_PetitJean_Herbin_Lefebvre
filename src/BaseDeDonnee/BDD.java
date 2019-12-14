@@ -131,7 +131,7 @@ public class BDD implements Parametre{
                         System.out.println(chronoBDD +" > "+chrono);
                         Statement updateMove = co.createStatement();
                         /*  Si notre mouvement est supérieur à celui du tableau alors UPDATE mouvement*/
-                        updateMove.executeUpdate("UPDATE scoreboard SET Mouvement = '"+mvt+"' WHERE Pseudo = "+pseudo);
+                        updateMove.executeUpdate("UPDATE scoreboard SET Chronometre = '"+chrono+"' WHERE Pseudo = "+pseudo);
                     }
                 }
                 

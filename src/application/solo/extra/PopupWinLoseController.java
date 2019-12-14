@@ -5,6 +5,7 @@
  */
 package application.solo.extra;
 
+import application.solo.FXMLDocumentController;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;

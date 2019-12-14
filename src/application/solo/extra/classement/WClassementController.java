@@ -7,7 +7,9 @@ package application.solo.extra.classement;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 
 /**
  * FXML Controller class
@@ -15,6 +17,9 @@ import javafx.fxml.Initializable;
  * @author Simon
  */
 public class WClassementController implements Initializable {
+
+    @FXML
+    private ListView<?> listv1;
 
     /**
      * Initializes the controller class.
