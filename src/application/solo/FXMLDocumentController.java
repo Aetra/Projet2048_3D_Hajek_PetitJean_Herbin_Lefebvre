@@ -400,6 +400,14 @@ public class FXMLDocumentController implements Initializable, Serializable, Para
             }
         }
      }
+     
+     public boolean getStartParty(){
+         return this.hasGameStarted;
+     }
+     
+     public Timeline getTimeLine(){
+         return this.timeline;
+     }
 
 
      @FXML
