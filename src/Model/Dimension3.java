@@ -14,14 +14,12 @@ import java.util.Iterator;
 /**
  * @author aurelien
  */
-public enum Dimension3 implements Parametres, java.io.Serializable {
+public class Dimension3 implements Parametres, java.io.Serializable {
 
-    INSTANCE;
-    
     private Grille[] mesGrilles = new Grille[ETAGE];
     //private Grille[] mesGrilles;
 
-    private Dimension3()
+    public Dimension3()
     {
           for( int i = 0 ; i < ETAGE ; i++ )
         {
@@ -32,10 +30,6 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
            this.mesGrilles[i] = new Grille(i);
         }
 
-    }
-    
-     public static Dimension3 getInstance() {
-        return INSTANCE;
     }
      
     @Override
@@ -203,7 +197,7 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
     }
                       
     public void initStart(Grille[] dim3) {
-        System.out.println(dim3[0]);
+        //System.out.println(dim3[0]);
         this.mesGrilles[0] = dim3[0];
         this.mesGrilles[1] = dim3[1];
         this.mesGrilles[2] = dim3[2];

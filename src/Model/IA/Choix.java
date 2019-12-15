@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package IA;
-
+package Model.IA;
 import Model.Dimension3;
 
 /**
  *
  * @author aurelien
  */
-
 public class Choix {
     private int direction;
     private long poids;

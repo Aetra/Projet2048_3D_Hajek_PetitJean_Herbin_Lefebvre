@@ -20,6 +20,6 @@ public interface Parametres {
     static final int tailleY =334/3;
     
     static final int ETAGE = 3; 
-    static final int DESCENDRE = 6;
+    static final int DESCENDRE =6;
     static final int MONTER = 5;
 }

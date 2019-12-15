@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Model;
-import Model.IA.God;
+package Model.IA;
+
 import java.util.Scanner;
-import Model.Case;
+import Model.Grille;
+import Model.Dimension3;
 
  
-public class Main implements Parametres {
+public class Main implements Model.Parametres {
 
        
    public static void main(String[] args) throws CloneNotSupportedException {
@@ -25,13 +26,16 @@ public class Main implements Parametres {
        boolean b = g.nouvelleCase();
        b = g.nouvelleCase();
        System.out.println(g);
-       
+        God oranos = new God(g);
+
        Scanner sc = new Scanner(System.in);
                 
         System.out.println(g);
         
         while (!g.partieFinie()) {
-            System.out.println("Déplacer vers la Droite (d), Gauche (q), Haut (z), ou Bas (s), Monter (m) et Descendre (l)");
+            System.out.println("Déplacer vers la Droite (d), Gauche (q), Haut (z), ou Bas (s) ?");
+            System.out.println("Ajout : Monter (m) et Descendre (s)");
+            System.out.print("Ulysse... ");  System.out.println(oranos);
             String s = sc.nextLine();
             s.toLowerCase();
             if (!(s.equals("d") || s.equals("droite")
@@ -40,21 +44,11 @@ public class Main implements Parametres {
                     || s.equals("s") || s.equals("bas")
                     || s.equals("m") || s.equals("monter")
                     || s.equals("l") || s.equals("descendre")
-                    || s.equals("IA") || s.equals("GOD")
                     )) {
                 System.out.println("Vous devez écrire d pour Droite, q pour Gauche, z pour Haut ou s pour Bas");
                 System.out.println("Vous devez écrire m pour Monter ou l pour Descendre");
             } else {
                 int direction;
-
-                if(s.equals("IA"))
-                {
-                    God oranos = new God(g);
-                    System.out.println("Vous avez appelé l'aide des dieux:");
-                    System.out.println("Ulysse... ");  
-                    System.out.println(oranos);
-                }
-                else{
                 if (s.equals("d") || s.equals("droite")) 
                 {
                     direction = DROITE;
@@ -90,7 +84,6 @@ public class Main implements Parametres {
                 }
                 System.out.println(g);
                 if (g.getValeurMax()>=OBJECTIF) g.victory();
-            }
             }
         }
         g.gameOver();

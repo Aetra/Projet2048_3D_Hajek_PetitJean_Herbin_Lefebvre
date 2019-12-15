@@ -9,11 +9,9 @@ import Model.Case;
 import Model.Dimension3;
 import Model.Grille;
 import Model.Originator;
-import Model.Parametres;
-import static Model.Parametres.tailleX;
-import static Model.Parametres.tailleY;
 import Model.Tuile2048;
 import Model.TuileComposite;
+import Model.IA.God;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -60,7 +58,7 @@ import javax.swing.*;
  *
  * @author Val
  */
-public class FXMLDocumentController implements Initializable, Serializable, Parametres{
+public class FXMLDocumentController implements Initializable, Serializable, Model.Parametres{;
     private boolean hasGameStarted = false;
 
     @FXML
@@ -113,6 +111,8 @@ public class FXMLDocumentController implements Initializable, Serializable, Para
     private Label labelMinutes;
     @FXML
     private Label labelHours;
+    @FXML
+    private Label labelIa;
 
     private static final Integer STARTTIME = 0;
     private static final Integer MINUTESINANHOUR = 59;
@@ -183,13 +183,14 @@ public class FXMLDocumentController implements Initializable, Serializable, Para
         grille2.getStyleClass().add("grille2");
         menuBar.getStyleClass().add("menuBar");
         goBack.getStyleClass().add("goBack");
+        labelIa.getStyleClass().add("labelIa");
 
         // Initialisation de ma multi-grille
         modelGrille1 = new Grille(0);
         modelGrille2 = new Grille(1);
         modelGrille3 = new Grille(2);        
         dim3 = new Grille[]{modelGrille1, modelGrille2, modelGrille3};
-        mesGrilles = Dimension3.INSTANCE;
+        mesGrilles = new Dimension3();
                 
         // Pour le bouton revenir en arrière
         originator = new Originator();
@@ -335,10 +336,6 @@ public class FXMLDocumentController implements Initializable, Serializable, Para
             showLab.setToValue(1.0);
             showLab.play();
         }
-
-        //if (tp.isVisible())
-          //  tp.setVisible(false);
-        //else tp.setVisible(true);
      }
     
 
@@ -400,14 +397,6 @@ public class FXMLDocumentController implements Initializable, Serializable, Para
             }
         }
      }
-     
-     public boolean getStartParty(){
-         return this.hasGameStarted;
-     }
-     
-     public Timeline getTimeLine(){
-         return this.timeline;
-     }
 
 
      @FXML
@@ -453,7 +442,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Para
          modelGrille1 = new Grille(0);
          modelGrille2 = new Grille(1);
          modelGrille3 = new Grille(2);
-         mesGrilles = Dimension3.INSTANCE;
+         mesGrilles = new Dimension3();
          dim3 = new Grille[]{modelGrille1, modelGrille2, modelGrille3};
          mesGrilles.initStart(dim3);
     /*
@@ -497,7 +486,6 @@ public class FXMLDocumentController implements Initializable, Serializable, Para
     @FXML
     private void keyPressed(KeyEvent ke) throws CloneNotSupportedException, IOException{
         TuileComposite t = new TuileComposite();
-
         System.out.println("touche appuyée");
         String touche = ke.getText();
         if (touche.compareTo("q") == 0) { // utilisateur appuie sur "q" pour envoyer la tuile vers la gauche
@@ -780,7 +768,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Para
 
     /** deroulement Du jeu */
     public void nouvelleCase() throws IOException {
-      if(mesGrilles.getValeurMax()<Parametres.OBJECTIF){
+      if(mesGrilles.getValeurMax()<OBJECTIF){
         ArrayList<Integer> grillePossible = new ArrayList<>();
         grillePossible.add(0); grillePossible.add(1); grillePossible.add(2);
         // si le tableau est vide cela signifie qu'on ne peut ajouter aucune case dans les grilles
@@ -810,6 +798,26 @@ public class FXMLDocumentController implements Initializable, Serializable, Para
     
     @FXML
     private void regles(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/solo/extra/GameRules.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("FINAL RULES");
+        stage.setScene(new Scene(root1));  
+        stage.show();
+    }
+        @FXML
+    private void iaJustHelp(ActionEvent event) throws IOException {
+       labelIa.setText("");
+       God oranos= new God(mesGrilles);
+       System.out.println("Vous avez appelé l'aide des dieux:");
+       System.out.println("Ulysse... ");  
+       System.out.println(oranos);
+       labelIa.setText("Vous avez appelé l'aide des dieux.   " +oranos);
+       
+    }
+        @FXML
+    private void iaPlay(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/solo/extra/GameRules.fxml"));
         Parent root1 = (Parent) fxmlLoader.load();
         Stage stage = new Stage();

@@ -3,14 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package IA;
-import IA.Choix;
+package Model.IA;
+import Model.Dimension3;
 import Model.Case;
-import Model.Dimension3;
-import Model.Dimension3;
-import Model.Grille;
-import Model.Parametres;
-import static java.time.Clock.system;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,9 +15,7 @@ import java.util.logging.Logger;
  *
  * @author aurelien
  */
-public class God implements Parametres {
-    private Grille[] dim3;
-    private Dimension3 mesGrilles;
+public class God implements Model.Parametres {
     
     private final int xCoup = 5;    // final 5
     private Dimension3 game;
@@ -42,19 +35,19 @@ public class God implements Parametres {
         try {
             switch( omniscience() )
             {
-                case GAUCHE:    return "Les dieux disent : Gauche (g)";
+                case GAUCHE:    return "Les dieux disent : Gauche (q)";
                 case DROITE:    return "Les dieux disent : Droite (d)";
-                case HAUT:      return "Les dieux disent : Haut (h)";
-                case BAS:       return "Les dieux disent : Bas (b)";
+                case HAUT:      return "Les dieux disent : Haut (z)";
+                case BAS:       return "Les dieux disent : Bas (s)";
                 case MONTER:    return "Les dieux disent : Monter (m)";
-                case DESCENDRE: return "Les dieux disent : Descendre (s)";
+                case DESCENDRE: return "Les dieux disent : Descendre (l)";
                 default:        return "I'm sorry Dave...";
             }
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(God.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("Pas fou lerreur");
-        return null;
+        return null;    
     }
 
     public int omniscience() throws CloneNotSupportedException
@@ -258,22 +251,22 @@ public class God implements Parametres {
         }
         return null;
     }
-
+    
     
     private Dimension3 clone(Dimension3 original)
     {
-        Dimension3 newResult = Dimension3.INSTANCE;
-         for (int i = 0; i < 3; i++) {
-
-         //  for (Case c : this.dim3[i].getGrille()) {
-           for (Case c : original.getMesGrilles()[i].getGrille()) {
-
+        Dimension3 newResult = new Dimension3();
+        
+        for( int i = 0 ; i < ETAGE ; i++ )
+        {
+            for (Case c : original.getMesGrilles()[i].getGrille() ) 
+            {
             Case cN = new Case(c.getX(), c.getY(), c.getValeur(), c.getNumGrille());
-            newResult.getMesGrilles()[i].getGrille().add(cN);
-            cN.setGrille(newResult.getMesGrilles()[i]);
-          }
-                   
-         }
-           return newResult;
+                newResult.getMesGrilles()[i].getGrille().add(cN);
+                cN.setGrille(newResult.getMesGrilles()[i]);
+            }
+        }
+        
+        return newResult;
     }
 }

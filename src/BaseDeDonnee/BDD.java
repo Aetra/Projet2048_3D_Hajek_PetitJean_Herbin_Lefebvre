@@ -81,14 +81,13 @@ public class BDD implements Parametre{
     }
 
     /*      Fonction qui permet d'inserer une ligne de score*/
-    protected static void insertLigneScore(String pseudoInsert, int mvt, int score, double chrono, Connection co){
+    protected static void insertLigneScore(String pseudoInsert, int mvt, int score, int chrono, Connection co){
                 /*  Variables */
         String pseudo = "'"+pseudoInsert+"'";
         boolean firstStrike = true; //c'est notre première partie 
        //String pseudo = "'"+pseudo+"'"; // cela va nous permettre de chercher notre pseudo dans le tableau de score
        
         try{
-            
             Statement verifFirstStrike = co.createStatement();
             ResultSet res = verifFirstStrike.executeQuery("SELECT COUNT(*) FROM scoreboard WHERE Pseudo = "+pseudo);
            
