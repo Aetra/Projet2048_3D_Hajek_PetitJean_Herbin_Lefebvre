@@ -11,9 +11,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Iterator;
 
-/**
- * @author aurelien
- */
+
 public enum Dimension3 implements Parametres, java.io.Serializable {
 
     INSTANCE;
@@ -25,16 +23,19 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
     {
           for( int i = 0 ; i < ETAGE ; i++ )
         {
-            // 0: Haut
-            // 1: Moyen
-            // 2: Bas
-
+            // 0: Grille du Haut
+            // 1: Grille du Milieu
+            // 2: Grille du Bas
            this.mesGrilles[i] = new Grille(i);
         }
 
     }
     
-     public static Dimension3 getInstance() {
+    /**
+     * Retourne l'instance du jeu actuel.
+     * @return l'instance du jeu
+     */
+    public static Dimension3 getInstance() {
         return INSTANCE;
     }
      
@@ -49,6 +50,13 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
         }
         return result;
     }
+    
+    /**
+     * Fait déplacer toutes les cases des grilles du jeu vers une direction donnée.
+     * @param direction la direction où on souhaite faire déplacer les cases.
+     * @return Vrai s'il y a eu au moins déplacement ou Faux dans le cas contraire.
+     * @throws CloneNotSupportedException 
+     */
     public boolean lanceurDeplacerCases(int direction) throws CloneNotSupportedException
     {
         boolean result = false;
@@ -77,6 +85,10 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
         return result;
     }
   
+    /**
+     * Indique si la partie est terminée.
+     * @return Vrai si les conditions de défaites ont été remplies ou Faux dans le cas contraire.
+     */
     public boolean partieFinie() {
         
         int over = 0;
@@ -90,6 +102,10 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
         return ( over == ETAGE );
     }
     
+    /**
+     * Génère aléatoirement une case parmis une des grilles du jeu. Il y a 1 chance sur 2 que sa valeur soit égale à 2 ou 4.
+     * @return Vrai si on a pu mettre une nouvelle case ou Faux dans le cas contraire.
+     */
     public boolean nouvelleCase() 
     {
         ArrayList<Grille> mesGrillesLibres = new ArrayList<>();
@@ -127,6 +143,10 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
         }
     }
     
+    /**
+     * Retourne la valeur la plus haute actuellement dans le jeu.
+     * @return un entier
+     */
     public int getValeurMax() {
         int max[] = new int[ETAGE];
         int maxV = 0;
@@ -160,11 +180,18 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
         return true;
     }
     */
+    
+    /**
+     * Affiche que les conditions de victoire ont été remplies puis ferme le jeu.
+     */
     public void victory() {
         System.out.println("Bravo ! Vous avez atteint " + this.getValeurMax());
         System.exit(0);
     }
 
+    /**
+     * Affiche que les conditions de défaite ont été remplies puis ferme le jeu.
+     */
     public void gameOver() {
         System.out.println("La partie est finie. Votre score est " + this.getValeurMax());
         System.exit(1);
@@ -201,7 +228,11 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
         }
         return null;
     }
-                      
+    
+    /**
+     * Initialise les grilles du jeu selon les paramètres données.
+     * @param dim3 un tableau de grilles
+     */
     public void initStart(Grille[] dim3) {
         System.out.println(dim3[0]);
         this.mesGrilles[0] = dim3[0];
@@ -209,6 +240,11 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
         this.mesGrilles[2] = dim3[2];
     }
     
+    /**
+     * Transforme une grille en un tableau de cases.
+     * @param g une grille du jeu
+     * @return un tableau de cases.
+     */
     public Case[][] convertHash(Grille g) {
         HashSet<Case> set = g.getGrille();
         Case[][] convert = new Case[3][3];
@@ -218,8 +254,12 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
         return convert;
     }
     
-    
-  public boolean fusionL() throws CloneNotSupportedException {
+    /**
+     * Fusionne les cases de la grille de haut en bas.
+     * @return Vrai si toutes les cases ont été fusionnées ou Faux dans le cas contraire.
+     * @throws CloneNotSupportedException 
+     */
+    public boolean fusionL() throws CloneNotSupportedException {
         boolean b1 = this.teleportationSameCase(this.getMesGrilles()[0], this.getMesGrilles()[1], -1);
         boolean b2 = this.teleportationSameCase(this.getMesGrilles()[1], this.getMesGrilles()[2], -1);
         
@@ -228,6 +268,11 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
         return b1 || b2 || b3 || b4;
     }
     
+    /**
+     * Fusionne les cases de la grille de bas en haut.
+     * @return Vrai si toutes les cases ont été fusionnées ou Faux dans le cas contraire.
+     * @throws CloneNotSupportedException 
+     */
     public boolean fusionR() throws CloneNotSupportedException {
         boolean b1 = this.teleportationSameCase(this.getMesGrilles()[2], this.getMesGrilles()[1], 1);
         boolean b2 = this.teleportationSameCase(this.getMesGrilles()[1], this.getMesGrilles()[0], 1);
@@ -236,15 +281,34 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
         boolean b4 = this.teleportationEmptyCase(this.getMesGrilles()[1], this.getMesGrilles()[0], 1);
         
         return b1 || b2 || b3 || b4;
-       }
-        public Grille[] getMesGrilles()
-        {
-            return this.mesGrilles;
-        }
-     public void setMesGrilles(Grille[] multiGrille) {
+    }
+    
+    /**
+     * Retourne les grilles du jeu.
+     * @return un tableau de grille
+     */
+    public Grille[] getMesGrilles()
+    {
+        return this.mesGrilles;
+    }
+    
+    /**
+     * Fixe les grilles du jeu en fonction des paramètres.
+     * @param multiGrille un tableau de grilles
+     */
+    public void setMesGrilles(Grille[] multiGrille) {
         this.mesGrilles = mesGrilles;
     }
-        public boolean teleportationEmptyCase(Grille left, Grille right, int c) throws CloneNotSupportedException { // de base se fait de la droite vers la gauche (<-)
+    
+    /**
+     * Déplace toutes les cases d'une grille à une autre. Leurs destinations sont des cases vides.
+     * @param left la grille de départ
+     * @param right la grille de destination
+     * @param c la direction que prennent les cases
+     * @return Vrai s'il y a eu au moins un déplacement ou Faux dans le cas contraire
+     * @throws CloneNotSupportedException 
+     */
+    public boolean teleportationEmptyCase(Grille left, Grille right, int c) throws CloneNotSupportedException { // de base se fait de la droite vers la gauche (<-)
         boolean b = false;
         Case[][] l = this.convertHash(left);
         Case[][] r = this.convertHash(right);
@@ -258,7 +322,7 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
                         fusion.setGrille(left);
                         fusion.setLastX(fusion.getX());
                         fusion.setLastY(fusion.getY());
-                        // ne peas mettre lastGrille : sinon le mouvement se fera avec une grille en moins !
+                        // ne pas mettre lastGrille : sinon le mouvement se fera avec une grille en moins !
                         left.getGrille().add(fusion); // ajout de la nouvelle case
                                               
                         right.getGrille().remove(r[x][y]);
@@ -270,7 +334,14 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
         return b;
     }
 
-   
+    /**
+     * Déplace toutes les cases d'une grille à une autre. Leurs destinations sont des cases remplies.
+     * @param left la grille de départ
+     * @param right la grille de destination
+     * @param c la direction que prennent les cases
+     * @return Vrai s'il y a eu au moins un déplacement ou Faux dans le cas contraire
+     * @throws CloneNotSupportedException 
+     */
     public boolean teleportationSameCase(Grille left, Grille right, int c) throws CloneNotSupportedException { // de base se fait de la droite vers la gauche (<-)
         boolean b = false;
         Case[][] l = this.convertHash(left);
@@ -278,8 +349,8 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
         
         for (int x = 0; x < TAILLE; x++) {
             for (int y = 0; y < TAILLE; y++) {
-                if (r[x][y] != null) { // si ma case dans la grille droite existe alors
-                    if (l[x][y] != null) { // si ma case dans la grille droite existe alors
+                if (r[x][y] != null) { // si la case dans la grille droite existe alors
+                    if (l[x][y] != null) { // si la case dans la grille droite existe alors
                         if (l[x][y].valeurEgale(r[x][y])) { // si ces cases ont la mêmes valeurs alors je fusionne
                             Case fusion = (Case) l[x][y].clone();
                             fusion.setValeur(fusion.getValeur()*2); // Fusion
@@ -299,7 +370,7 @@ public enum Dimension3 implements Parametres, java.io.Serializable {
                             l[x][y].setLastX(l[x][y].getX());
                             l[x][y].setLastY(l[x][y].getY());                            
                         }
-                    } else { // la position est disponible donc je tp la case
+                    } else { // la position est disponible donc la case est téléportée
                         Case fusion = (Case) r[x][y].clone();
                         fusion.setNumGrille(fusion.getNumGrille() + c);
                         fusion.setLastGrille(r[x][y].getNumGrille());

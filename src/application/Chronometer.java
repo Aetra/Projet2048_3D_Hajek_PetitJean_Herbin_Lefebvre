@@ -20,7 +20,9 @@ public class Chronometer {
     private Integer timeHours = STARTTIME;
 
 
-    /** Permet de relancer le chronomètre en partant de 0*/
+    /** 
+     * Permet de relancer le chronomètre en partant de 0.
+     */
     private void restart() {
 
         timeline.playFromStart();
