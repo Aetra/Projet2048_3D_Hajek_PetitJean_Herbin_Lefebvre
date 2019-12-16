@@ -917,5 +917,9 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         }
 
     }
-        
+ 
+    /**Retourne le boolean qui permemt de dire si la partie à commencée*/
+    public boolean getHasGameStarted(){
+        return this.hasGameStarted;
+    }
 }
