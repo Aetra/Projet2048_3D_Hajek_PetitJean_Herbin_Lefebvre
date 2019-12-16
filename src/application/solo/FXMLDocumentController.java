@@ -38,6 +38,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
@@ -60,7 +61,6 @@ import javax.swing.*;
  */
 public class FXMLDocumentController implements Initializable, Serializable, Model.Parametres{;
     private boolean hasGameStarted = false;
-
     @FXML
     private Pane scorePane;
     @FXML
@@ -78,7 +78,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
     @FXML
     private Button hide;
     @FXML
-    private MenuBar menuBar;
+    private MenuBar menuBar; 
     @FXML
     private MenuItem reglesGames;
     @FXML
@@ -86,23 +86,15 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
     @FXML
     private Pane goBack;
     @FXML    
-    private RadioMenuItem thm1;
+    private MenuItem thm1,thm2,thm3,fichierMenu,rankingMenu,helpMenu;
     @FXML
-    private RadioMenuItem thm2;
-    @FXML
-    private RadioMenuItem thm3;
-    @FXML
-    private Button bTop;
-    @FXML
-    private Button bBot, bLeft, bRight, bTpg, bTpd;
+    private Button bBot, bLeft, bRight, bTpg, bTpd,bTop;
     @FXML
     private Pane fond;
     @FXML
     private Pane playButton;
     @FXML
-    private Label playLabel;
-    @FXML
-    private Label mvtScoreLabel,tp;
+    private Label mvtScoreLabel,tp, playLabel, scoreLabel, mvtLabel;
     private Label lTp,lUp,lDown,lMove,lRight,lLeft,lBot,lTop;
     private Timeline timeline;
     @FXML
@@ -112,7 +104,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
     @FXML
     private Label labelHours;
     @FXML
-    private Label labelIa;
+    private Label iaLabel;
 
     private static final Integer STARTTIME = 0;
     private static final Integer MINUTESINANHOUR = 59;
@@ -155,6 +147,8 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
     private RadioMenuItem thm4;
     @FXML
     private ToggleGroup chgtStyles1;
+    @FXML
+    private ImageView backHome;
     
     /**
      * Initializes the controller class.
@@ -183,7 +177,13 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         grille2.getStyleClass().add("grille2");
         menuBar.getStyleClass().add("menuBar");
         goBack.getStyleClass().add("goBack");
-        labelIa.getStyleClass().add("labelIa");
+        iaLabel.getStyleClass().add("iaLabel");
+        mvtLabel.getStyleClass().add("mvtLabel");
+        scoreLabel.getStyleClass().add("scoreLabel");
+        fichierMenu.getStyleClass().add("fichierMenu");
+        rankingMenu.getStyleClass().add("rankingMenu");
+        helpMenu.getStyleClass().add("helpMenu");
+
 
         // Initialisation de ma multi-grille
         modelGrille1 = new Grille(0);
@@ -808,12 +808,12 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
     }
         @FXML
     private void iaJustHelp(ActionEvent event) throws IOException {
-       labelIa.setText("");
+       iaLabel.setText("");
        God oranos= new God(mesGrilles);
        System.out.println("Vous avez appelé l'aide des dieux:");
        System.out.println("Ulysse... ");  
        System.out.println(oranos);
-       labelIa.setText("Vous avez appelé l'aide des dieux.   " +oranos);
+       iaLabel.setText("Vous avez appelé l'aide des dieux.   " +oranos);
        
     }
         @FXML
@@ -856,7 +856,14 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
             grille1.getStyleClass().add("grille1");
             grille2.getStyleClass().add("grille2");
             menuBar.getStyleClass().add("menuBar");
-            goBack.getStyleClass().add("goBack");    
+            goBack.getStyleClass().add("goBack");
+            mvtLabel.getStyleClass().add("iaLabel");
+            mvtLabel.getStyleClass().add("mvtLabel");
+            scoreLabel.getStyleClass().add("scoreLabel");
+            fichierMenu.getStyleClass().add("fichierMenu");
+            rankingMenu.getStyleClass().add("rankingMenu");
+            helpMenu.getStyleClass().add("helpMenu");
+            
     }
       @FXML
     private void switchThm(ActionEvent e) {
@@ -879,6 +886,13 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         grille2.getStylesheets().clear();
         menuBar.getStylesheets().clear();
         goBack.getStylesheets().clear();
+        mvtLabel.getStyleClass().clear();
+        mvtLabel.getStyleClass().clear();
+        scoreLabel.getStyleClass().clear();
+        fichierMenu.getStyleClass().clear();
+        rankingMenu.getStyleClass().clear();
+        helpMenu.getStyleClass().clear();
+            
 
         RadioMenuItem source = (RadioMenuItem) e.getSource();
         if (source == thm1) {
