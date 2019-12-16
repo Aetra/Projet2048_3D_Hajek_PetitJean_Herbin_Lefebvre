@@ -110,7 +110,7 @@ public class BDD implements Parametre{
                 System.out.println("Voici score BDD "+ scoreBDD);
                 int moveBDD = recupMove(pseudo,co); // c'est le mouvement que l'on recupère si déjà joué
                 System.out.println("Voici move BDD " + moveBDD);
-                int chronoBDD=recupChrono(pseudo,co);
+                double chronoBDD=recupChrono(pseudo,co);
                 if(scoreBDD < score){
                     /*  Si notre score est supérieur à celui en du tableau alors on UPDATE le score   */
                     Statement updateScore = co.createStatement();
@@ -169,8 +169,8 @@ public class BDD implements Parametre{
        }catch(SQLException e){} 
         return moveRecup;
     }
-      protected static int recupChrono(String pseudoBDD, Connection co){
-       int chrono = 0;
+      protected static double recupChrono(String pseudoBDD, Connection co){
+       double chrono = 0;
         try{
             Statement isCo = co.createStatement();
             String querry ="SELECT `Chronometre` FROM `scoreboard` WHERE `Pseudo` = "+pseudoBDD;

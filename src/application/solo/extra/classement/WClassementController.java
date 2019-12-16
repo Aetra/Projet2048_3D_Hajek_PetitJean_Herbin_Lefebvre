@@ -62,7 +62,11 @@ public class WClassementController extends BDD implements Initializable {
             boolean pseudo = verifPseudo(pseudoSearch,this.co);
             /*Ici 2 cas soit la recherche aboutis soit il c'est trompé*/
             if(pseudo == true){
-            
+                double chrono = recupChrono(pseudoSearch,this.co);
+                int score = recupScore(pseudoSearch,this.co);
+                int move = recupMove(pseudoSearch,this.co);
+                
+                
             }
             
             /*Dans ce cas on affiche tout avec une erreur via le label pasDeCorrespondance*/
