@@ -857,7 +857,8 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
             grille2.getStyleClass().add("grille2");
             menuBar.getStyleClass().add("menuBar");
             goBack.getStyleClass().add("goBack");
-            mvtLabel.getStyleClass().add("iaLabel");
+            iaLabel.getStyleClass().add("iaLabel");
+
             mvtLabel.getStyleClass().add("mvtLabel");
             scoreLabel.getStyleClass().add("scoreLabel");
             fichierMenu.getStyleClass().add("fichierMenu");
@@ -892,7 +893,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         fichierMenu.getStyleClass().clear();
         rankingMenu.getStyleClass().clear();
         helpMenu.getStyleClass().clear();
-            
+        mvtLabel.getStyleClass().clear();
 
         RadioMenuItem source = (RadioMenuItem) e.getSource();
         if (source == thm1) {
