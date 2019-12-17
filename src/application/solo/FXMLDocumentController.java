@@ -50,6 +50,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import javax.swing.*;
@@ -198,7 +199,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         mesGrilles.initStart(dim3);
     }
     
-    /** Retourne la durée total du chrono en secondes*/
+     /** Retourne la durée total du chrono en secondes*/
      public double getCurrentTime() {
          return timeline.getCurrentTime().toSeconds();
      }
@@ -221,7 +222,10 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
             oos.writeObject(this.modelGrille1);
             oos.writeObject(this.modelGrille2);
             oos.writeObject(this.modelGrille3);
+            System.out.println("ToutesLessauvegardes good");
             oos.flush();
+            System.out.println("ToutesLessauvegardes good2");
+
         } catch (final java.io.IOException e) {
             e.printStackTrace();
         } catch (URISyntaxException e) {
@@ -245,17 +249,17 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         Grille[] grilles = new Grille[3];
         try {
             File f = new File(new File(new File(FXMLDocumentController.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent()).getParent() + "\\save.ser");
-
             final FileInputStream fichierIn = new FileInputStream(f);
             ois = new ObjectInputStream(fichierIn);
-            //mGrille = (MultiGrille) ois.readObject();
             for (int i = 0; i < grilles.length; i++) {
                 grilles[i] = (Grille) ois.readObject();
+                System.out.println("Serialization");
+                System.out.println(grilles[i]);
+                //Enregistre DANS chq grille chelou pette couilles
             }
-            this.dim3 = grilles;
             this.mesGrilles.setMesGrilles(grilles);
-
-        } catch (final java.io.IOException | ClassNotFoundException e) {
+            System.out.println(this.mesGrilles);
+          } catch (final java.io.IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } catch (URISyntaxException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -580,7 +584,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
   }
         @FXML
     private void clickTop(MouseEvent event) throws CloneNotSupportedException, IOException {
-            TuileComposite t = new TuileComposite();
+           TuileComposite t = new TuileComposite();
            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
             boolean b1 = this.dim3[0].lanceurDeplacerCases(HAUT);
             boolean b2 = this.dim3[1].lanceurDeplacerCases(HAUT);
@@ -798,45 +802,148 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
     
     @FXML
     private void regles(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/solo/extra/GameRules.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("FINAL RULES");
-        stage.setScene(new Scene(root1));  
-        stage.show();
-    }
-        @FXML
+         try {
+         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/solo/extra/GameRules.fxml"));
+         Parent root1 = (Parent) fxmlLoader.load();
+         Stage stage = new Stage();
+         stage.initModality(Modality.APPLICATION_MODAL);
+         stage.setTitle("Rules");
+         stage.setScene(new Scene(root1));
+         stage.setOnCloseRequest((WindowEvent event1) -> {
+             fond.setEffect(null);
+         });
+         stage.show();
+     } catch (Exception e) {
+        e.printStackTrace();
+     }
+ }
+    @FXML
     private void iaJustHelp(ActionEvent event) throws IOException {
        iaLabel.setText("");
        God oranos= new God(mesGrilles);
-       System.out.println("Vous avez appelé l'aide des dieux:");
-       System.out.println("Ulysse... ");  
-       System.out.println(oranos);
        iaLabel.setText("Vous avez appelé l'aide des dieux.   " +oranos);
        
     }
-        @FXML
-    private void iaPlay(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/solo/extra/GameRules.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("FINAL RULES");
-        stage.setScene(new Scene(root1));  
-        stage.show();
-    }
+    @FXML
+    private void iaPlay(ActionEvent event) throws IOException, CloneNotSupportedException {
+          iaLabel.setText("");
+          God oranos= new God(mesGrilles);
+          iaLabel.setText("Dieux à joué de la meilleur possible selon les 5 prochains coups");
+
+          String textStockIa= ""+oranos;
+          System.out.println(""+textStockIa);
+          TuileComposite t = new TuileComposite();
+          if(textStockIa.equals("Les dieux disent : Bas (s)"))
+          {
+            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));  
+            boolean b1 = this.dim3[0].lanceurDeplacerCases(BAS);
+            boolean b2 = this.dim3[1].lanceurDeplacerCases(BAS);
+            boolean b3 = this.dim3[2].lanceurDeplacerCases(BAS);
+            if (b1 || b2 || b3) {
+                t.add(new Tuile2048(this.dim3[0]));
+                t.add(new Tuile2048(this.dim3[1]));
+                t.add(new Tuile2048(this.dim3[2]));
+                t.threadMovement();
+                t.threadMovementCaseDead(fond);
+                this.nouvelleCase();           
+            }
+                  
+          }
+          else if(textStockIa.equals("Les dieux disent : Haut (z)"))
+          {
+            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
+            boolean b1 = this.dim3[0].lanceurDeplacerCases(HAUT);
+            boolean b2 = this.dim3[1].lanceurDeplacerCases(HAUT);
+            boolean b3 = this.dim3[2].lanceurDeplacerCases(HAUT);
+            if (b1 || b2 || b3) {
+                // Patern composite
+                t.add(new Tuile2048(this.dim3[0]));
+                t.add(new Tuile2048(this.dim3[1]));
+                t.add(new Tuile2048(this.dim3[2]));
+                t.threadMovement();
+                t.threadMovementCaseDead(fond);
+                this.nouvelleCase();
+            }   
+          }
+          else if(textStockIa.equals("Les dieux disent : Gauche (q)"))
+          {
+            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1)); // mise à jour du compteur de mouvement
+            boolean b1 = this.dim3[0].lanceurDeplacerCases(GAUCHE);
+            boolean b2 = this.dim3[1].lanceurDeplacerCases(GAUCHE);
+            boolean b3 = this.dim3[2].lanceurDeplacerCases(GAUCHE);
+            if (b1 || b2 || b3) {
+               // Patern composite
+                t.add(new Tuile2048(this.dim3[0]));
+                t.add(new Tuile2048(this.dim3[1]));
+                t.add(new Tuile2048(this.dim3[2]));
+                t.threadMovement();
+                t.threadMovementCaseDead(fond);
+                this.nouvelleCase();                 
+
+            }
+          }
+          else if(textStockIa.equals("Les dieux disent : Droite (d)"))
+          {
+            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1));
+            boolean b1 = this.dim3[0].lanceurDeplacerCases(DROITE);
+            boolean b2 = this.dim3[1].lanceurDeplacerCases(DROITE);
+            boolean b3 = this.dim3[2].lanceurDeplacerCases(DROITE);
+            if (b1 || b2 || b3) {
+               // Patern composite
+                t.add(new Tuile2048(this.dim3[0]));
+                t.add(new Tuile2048(this.dim3[1]));
+                t.add(new Tuile2048(this.dim3[2]));
+                t.threadMovement();
+                t.threadMovementCaseDead(fond);
+                this.nouvelleCase();                 
+
+            }
+          }
+          else if(textStockIa.equals("Les dieux disent : Monter (m)"))
+          {
+            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1)); // mise à jour du compteur de mouvement
+            boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(MONTER);  
+            if (fusionSuccess) {
+                t.add(new Tuile2048(this.dim3[0]));
+                t.add(new Tuile2048(this.dim3[1]));
+                t.add(new Tuile2048(this.dim3[2]));
+                t.threadMovement();
+                t.threadMovementCaseDead(fond);
+                this.nouvelleCase();                 
+            }
+              
+          }
+          else if(textStockIa.equals("Les dieux disent : Descendre (l)"))
+          {
+            boolean fusionSuccess = mesGrilles.lanceurDeplacerCases(DESCENDRE);  
+            if (fusionSuccess) {
+                t.add(new Tuile2048(this.dim3[0]));
+                t.add(new Tuile2048(this.dim3[1]));
+                t.add(new Tuile2048(this.dim3[2]));
+                t.threadMovement();
+                t.threadMovementCaseDead(fond);
+                this.nouvelleCase();
+            }
+ 
+          }
+          else{
+              System.out.println("Sorry Dave: je comprend pas");
+          }
+            mvtScoreLabel.setText(Integer.toString(Integer.parseInt(mvtScoreLabel.getText()) + 1)); // mise à jour du compteur de mouvement
+            this.updateTemplate();
+            System.out.println(mesGrilles);  
+        }
     
         @FXML
-    private void checkrank(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/solo/extra/WClassement.fxml"));
-        Parent root1 = (Parent) fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.setTitle("Classement");
-        stage.setScene(new Scene(root1));  
-        stage.show();
-      }
+        private void checkrank(ActionEvent event) throws IOException {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/solo/extra/WClassement.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Classement");
+            stage.setScene(new Scene(root1));  
+            stage.show();
+          }
         
     private void prepStylesSheets(){
             scorePane.getStyleClass().add("scorePane");
@@ -901,9 +1008,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
            prepStylesSheets();
         } else if (source == thm2) {
             fond.getStylesheets().add("css/styles2.css");
-            prepStylesSheets();
-
-            
+            prepStylesSheets(); 
         } else if (source == thm3) {
             fond.getStylesheets().add("css/psychedelic.css");
             prepStylesSheets();

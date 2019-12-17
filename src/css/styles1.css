@@ -26,10 +26,16 @@
     -color-score2 :  #A43747;
     /** couleur de titre play */
     -color-title : #541C38; 
+    /** couleur texte "mouvements"*/
+    -color-txt-mvt : black;
+    /** couleur texte "score"*/
+    -color-txt-score : black;
     /** couleur des boutons fléchés */
     -color-cmdSouris : #A43747;
     /** couleur show/hide cmd */
     -color-btnCmd : #F4DEDD;
+    /** Couleur texte bouttons teleportation*/
+    -color-text-bTP: black ;
     /** couleur des bordures de la grille */
     -color-border-grid : black;
     /** Couleur fond grille */
@@ -42,6 +48,7 @@
 }
 .bTop,.bRight,.bLeft,.bBot,.bTpg,.bTpd{
     -fx-background-color: -color-cmdSouris;
+    -fx-text-fill : -color-text-bTP;
 }
 /** Couleur des boutons */
 .hide{
@@ -52,6 +59,14 @@
 } 
 .playLabel{
     -fx-text-fill: -color-title;
+}
+.mvtLabel, mvtScoreLabel{
+    -fx-text-fill : -color-txt-mvt;
+
+}
+.scoreLabel, scoreToLabel{
+    -fx-text-fill : -color-txt-score;
+    
 }
 .goBack{
     -fx-background-color: -color-retourArr;
