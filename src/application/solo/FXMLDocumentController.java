@@ -21,6 +21,7 @@ import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -66,7 +67,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
     @FXML
     private MenuItem reglesGames, rankG, thm1,thm2,thm3,thm4,fichierMenu,rankingMenu,helpMenu,leave,load;
     @FXML
-    private Button bBot, bLeft, bRight, bTpg, bTpd,bTop;
+    private Button bBot, bLeft, bRight, bTpg, bTpd,bTop,okButton;
     @FXML
     private Pane playButton;
     @FXML
@@ -97,6 +98,8 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
     // Pour le MenuItem revenir en arrière
     private Originator originator;
     private CareTaker careTaker;
+    private Grille[] stockGrilles=new Grille[3];
+
 
 
     private int x = 25, y = 295;
@@ -182,11 +185,13 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
      }
      
      /** Fonction permettant de quitter et de sauvegarder la dimension3
-      * 
+      * Accés au Menu fichier et Menu item Exit
+      * Enregistre dans un fichier save.ser le modèle actuel de la grille
+      * Fait appraître une fenêtre le renseignant sur son action
       * @param event 
       */
     @FXML
-    private void exit(ActionEvent event) {
+    private void exit(ActionEvent event) throws InterruptedException {
          ObjectOutputStream oos = null;
          try {
             File f = new File(new File(new File(FXMLDocumentController.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent()).getParent() + "\\save.ser");
@@ -195,10 +200,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
             oos.writeObject(this.modelGrille1);
             oos.writeObject(this.modelGrille2);
             oos.writeObject(this.modelGrille3);
-            System.out.println("ToutesLessauvegardes good");
             oos.flush();
-            System.out.println("ToutesLessauvegardes good2");
-
         } catch (final java.io.IOException e) {
             e.printStackTrace();
         } catch (URISyntaxException e) {
@@ -213,7 +215,20 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
                 e.printStackTrace();
             }
         }
-
+         try {
+         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/application/solo/extra/InfoUtileSave.fxml"));
+         Parent root1 = (Parent) fxmlLoader.load();
+         Stage stage = new Stage();
+         stage.initModality(Modality.APPLICATION_MODAL);
+         stage.setTitle("");
+         stage.setScene(new Scene(root1));
+         stage.setOnCloseRequest((WindowEvent event1) -> {
+             fond.setEffect(null);
+         });
+         stage.show();
+     } catch (Exception e) {
+        e.printStackTrace();
+     }
      }
     
     /** Fonction permetant de charger la dernière sauvegarde effectuée
@@ -225,18 +240,33 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         this.removeAll();
         ObjectInputStream ois = null;
         Grille[] grilles = new Grille[3];
+        this.mesGrilles= new Dimension3();
+        this.modelGrille1 = new Grille(0);
+        this.modelGrille2 = new Grille(1);
+        this.modelGrille3 = new Grille(2);        
+        this.dim3 = new Grille[]{modelGrille1, modelGrille2, modelGrille3};
+        mesGrilles = new Dimension3();
+                
         try {
             File f = new File(new File(new File(FXMLDocumentController.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent()).getParent() + "\\save.ser");
             final FileInputStream fichierIn = new FileInputStream(f);
             ois = new ObjectInputStream(fichierIn);
             for (int i = 0; i < grilles.length; i++) {
                 grilles[i] = (Grille) ois.readObject();
-                System.out.println("Serialization");
-                System.out.println(grilles[i]);
-                //Enregistre DANS chq grille chelou pette couilles
+                if(i==1){
+                    this.modelGrille1=grilles[1];
+                }else if(i==2){
+                    this.modelGrille2=grilles[2];
+                }else if(i==3){
+                    this.modelGrille3=grilles[3];
+                }
             }
-            this.mesGrilles.setMesGrilles(grilles);
-            System.out.println(this.mesGrilles);
+             this.dim3 = new Grille[]{this.modelGrille1, this.modelGrille2, this.modelGrille3};
+             System.out.println("test mesGrilles");
+             this.mesGrilles.initStart(this.dim3);
+             System.out.println(this.mesGrilles);
+            
+           // System.out.println(this.mesGrilles);
           } catch (final java.io.IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } catch (URISyntaxException ex) {
@@ -260,7 +290,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         System.out.println("AFFICHAGE DES TUILES");
         for (int k = 0; k < 3; k++) {
             for (Case c : this.dim3[k].getGrille()) {
-                if (c.getPane() == null) { // la tuile vient d'être créé
+                if (c.getPane() == null) { 
                     switch(c.getValeur()) {
                         case 2:
                             c.setPane(new Pane());
