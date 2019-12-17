@@ -15,6 +15,8 @@ import javafx.scene.layout.Pane;
 public class TuileComposite implements Tuile{
     private ArrayList<Tuile> tuileComposite = new ArrayList<>();
 
+    /** On appel la fonction threadMovement
+     * On utilise Composite pour définir le comportement de l'élément ciblé de la liste*/
     @Override
     public void threadMovement() {
         for(Tuile t : tuileComposite) { 
@@ -22,6 +24,8 @@ public class TuileComposite implements Tuile{
         }
     }
     
+    /** On appel et la fonction threadMovementCaseDead 
+     * On utilise Composite pour définir le comportement de l'élément ciblé de la liste*/
     @Override
     public void threadMovementCaseDead(Pane fond) {
         for(Tuile t : tuileComposite) { 
@@ -29,10 +33,12 @@ public class TuileComposite implements Tuile{
         }
     }
     
+    /** Fonction permettant l'ajout de la tuile */
     public void add(Tuile t) { 
         tuileComposite.add(t); 
     } 
     
+    /** Fonction permettant de détruire la tuile */
     public void remove(Tuile t) { 
         tuileComposite.remove(t); 
     } 

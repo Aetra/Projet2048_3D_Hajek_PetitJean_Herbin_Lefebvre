@@ -20,7 +20,6 @@ public class Main implements Parametres {
        
        Grille[] dim3;
         dim3 = new Grille[]{modelGrille1, modelGrille2, modelGrille3};
-        // TODO code application logic here
        Dimension3 g = new Dimension3();
        boolean b = g.nouvelleCase();
        b = g.nouvelleCase();

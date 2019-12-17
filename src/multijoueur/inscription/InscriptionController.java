@@ -28,13 +28,16 @@ public class InscriptionController extends BDD implements Initializable {
     @FXML
     private Label pswdLabel;
     
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
     
+    /** Fonction d'inscription permettant l'inscription et qu'il n'y ait pas d'erreur dans la bd
+     * On vérifie le pseudo et mot de passe rentré dans pseudoField passwordField pour définir si le compte est déjà existant 
+     * On enregistre ensuite dans la BD les valeurs renseignés dans 2 champs pseudo et password
+     * @param event 
+     */
     @FXML
     private void inscription(ActionEvent event) {
             /*      Variables       */
@@ -64,9 +67,7 @@ public class InscriptionController extends BDD implements Initializable {
                     pseudoField.setStyle("-fx-border-color: green;");
                     pseudoLabel.setText("");
                 }
-                
-                
-                
+          
                 cdtMdp = criterePswd(password);
                 if(cdtMdp == false){
                     passwordField.setStyle("-fx-border-color: red;");
@@ -85,14 +86,19 @@ public class InscriptionController extends BDD implements Initializable {
 
             }catch(SQLException e){}
         }else{
-                     pseudoField.setStyle("-fx-border-color: red;");
-                     passwordField.setStyle("-fx-border-color: red;");
-                     pswdLabel.setStyle("-fx-text-fill: red;");
-                     pswdLabel.setText("Champs vide");
-                }
+                pseudoField.setStyle("-fx-border-color: red;");
+                passwordField.setStyle("-fx-border-color: red;");
+                pswdLabel.setStyle("-fx-text-fill: red;");
+                pswdLabel.setText("Champs vide");
+            }
         
     }
 
+    /** Fonction permettant le retour en arriere vers la fenêtre de connexion
+     * 
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void back(ActionEvent event) throws IOException {
         String path = "/multijoueur/connexion/multiCoFXML.fxml";
@@ -102,7 +108,11 @@ public class InscriptionController extends BDD implements Initializable {
         inscPane.getChildren().setAll(pane);
     }
     
-    
+    /** Fonction renvoyant un booléan si le passwordd correspond aux critères de sécurités
+     * 
+     * @param password
+     * @return 
+     */
     private static boolean criterePswd(String password){
         boolean cdt1 = false; // longueur du mdp
         boolean cdt2 = false; // complexité
@@ -118,6 +128,11 @@ public class InscriptionController extends BDD implements Initializable {
         return retour;
     }
     
+    /** Fonction renvoyant la longueur du pseudo afin qu'il corresponde aux critères
+     * 
+     * @param pseudo
+     * @return 
+     */
     private static boolean lenghtPseudo(String pseudo){
         // cette fonction permet de mettre une longueur minimum à notre pseudo
         boolean lenght = false;
@@ -129,7 +144,12 @@ public class InscriptionController extends BDD implements Initializable {
     }
     
     
-    
+    /** Permet de suggérer un pseudo a l'utilisateur, renvoie un nouveau pseudo
+     * 
+     * @param pseudo
+     * @return
+     * @throws SQLException 
+     */
     private  String suggest(String pseudo) throws SQLException{
         // fonction qui va proposer un pseudo non utiliser
        int suffixeNum;

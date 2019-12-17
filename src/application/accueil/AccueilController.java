@@ -50,12 +50,17 @@ public class AccueilController implements Initializable {
         // TODO
     }    
 
+    /** Permet d'annuler l'effet d'Highlight sur le Pane */
     @FXML
     private void cancelHighlight(MouseEvent event) {
         Pane source = (Pane) event.getSource();
         source.setEffect(null);
     }
 
+    /**Fontion permettant de déclancher un effet d'Highlight
+     *@param event pour cibler l'évenement
+     *On ajoute un effet d'éclaircissement
+     */
     @FXML
     private void highlightButton(MouseEvent event) {
         ColorAdjust colorAdjust = new ColorAdjust();
@@ -69,6 +74,12 @@ public class AccueilController implements Initializable {
         source.setEffect(colorAdjust);
     }
 
+    /** Lancement du Mode Solo
+     *@param event évnement est associé au clique sur le Pane
+     *Charge le ThemeBasique.fxml
+     *Ajout d'effet servant de transition où on définit sa durée
+     *@throws IOException 
+     */
     @FXML
     private void startModeSolo(MouseEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/application/solo/ThemeBasique.fxml"));
@@ -83,6 +94,12 @@ public class AccueilController implements Initializable {
 
     }
 
+     /** Lancement du Mode Multijoueur
+     * @param event évnement est associé au clique sur le Pane
+     * Charge le multiCo.fxml pour lancer la scene
+     * Ajout d'effet servant de transition où on définit sa durée
+     * @throws IOException 
+     */
     @FXML
     private void startModeMulti() throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/multijoueur/connexion/multiCoFXML.fxml"));

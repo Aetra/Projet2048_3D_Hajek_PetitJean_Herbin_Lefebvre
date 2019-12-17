@@ -50,6 +50,11 @@ public class God implements Model.Parametres {
         return null;    
     }
 
+     /**
+     * Choisie la direction du premier coup venant d'une des combinaisons envisageables. S'il y a plusieurs combinaisons, une seule sera choisie au hasard.
+     * @return une direction sous forme d'un entier.
+     * @throws CloneNotSupportedException 
+     */
     public int omniscience() throws CloneNotSupportedException
     {
         ArrayList<Choix> combinaison = new ArrayList<>();
@@ -65,9 +70,10 @@ public class God implements Model.Parametres {
         return result;
     }
 
-    // va ajouter la combinaison à la liste des combinaisons en prenant soin d'un paramètre :
-    // en fonction du poids de la combinaison, il faudra en enlever dans la liste des combinaisons
-    // afin de pas surcharger la mémoire ; sinon il faudrait y stocker 20 000 combinaisons.
+    /**
+     * Enregistre une combinaison dans une liste. Si cette dernière ayant un poids identique à celles déjà enregistrés, elle est enregistrée. Si son poids y est plus petit, elle remplace toutes combinaisons enregistrée. Sinon, elle n'est pas enregistrée.
+     * @param combinaison liste de 5 objets de la classe Choix
+     */
     private void ajoutListe(ArrayList<Choix> combinaison) 
     {
         // calcule du poids de la combinaison (taille : xCoup)
@@ -97,20 +103,12 @@ public class God implements Model.Parametres {
         }
     }
     
-    // on prend le poids du premier jeu...
-    // pour chaque direction : on le simule avec un jeu, on en évalue le poids, 
-    // et on le soustrait avec le poids du premier jeu, afin d'obtenir la "satisfaction".
-    // on la met dans un tableau de int : [ DIRECTION , satifaction ] ; on obtient 1 "coup".
-    // Chaque coup simulé, est entreposé dans une liste de coups, nommée la "combinaison".
-    // Une fois qu'on atteint X coups (la taille de la combinaison est définie par X),
-    // la "combinaison" est mise DIRECTEMENT dans la liste de combinaisons (par valeur),
-    // grace à ajoutListe. Tant que la combinaison n'est pas complète, la récursivité continue
-    // et ce, pour chaque direction que l'on souhaite analyser
-    //      (  d'abord makeTrump() --> résultat (un "coup"), 
-    //      puis ledit résultat dans la combinaison, puis récursivité avec le transfert de cette combinaison 
-    //      (en paramètre / par référence)  ).
-    // combo indique combien de coups il reste, avant que la combinaison soit complétée.
-    
+    /**
+     * Génère toutes les combinaisons sur 5 coups et enregistre leurs résultats. Chaque choix provoquera une simulation de l'instance du jeu en paramètre, puis une récursivitée : cette dernière s'arrête après 5 fois.
+     * @param combinaison liste qui va contenir les objets de la classe Choix, résultant des différentes simulations de coups.
+     * @param jeu instance d'un jeu, dont celle simulée sera transmise en paramètre, via la récursivité.
+     * @throws CloneNotSupportedException 
+     */
     private void makeCombinaison(ArrayList<Choix> combinaison, Dimension3 jeu) throws CloneNotSupportedException
     {
         
@@ -137,14 +135,17 @@ public class God implements Model.Parametres {
         }
     }
     
-    // au lieu de demander d'aller dans une direction, puis analyser le poids du jeu, UNE seule fois (processus)
-    // il est intéressant de le faire X fois : chaque mouvement provoque une nouvelle case ;
-    // la présence d'un facteur aléatoire force, à répéter le processus X fois.
-    // on ne garde que le poids maximal, parmis toutes ces répétitions : c'est le cas pessimiste.
+   /**
+     * Simule un coup d'une direction donnée sur un jeu et calcule le poids du résultat obtenu. Ce processus sera répété 50 fois, afin de prendre en compte les nouvelles cases qui peuvent apparaître aléatoirement.
+     * @param jeu instance du jeu, qui sera clonée ensuite par la méthode clone()
+     * @param direction direction sous forme d'un entier, laquelle on s'intéresse pour la simulation d'un coup
+     * @return un objet de la classe Choix, contenant : l'instance du jeu simulée, dont le poids est le plus faible ; la direction qui a été sujette au test ; le poids total issu de toutes les simulations effectuées ;
+     * @throws CloneNotSupportedException 
+     */
     private Choix simulationDirection(Dimension3 jeu, int direction) throws CloneNotSupportedException
     {
-        int repeat = 50;
-        long poidsTotalSimulation = 0;
+        int repeat = 50; // Nombre définissant le nombre fois auquel on va simuler le coup
+        long poidsTotalSimulation = 0; // Poids total, issus des poids de tous les jeux qui auront été simulés.
         
         Dimension3 jeuResult = this.clone(jeu);
         if( jeuResult.lanceurDeplacerCases(direction) ) jeuResult.nouvelleCase();
@@ -165,9 +166,11 @@ public class God implements Model.Parametres {
         
         return new Choix(direction,poidsTotalSimulation,jeuResult);
     }
-    
-    // indique le poids totale du jeu, soit la "satisfaction" d'une situation donnée
-    // mettre un clone à partir de CookieMachine !!
+    /**
+     * Calcule le poids d'un instance du jeu. Plus ce poids est grand, moins cette instance présente d'options pour atteindre les conditions de victoire.
+     * @param jeu instance du jeu
+     * @return un entier, qui qualifie l'instance du jeu envoyée en paramètre.
+     */
     private long calculPoids(Dimension3 jeu)
     {
         // parametres reglables
@@ -227,6 +230,13 @@ public class God implements Model.Parametres {
         return result;
     }
     
+    /**
+     * Donne la case voisine à une case envoyée en paramètre, par rapport à une direction donnée. Retourne Null si cette dernière n'en a pas.
+     * @param direction direction par laquelle on souhaite chercher
+     * @param c case auquel on souhaite connaître sa case voisine directe
+     * @param jeu instance du jeu actuelle
+     * @return instance de la case, voisine directement à celle envoyée en paramètre. Retourne Null en cas d'abence de voisin direct.
+     */
     private Case getVoisinEtage(int direction, Case c, Dimension3 jeu)
     {
         if (direction == MONTER) 
@@ -252,7 +262,11 @@ public class God implements Model.Parametres {
         return null;
     }
     
-    
+     /**
+     * Crée une copie indépendante du jeu envoyé par paramètre.
+     * @param original instance du jeu actuel
+     * @return une nouvelle instance du jeu en paramètre, indépendante de cette dernière.
+     */
     private Dimension3 clone(Dimension3 original)
     {
         Dimension3 newResult = new Dimension3();

@@ -26,10 +26,12 @@ public class Chronometer {
         timeline.playFromStart();
     }
 
+    /** Permet de mettre en pause les timings et donc le chronomètre */
     private void pause() {
         timeline.pause();
     }
 
+    /** Permet de play le chronomètre */
     private void play() {
         timeline.play();
     }

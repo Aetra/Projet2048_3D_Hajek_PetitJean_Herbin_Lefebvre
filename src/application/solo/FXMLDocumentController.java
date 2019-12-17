@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package application.solo;
 import Model.CareTaker;
 import Model.Case;
@@ -20,7 +15,6 @@ import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import java.io.File;
 import java.io.Serializable;
 import java.net.URISyntaxException;
@@ -53,8 +47,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
-import javax.swing.*;
-
 /**
  * FXML Controller class
  *
@@ -63,50 +55,27 @@ import javax.swing.*;
 public class FXMLDocumentController implements Initializable, Serializable, Model.Parametres{;
     private boolean hasGameStarted = false;
     @FXML
-    private Pane scorePane;
-    @FXML
-    private Pane scorePane2;
-    @FXML
+    private Pane fond, scorePane, scorePane2, chronoPane, goBack;
     private AnchorPane container;
     @FXML
-    private GridPane grille;
-    @FXML
-    private GridPane grille1;
-    @FXML
-    private GridPane grille2;
-    @FXML
-    private Pane chronoPane;
+    private GridPane grille,grille1,grille2;
     @FXML
     private Button hide;
     @FXML
     private MenuBar menuBar; 
     @FXML
-    private MenuItem reglesGames;
-    @FXML
-    private MenuItem rankG;
-    @FXML
-    private Pane goBack;
-    @FXML    
-    private MenuItem thm1,thm2,thm3,fichierMenu,rankingMenu,helpMenu;
+    private MenuItem reglesGames, rankG, thm1,thm2,thm3,thm4,fichierMenu,rankingMenu,helpMenu,leave,load;
     @FXML
     private Button bBot, bLeft, bRight, bTpg, bTpd,bTop;
     @FXML
-    private Pane fond;
-    @FXML
     private Pane playButton;
     @FXML
-    private Label mvtScoreLabel,tp, playLabel, scoreLabel, mvtLabel;
+    private Label mvtScoreLabel, scoreToLabel, tp, playLabel, scoreLabel, mvtLabel,iaLabel;
+    @FXML
     private Label lTp,lUp,lDown,lMove,lRight,lLeft,lBot,lTop;
+    @FXML
+    private Label labelSeconds,labelMinutes,labelHours;
     private Timeline timeline;
-    @FXML
-    private Label labelSeconds;
-    @FXML
-    private Label labelMinutes;
-    @FXML
-    private Label labelHours;
-    @FXML
-    private Label iaLabel;
-
     private static final Integer STARTTIME = 0;
     private static final Integer MINUTESINANHOUR = 59;
     private static final Integer SECONDSINAMINUTE = 59;
@@ -114,23 +83,18 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
     private Integer timeSeconds = STARTTIME;
     private Integer timeMinutes  = STARTTIME;
     private Integer timeHours = STARTTIME;
-
-    @FXML
-    private Label scoreToLabel;
     int direction;
     
     private Grille modelGrille1;
     private Grille modelGrille2;
     private Grille modelGrille3;
     
-    // partie en 3 dimension
+    //3 dimension
     private Grille[] dim3;
     private Dimension3 mesGrilles;
-
-    //private Dimension3 grilleDim3 = new Dimension3(dim3);
     
     
-    // Pour le bouton revenir en arrière
+    // Pour le MenuItem revenir en arrière
     private Originator originator;
     private CareTaker careTaker;
 
@@ -138,14 +102,9 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
     private int x = 25, y = 295;
     private int objectifx = 25, objectify = 295;
 
-    @FXML
-    private MenuItem leave;
-    @FXML
-    private MenuItem load;
+   
     @FXML
     private ToggleGroup chgtStyles;
-    @FXML
-    private RadioMenuItem thm4;
     @FXML
     private ToggleGroup chgtStyles1;
     @FXML
@@ -199,19 +158,33 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         mesGrilles.initStart(dim3);
     }
     
-     /** Retourne la durée total du chrono en secondes*/
+    /** Retourne la durée total du chrono en secondes
+
+     * @return  timeline
+    */
      public double getCurrentTime() {
          return timeline.getCurrentTime().toSeconds();
      }
-     /** Retourne le score */
+    
+     /** retourne le score max de la 3 dimension
+      * 
+      * @return 
+      */
      public int bdGetSocreMax(){
          return Integer.parseInt(scoreToLabel.getText());
      }
-     /** retourne le nombre de mouvement */
+     /** retoune le nombre de mouvement
+      * 
+      * @return 
+      */
      public int bdGetMouvement(){
          return Integer.parseInt(mvtScoreLabel.getText());
      }
      
+     /** Fonction permettant de quitter et de sauvegarder la dimension3
+      * 
+      * @param event 
+      */
     @FXML
     private void exit(ActionEvent event) {
          ObjectOutputStream oos = null;
@@ -242,6 +215,11 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         }
 
      }
+    
+    /** Fonction permetant de charger la dernière sauvegarde effectuée
+     * 
+     * @param event 
+     */
         @FXML
     private void loading(ActionEvent event) {
         this.removeAll();
@@ -274,7 +252,10 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         }
     }
     
-    
+    /** Fonction affichant les tuiles de départ sur l'interfaces graphique
+     * Parcours les 3 grilles et chaque Cases
+     * Récupère le pane et set la valeur à l'intérieur des tuiles
+     */
     private void afficherTuile() { // A chaque nouvelle case cela créé la tuile (de façon dynamique)
         System.out.println("AFFICHAGE DES TUILES");
         for (int k = 0; k < 3; k++) {
@@ -300,6 +281,10 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
             }
         }
 
+    /** Fonction permettant la position des tuiles sur la grilles
+     * Prend en compte les dimensions et le placement des grilles sur la fenêtre
+     * Pren en compte l'espacement entre les grilles
+     */
      private void positionTuile() {
         for (int i = 0; i < 3; i++) {
             for (Case c : this.dim3[i].getGrille()) {
@@ -322,10 +307,13 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
     
     
     @FXML
-    private void handleDragAction(MouseEvent event) {
-       
+    private void handleDragAction(MouseEvent event) { 
      }
 
+    /** Fonction permettant de cacher le label où les commandes sont répertoriés
+     * 
+     * @param e 
+     */
      @FXML
      private void cacherLabel(ActionEvent e) {
         FadeTransition hideLab = new FadeTransition(Duration.millis(500), tp);
@@ -389,7 +377,9 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
          timeline.playFromStart();
      }
 
-     /** Met un pause le chrono*/
+     /** Met en pause le chrono
+      *S'il est en pause on le play
+      */
      @FXML
      private void pausePlayChrono(MouseEvent e) {
         if (hasGameStarted) {
@@ -402,7 +392,11 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         }
      }
 
-
+     /** Fonction permettant le retour en arriere vers la pages d'accueil
+      * Lorsque l'utilisateur clique sur l'ImageView retour a Accueil.fxml
+      * @param e
+      * @throws IOException 
+      */
      @FXML
      private void backHome(MouseEvent e) throws IOException {
          Parent root = FXMLLoader.load(getClass().getResource("/application/accueil/Accueil.fxml"));
@@ -423,6 +417,10 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
          timeline2.play();
      }
 
+     /** Permet de colorer avec un effet de highlight le bouton cliblé
+      * 
+      * @param e 
+      */
     @FXML
     private void highlightButton(MouseEvent e) {
         ColorAdjust colorAdjust = new ColorAdjust();
@@ -432,12 +430,21 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         source.setEffect(colorAdjust);
     }
 
+    /** Annule l'effet de Highlit du bouton
+     * 
+     * @param e 
+     */
     @FXML
     private void cancelHighlight(MouseEvent e) {
         Pane source = (Pane) e.getSource();
         source.setEffect(null);
     }
 
+    /** Fonction appelé au démarache d'une partie lorsque on appuie sur play
+     * Restart pris en compte, on remet les grilles et label à son origine
+     * on set graphiquement également à l'origine
+     * @param event 
+     */
     @FXML
     private void starting(MouseEvent event) {
 
@@ -449,12 +456,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
          mesGrilles = new Dimension3();
          dim3 = new Grille[]{modelGrille1, modelGrille2, modelGrille3};
          mesGrilles.initStart(dim3);
-    /*
-    for (int i = 0; i < 2; i++) {
-        int random = (int) (Math.random() * 3);
-        this.mesGrilles[random].nouvelleCase();
-    }
-    */
+
          for (int i = 0; i < 2; i++) {
              int random = (int) (Math.random() * 3);
              this.dim3[random].nouvelleCase();
@@ -463,22 +465,18 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
          this.positionTuile();
          mvtScoreLabel.setText("0");
          scoreToLabel.setText("0");
-        
          System.out.println(dim3);
-
-
          FadeTransition ft = new FadeTransition(Duration.millis(500), chronoPane);
          ft.setFromValue(0.0);
          ft.setToValue(1.);
          ft.play();
          restartChrono();
          playLabel.setText("Restart");
-
-
-
-
     }
     
+    /** Permet de détruire le model
+     * 
+     */
       private void removeAll() {
         for (int i = 0; i < 3; i++) {
             for (Case c : this.dim3[i].getGrille()) {
@@ -487,6 +485,14 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         }
     }
     
+      /** Fonction prenant en compte l'appuie de la touche par l'utilisateur
+       * La touches doit être une de celle de listé dans la listes des commandes possibles
+       * Si la touche est correct, appel des threads permettant le mouvement et la destruction d'une case
+       * On met à jour les labels et update le template
+       * @param ke
+       * @throws CloneNotSupportedException
+       * @throws IOException 
+       */
     @FXML
     private void keyPressed(KeyEvent ke) throws CloneNotSupportedException, IOException{
         TuileComposite t = new TuileComposite();
@@ -582,6 +588,13 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         scoreToLabel.setText(String.valueOf(mesGrilles.getValeurMax())); 
         System.out.println(mesGrilles);    
   }
+    /** Fonction  permettant le déplacement vers le haut
+     * Clique sur le bouton nécessaire
+     * Si clique déclanchement des threads et mises à jours de l'interface graphique
+     * @param event
+     * @throws CloneNotSupportedException
+     * @throws IOException 
+     */
         @FXML
     private void clickTop(MouseEvent event) throws CloneNotSupportedException, IOException {
            TuileComposite t = new TuileComposite();
@@ -602,6 +615,13 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
             System.out.println(mesGrilles);  
     }
 
+    /** Fonction  permettant le déplacement vers le bas
+     * Clique sur le bouton nécessaire
+     * Si clique déclanchement des threads et mises à jours de l'interface graphique
+     * @param event
+     * @throws CloneNotSupportedException
+     * @throws IOException 
+     */
     @FXML
     private void clickBot(MouseEvent event) throws CloneNotSupportedException, IOException {
          TuileComposite t = new TuileComposite();
@@ -622,6 +642,13 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
             System.out.println(mesGrilles);  
     }
 
+    /** Fonction  permettant le déplacement vers la droite
+     * Clique sur le bouton nécessaire
+     * Si clique déclanchement des threads et mises à jours de l'interface graphique
+     * @param event
+     * @throws CloneNotSupportedException
+     * @throws IOException 
+     */
     @FXML
     private void clickRight(MouseEvent event) throws CloneNotSupportedException, IOException {
          TuileComposite t = new TuileComposite();
@@ -643,6 +670,13 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
             }
     }
 
+    /** Fonction  permettant le déplacement vers la gauche
+     * Clique sur le bouton nécessaire
+     * Si clique déclanchement des threads et mises à jours de l'interface graphique
+     * @param event
+     * @throws CloneNotSupportedException
+     * @throws IOException 
+     */
     @FXML
     private void clickLeft(MouseEvent event) throws CloneNotSupportedException, IOException {
         TuileComposite t = new TuileComposite();
@@ -666,6 +700,13 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         System.out.println(mesGrilles);  
     }
 
+    /** Fonction  permettant le déplacement vers la descente, soit vers la gauche
+     * Clique sur le bouton nécessaire
+     * Si clique déclanchement des threads et mises à jours de l'interface graphique et gestion de la fusion
+     * @param event
+     * @throws CloneNotSupportedException
+     * @throws IOException 
+     */
     @FXML
     private void clickTpG(MouseEvent event) throws CloneNotSupportedException, IOException {
         TuileComposite t = new TuileComposite();
@@ -685,6 +726,13 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
          
     }
 
+    /** Fonction  permettant le déplacement vers la Monter, soit vers la droite
+     * Clique sur le bouton nécessaire
+     * Si clique déclanchement des threads et mises à jours de l'interface graphique et gestion de la fusion
+     * @param event
+     * @throws CloneNotSupportedException
+     * @throws IOException 
+     */
     @FXML
     private void clicktpD(MouseEvent event) throws CloneNotSupportedException, IOException {
       TuileComposite t = new TuileComposite();
@@ -703,6 +751,9 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
             System.out.println(mesGrilles);  
     }
     
+       /** Fonction permettant la mise à jour de l'interface graphique
+        * Appelé lors d'un événement déclenché par l'utilisateur
+        */
        public synchronized void updateTemplate() {
         for (int k = 0; k < 3; k++) {
             for (Case c : this.dim3[k].getGrille()) {
@@ -770,7 +821,9 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
     }
     
 
-    /** deroulement Du jeu */
+    /** Fonction gérant a la fois le déroulement du jeu et la nouvelle case
+     * On crée une nouvelle Case si sur la grille c'est disponible
+     */
     public void nouvelleCase() throws IOException {
       if(mesGrilles.getValeurMax()<OBJECTIF){
         ArrayList<Integer> grillePossible = new ArrayList<>();
@@ -799,7 +852,11 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
       }
     }
        
-    
+    /** Fonction permettant lors du clique sur le MenuItem régles d'afficher ces dernières
+     * La fenêtre se met au dessus de l'application
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void regles(ActionEvent event) throws IOException {
          try {
@@ -817,6 +874,12 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
         e.printStackTrace();
      }
  }
+    /**Fonction permettant l'utilisation de l'ia Conseil
+     * Nécessite le clique sur le menuItem Je ne sais pas joue IA dans le menu help
+     * Crée un objet God qui renvoie sa méthode omniscience dans un label 
+     * @param event
+     * @throws IOException 
+     */
     @FXML
     private void iaJustHelp(ActionEvent event) throws IOException {
        iaLabel.setText("");
@@ -824,6 +887,14 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
        iaLabel.setText("Vous avez appelé l'aide des dieux.   " +oranos);
        
     }
+    /** Fonction permettant l'utilisation de l'IA player
+     * On précise lorsque l'IA a joué avec un label iaLabel
+     * On crée un objet God qui renvoie dans une variable ces instructions
+     * on compare les instructions et définit déclenche les threads de mouvements dans la direction indiqué par l'IA
+     * @param event
+     * @throws IOException
+     * @throws CloneNotSupportedException 
+     */
     @FXML
     private void iaPlay(ActionEvent event) throws IOException, CloneNotSupportedException {
           iaLabel.setText("");
@@ -944,7 +1015,10 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
             stage.setScene(new Scene(root1));  
             stage.show();
           }
-        
+    
+    /** Fonction permettant la préparation des styles
+     * 
+     */
     private void prepStylesSheets(){
             scorePane.getStyleClass().add("scorePane");
             scorePane2.getStyleClass().add("scorePane2");
@@ -973,6 +1047,13 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
             helpMenu.getStyleClass().add("helpMenu");
             
     }
+    /** Fonction permettant de changer de theme
+     * L'utilisateur clique sur le menuItem changer theme et fichier
+     * On stock dans chaque menuItem la valeur d'un fichier css
+     * Le pane général prend la valeur du fichier css
+     * Le css est chargé et remplace les valeur de chaque composant préparé dans getStylesSheets
+     * @param e 
+     */
       @FXML
     private void switchThm(ActionEvent e) {
         fond.getStylesheets().clear();

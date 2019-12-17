@@ -51,6 +51,10 @@ public class PopupWinLoseController extends BDD implements Initializable {
         // TODO
     }    
 
+    /** Permet de retourner le score dans la bd le contenue dans les différents labels
+     * 
+     * @param event 
+     */
     @FXML
     private void sendScore(MouseEvent event) {
         FXMLDocumentController fxml = new FXMLDocumentController();
@@ -58,6 +62,10 @@ public class PopupWinLoseController extends BDD implements Initializable {
        insertLigneScore(pseudoArenaField.getText(),fxml.bdGetMouvement(),fxml.bdGetSocreMax(),fxml.getCurrentTime(),this.co);
     }
 
+    /** Fonction mettant en pause le chrono lors de l'apparition de la fenêtre WinLose
+     * 
+     * @param event 
+     */
     @FXML
     private void pausePlayChrono(MouseEvent event) {
         FXMLDocumentController fxml = new FXMLDocumentController();

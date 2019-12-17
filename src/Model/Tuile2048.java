@@ -21,32 +21,36 @@ public class Tuile2048 implements Tuile, Parametres{
         this.grille = (Grille) grille.clone();
     }
 
-    // mouvement pour une tuile
+    /** Fonction Thread déclanchant l'effet de mouvement
+     * On définit une tache paralléle pour l'execution de multi thread
+     * on prend en compte l'avant et l'après mouvement
+     * On utiise Platform.runLater pour pouvoir modifié le thread courant
+     * On modifie la position de la tuile en prenant en compte l'abscisse et l'ordonnée
+     * On met un Thread.sleep pour déterminer la durée du thread, il ne peut être inférieur à 1
+     * Le thread se délenche en prenant compte des paramètre précédant
+     */
     @Override
     public void threadMovement() {
         for (Case c  : grille.getGrille()) {
             final int numGrille = grille.getNumeroGrille();
-            Task task = new Task<Void>() { // on définit une tâche parallèle pour mettre à jour la vue
+            Task task = new Task<Void>() { 
                 @Override
-                public Void call() throws Exception { // implémentation de la méthode protected abstract V call() dans la classe Task
-                    // Après mouvement
+                public Void call() throws Exception { 
                     int objectifx = 25 + 14 * numGrille + numGrille * 334 + (c.getX() * tailleX);
                     int objectify = 295 + tailleY * c.getY();
-                    // Avant mouvement
                     int x = 25 + 14 * c.getLastGrille() + c.getLastGrille() * 334 + (c.getLastX() * tailleX);
                     int y = 295 + tailleY * c.getLastY();
-                    while (x != objectifx || y != objectify) { // si la tuile n'est pas à la place qu'on souhaite attendre en abscisse
+                    while (x != objectifx || y != objectify) { 
                         if (x < objectifx) {
-                            x += 1; // si on va vers la droite, on modifie la position de la tuile pixel par pixel vers la droite
+                            x += 1; 
                         } else if (x > objectifx) {
-                            x -= 1; // si on va vers la gauche, idem en décrémentant la valeur de x
+                            x -= 1; 
                         }
                         if (y < objectify) {
-                            y += 1; // si on va vers le , on modifie la position de la tuile pixel par pixel vers la droite
+                            y += 1; 
                         } else if (y > objectify) {
-                            y -= 1; // si on va vers le , idem en décrémentant la valeur de x
+                            y -= 1; 
                         }
-                        // Platform.runLater est nécessaire en JavaFX car la GUI ne peut être modifiée que par le Thread courant, contrairement à Swing où on peut utiliser un autre Thread pour ça
                         final int varX = x;
                         final int varY = y;
                         Platform.runLater(new Runnable() { // classe anonyme
@@ -58,62 +62,27 @@ public class Tuile2048 implements Tuile, Parametres{
                             }
                         );
                         Thread.sleep((long) 1);
-                    } // end while
-                    return null; // la méthode call doit obligatoirement retourner un objet. Ici on n'a rien de particulier à retourner. Du coup, on utilise le type Void (avec un V majuscule) : c'est un type spécial en Java auquel on ne peut assigner que la valeur null
-                } // end call
+                    } 
+                    return null; 
+                } 
 
             };
-            Thread th = new Thread(task); // on crée un contrôleur de Thread
-            th.setDaemon(true); // le Thread s'exécutera en arrière-plan (démon informatique)
-            th.start(); // et on exécute le Thread pour mettre à jour la vue (déplacement continu de la tuile horizontalement)*/
+            Thread th = new Thread(task); 
+            th.setDaemon(true); 
+            th.start(); 
         }
     }    
     
+    /** Fonction thread permettant la destruction de la case qui a été fusionné auparavant
+     * @param fond  On prend le fond background pour définir où on veut détruire
+     * On récupère les coordonnées de la case et sur quel grille elle est
+     * On on la détruit visuellement et également dans le model
+     */
     @Override
     public void threadMovementCaseDead(Pane fond) {  
         for (Case c  : grille.getCasesDestroy()) {
             final int fi = grille.getNumeroGrille();
-            
-            /*Task task = new Task<Void>() { // on définit une tâche parallèle pour mettre à jour la vue
-                @Override
-                public Void call() throws Exception { // implémentation de la méthode protected abstract V call() dans la classe Task
-                    // Après mouvement
-                    int objectifx = 25 + 18 * fi + fi * 334 + (c.getX() * tailleX);
-                    int objectify = 295 + tailleY * c.getY();
-                    // Avant mouvement
-                    int x = 25 + 14 * fi + fi * 334 + (c.getLastX() * tailleX);
-                    int y = 295 + tailleY * c.getLastY();
-                    while (x != objectifx || y != objectify) { // si la tuile n'est pas à la place qu'on souhaite attendre en abscisse
-                        if (x < objectifx) {
-                            x += 1; // si on va vers la droite, on modifie la position de la tuile pixel par pixel vers la droite
-                        } else if (x > objectifx) {
-                            x -= 1; // si on va vers la gauche, idem en décrémentant la valeur de x
-                        }
-                        if (y < objectify) {
-                            y += 1; // si on va vers le , on modifie la position de la tuile pixel par pixel vers la droite
-                        } else if (y > objectify) {
-                            y -= 1; // si on va vers le , idem en décrémentant la valeur de x
-                        }
-                        final int varX = x;
-                        final int varY = y;
-                        Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
-                                    c.getPane().relocate(varX, varY);
-                                    c.getPane().setVisible(true); 
-                                }
-                            }
-                        );
-                        Thread.sleep(1);
-                    } 
-                    return null;
-                }
-            };
-            Thread th = new Thread(task);
-            th.setDaemon(true); 
-            th.start();            
-            */
-            fond.getChildren().remove((Node) c.getPane()); // ICI POUR L4INSTANT COTE VISUEL
+            fond.getChildren().remove((Node) c.getPane());
         }
         this.grille.getCasesDestroy().clear();
     }     

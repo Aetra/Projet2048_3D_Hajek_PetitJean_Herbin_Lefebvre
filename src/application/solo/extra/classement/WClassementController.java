@@ -42,6 +42,12 @@ public class WClassementController extends BDD implements Initializable {
         // TODO
     }    
 
+    /** Permet d'afficher les scores dans le tableau
+     * @param event
+     * @throws SQLException 
+     * On récupère le pseudo, le compare
+     * Pour ensuite pouvoir insérer le contenu de notre BD dans affichageScore
+     */
     @FXML
     private void affichageScoreDsTableau(MouseEvent event) throws SQLException {
         boolean cdtNothing = true;

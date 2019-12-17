@@ -70,6 +70,12 @@ public class multiFXMLController extends BDD implements Initializable {
         }
     }
     
+    /** Fonction inscription
+     * 
+     * @param event
+     * @throws IOException 
+     * On récupère lance la fenêtre pour s'inscrire inscriptionPanel.fxml
+     */
     @FXML
     private void inscription(ActionEvent event) throws IOException {      
         //String path = "/package/FXML.fxml";
@@ -78,6 +84,7 @@ public class multiFXMLController extends BDD implements Initializable {
         coPane.getChildren().setAll(pane);
     }
 
+    /** Fonction permettant de quitter la fenêtre */
     private void quitter(ActionEvent event){
         // fonction qui permet de quitter
         System.exit(0);
@@ -88,6 +95,11 @@ public class multiFXMLController extends BDD implements Initializable {
         // TODO
     }    
     
+    /** Fonction permettant de check les conditions de validation
+     * @param cdt1 boolean
+     * @param cdt2 boolean
+     * si les 2 conditions sont remplis l'utilisateur peut se connecter
+     */
     private void cdtValidationAcces(boolean cdt1,boolean cdt2){
         // fonction qui colore les bordures
         if(cdt1 == false || cdt2 ==false){
@@ -107,6 +119,9 @@ public class multiFXMLController extends BDD implements Initializable {
     }
     // centrer un pane sunr un autre pane
     
+    /** Fonction permetant de retourner au menu Principal 
+     * On recharge Accueil.fxml
+    */
     @FXML
     private void backMenuPrincipal(ActionEvent eventCo) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/application/accueil/Accueil.fxml"));
