@@ -171,14 +171,14 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
     
      /** retourne le score max de la 3 dimension
       * 
-      * @return 
+      * @return  le scoreMax Recuperer sur le label
       */
      public int bdGetSocreMax(){
          return Integer.parseInt(scoreToLabel.getText());
      }
      /** retoune le nombre de mouvement
       * 
-      * @return 
+      * @return  le mouvement recuperer sur le label
       */
      public int bdGetMouvement(){
          return Integer.parseInt(mvtScoreLabel.getText());
@@ -641,6 +641,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
                 t.threadMovementCaseDead(fond);
                this.nouvelleCase();
             }
+            scoreToLabel.setText(String.valueOf(mesGrilles.getValeurMax())); 
             this.updateTemplate();
             System.out.println(mesGrilles);  
     }
@@ -668,6 +669,7 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
                 this.nouvelleCase();
                 
             }
+            scoreToLabel.setText(String.valueOf(mesGrilles.getValeurMax())); 
             this.updateTemplate();
             System.out.println(mesGrilles);  
     }
@@ -695,9 +697,11 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
                 t.threadMovement();
                 t.threadMovementCaseDead(fond);
                 this.nouvelleCase();
-                this.updateTemplate();
-        System.out.println(mesGrilles);  
+               
             }
+             scoreToLabel.setText(String.valueOf(mesGrilles.getValeurMax())); 
+             this.updateTemplate();
+            System.out.println(mesGrilles);  
     }
 
     /** Fonction  permettant le déplacement vers la gauche
@@ -726,8 +730,9 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
                 
 
             }
-        this.updateTemplate();
-        System.out.println(mesGrilles);  
+             scoreToLabel.setText(String.valueOf(mesGrilles.getValeurMax())); 
+            this.updateTemplate();
+            System.out.println(mesGrilles); 
     }
 
     /** Fonction  permettant le déplacement vers la descente, soit vers la gauche
@@ -751,9 +756,9 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
                 this.nouvelleCase();    
 
             }
-         this.updateTemplate();
-        System.out.println(mesGrilles);  
-         
+             scoreToLabel.setText(String.valueOf(mesGrilles.getValeurMax())); 
+             this.updateTemplate();
+            System.out.println(mesGrilles);        
     }
 
     /** Fonction  permettant le déplacement vers la Monter, soit vers la droite
@@ -777,8 +782,9 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
                 this.nouvelleCase();    
                 
             }
-            this.updateTemplate();
-            System.out.println(mesGrilles);  
+             scoreToLabel.setText(String.valueOf(mesGrilles.getValeurMax())); 
+             this.updateTemplate();
+            System.out.println(mesGrilles); 
     }
     
        /** Fonction permettant la mise à jour de l'interface graphique
@@ -851,8 +857,10 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
     }
     
 
-    /** Fonction gérant a la fois le déroulement du jeu et la nouvelle case
+    /**Fonction gérant a la fois le déroulement du jeu et la nouvelle case
      * On crée une nouvelle Case si sur la grille c'est disponible
+     * 
+     * @throws IOException 
      */
     public void nouvelleCase() throws IOException {
       if(mesGrilles.getValeurMax()<OBJECTIF){
@@ -1134,7 +1142,10 @@ public class FXMLDocumentController implements Initializable, Serializable, Mode
 
     }
  
-    /**Retourne le boolean qui permemt de dire si la partie à commencée*/
+    /** Retourne le boolean qui permemt de dire si la partie à commencée
+     * 
+     * @return hasGameStarted
+     */
     public boolean getHasGameStarted(){
         return this.hasGameStarted;
     }

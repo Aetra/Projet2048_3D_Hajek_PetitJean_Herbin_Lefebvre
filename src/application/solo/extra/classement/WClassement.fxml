@@ -23,18 +23,17 @@
       </Label>
       <Pane layoutX="513.0" layoutY="7.0" prefHeight="70.0" prefWidth="253.0">
          <children>
-            <TextArea fx:id="champDeRecherchePseudo" layoutY="9.0" prefHeight="22.0" prefWidth="153.0" />
-            <ImageView fitHeight="44.0" fitWidth="53.0" layoutX="159.0" layoutY="7.0" onMouseClicked="#affichageScoreDsTableau" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../img/loupe.png" />
-               </image>
-            </ImageView>
+            <TextArea layoutY="9.0" prefHeight="22.0" prefWidth="153.0" />
+            <Pane layoutX="163.0" layoutY="-2.0" onMouseClicked="#affichageScoreDsTableau" prefHeight="70.0" prefWidth="79.0">
+               <children>
+                  <ImageView fitHeight="44.0" fitWidth="53.0" layoutX="18.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../img/loupe.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
       </Pane>
-      <Label fx:id="pasDeCorrespondance" layoutX="24.0" layoutY="42.0" prefHeight="33.0" prefWidth="710.0" textFill="#a44d4d">
-         <font>
-            <Font name="Book Antiqua Bold" size="18.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>

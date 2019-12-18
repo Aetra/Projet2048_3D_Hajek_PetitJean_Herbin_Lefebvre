@@ -3,11 +3,16 @@ package BaseDeDonnee;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class BDD implements Parametre{
-    /**     Fonction qui permet d'ouvrir la base de données     */
+    /** Fonction qui permet d'ouvrir la base de données    
+     * 
+     * @return connexion
+     */
     public static Connection openBDD(){
         Connection con = null;
         
@@ -24,7 +29,13 @@ public class BDD implements Parametre{
         return con;
     }
         
-    /**     Fonction qui permet de chercher le pseudo dans la base de donnée et rendre un boolean  */
+    /**    Fonction qui permet de chercher le pseudo dans la base de donnée et rendre un boolean
+     * 
+     * @param pseudoVerif
+     * @param co
+     * @return s'il existe
+     * @throws SQLException 
+     */
     protected static boolean verifPseudo(String pseudoVerif,Connection co)throws SQLException{
             boolean exist = false;
             String pseudo;
@@ -38,11 +49,16 @@ public class BDD implements Parametre{
                     exist = true;
                 }
             }
-            //System.out.println("Je regarde si il existe ou non"+exist);
             return exist;
     }
 
-    /**      Fonction qui permet de check le mot de passe est renvoie false si le mot de passe ne correspond pas */
+    /**  Fonction qui permet de check le mot de passe est renvoie false si le mot de passe ne correspond pas
+     * 
+     * @param pseudoVerif
+     * @param pswdVerif
+     * @param co
+     * @return les conditions de mdp
+     */
     protected static boolean verifPswd(String pseudoVerif,String pswdVerif,Connection co){
         String keyWord = "";
         boolean cdtMdp = false;
@@ -68,7 +84,12 @@ public class BDD implements Parametre{
         return cdtMdp;
     }
  
-    /**      Fonction qui permet de mettre un couple pseudo-password dans la base de donée   */
+    /**  Fonction qui permet de mettre un couple pseudo-password dans la base de donnée
+     * 
+     * @param setPseudo
+     * @param setPswd
+     * @param co 
+     */
     protected static void setNewAccount(String setPseudo, String setPswd, Connection co){
         String pseudo = "'"+setPseudo+"'";
         String pswd = "'"+setPswd+"'";
@@ -79,9 +100,16 @@ public class BDD implements Parametre{
         }catch(SQLException e){}
     }
 
-    /**      Fonction qui permet d'inserer une ligne de score, mouvement et chrono*/
+    /**   Fonction qui permet d'inserer une ligne de score, mouvement et chrono
+     * 
+     * @param pseudoInsert
+     * @param mvt
+     * @param score
+     * @param chrono
+     * @param co 
+     */
     protected static void insertLigneScore(String pseudoInsert, int mvt, int score, double chrono, Connection co){
-                /*  Variables */
+               /*  Variables */
         String pseudo = "'"+pseudoInsert+"'";
         boolean firstStrike = true; //c'est notre première partie 
        //String pseudo = "'"+pseudo+"'"; // cela va nous permettre de chercher notre pseudo dans le tableau de score
@@ -97,13 +125,13 @@ public class BDD implements Parametre{
                    }
             }
             
-                /**  Condition 1 : première partie INSERT */
+                /*  Condition 1 : première partie INSERT */
             if(firstStrike == true){
                 Statement insertScore = co.createStatement();
                 insertScore.executeUpdate("INSERT INTO scoreboard VALUES ("+pseudo+","+mvt+","+score+","+chrono+",)");           
             }
             
-                 /**  Condition 2 : meilleur score UPDDATE */
+                 /*  Condition 2 : meilleur score UPDDATE */
             if(firstStrike == false){
                 int scoreBDD = recupScore(pseudo,co); // c'est le score que l'on recupère si on a déjà joué
                 System.out.println("Voici score BDD "+ scoreBDD);
@@ -138,9 +166,15 @@ public class BDD implements Parametre{
         }catch(SQLException e){}
     }
 
-    /**  Fonction qui va recuperer et renvoyer le score de notre tableau de score en fonction du pseudo  */
+
+    /**  Fonction qui va recuperer et renvoyer le score de notre tableau de score en fonction du pseudo
+     * 
+     * @param pseudoBDD
+     * @param co
+     * @return le score recuperer
+     */
     protected static int recupScore(String pseudoBDD,Connection co){
-       int scoreRecup = 0;
+        int scoreRecup = 0;
        try{
        Statement isCo = co.createStatement();
         String querry ="SELECT `Score` FROM `scoreboard` WHERE `Pseudo` = "+pseudoBDD;
@@ -153,7 +187,12 @@ public class BDD implements Parametre{
         return scoreRecup;
     }
     
-    /**  Fonction qui va chercher et renvoyer le mouvement de notre tableau de score en fonction du pseudo   */
+    /**Fonction qui va chercher et renvoyer le mouvement de notre tableau de score en fonction du pseudo  
+     * 
+     * @param pseudoBDD
+     * @param co
+     * @return 
+     */
     protected static int recupMove(String pseudoBDD, Connection co){
        int moveRecup = 0;
         try{
@@ -168,6 +207,12 @@ public class BDD implements Parametre{
        }catch(SQLException e){} 
         return moveRecup;
     }
+    /**   Fonction qui va chercher et renvoyer le cbrono de notre tableau de score en fonction du pseudo  
+     * 
+     * @param pseudoBDD
+     * @param co
+     * @return le chrono recuperer
+     */
       protected static double recupChrono(String pseudoBDD, Connection co){
        double chrono = 0;
         try{
@@ -182,4 +227,33 @@ public class BDD implements Parametre{
        }catch(SQLException e){} 
         return chrono;
     }
+      /** Fonction qui renvoie le Tableau de la BDD
+       * 
+       * @param co
+       * @return
+       * @throws SQLException 
+       */
+      protected static ArrayList<String> renvoieTableauBDD(Connection co) throws SQLException{
+            ArrayList<String> tab = null;
+            Statement stmt = co.createStatement();
+            String querry = "SELECT * FROM `scoreboard`";
+            
+            ResultSet res = stmt.executeQuery(querry);
+            ResultSetMetaData metadata = res.getMetaData();
+            String tuple;
+            
+            while (res.next()) {
+                tuple = "";
+                for (int i = 1; i <= metadata.getColumnCount(); i++) {
+                    tuple += res.getString(i);
+                    if (i<metadata.getColumnCount()) {
+                        tuple +=";";
+                    }
+                }
+                tab.add(tuple);
+            }
+            stmt.close();
+            
+            return tab;
+      }
 }
